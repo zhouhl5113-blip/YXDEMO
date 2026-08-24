@@ -8,6 +8,10 @@ Decision owner: Project initiator
 
 Security/data approval: `PENDING`
 
+Named Product/Security/Data owner: `周贺龙`
+
+Independent R3 second approver: `UNASSIGNED`; R3 actions remain disabled.
+
 ## Confirmed context
 
 - 访问范围：仅本机、公司内网或 VPN，不开放公网匿名访问。

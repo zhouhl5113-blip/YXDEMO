@@ -44,7 +44,22 @@
     "rollbackTarget": "LAST_APPROVED_DIGEST_TBD",
     "rollbackTested": false
   },
-  "approvals": {"production": null},
+  "approvals": {
+    "assignments": {
+      "productApprover": "周贺龙",
+      "securityResponsiblePerson": "周贺龙",
+      "dataOwner": "周贺龙",
+      "independentR3SecondApprover": null,
+      "designGateApprover": null,
+      "acceptanceGateApprover": null,
+      "productionApprover": null
+    },
+    "product": null,
+    "design": null,
+    "security": null,
+    "acceptance": null,
+    "production": null
+  },
   "evidenceIndex": [
     "evidence-index.md",
     "harness-discovery.md",
@@ -75,6 +90,7 @@
     "evidence/product-design-gate-check.json",
     "evidence/product-design-gate-tests.junit.xml",
     "evidence/harness-scope-create.json",
+    "evidence/identity-governance-assignment.json",
     "evidence/local-runtime-discovery.json",
     "evidence/local-runtime-setup.json",
     "evidence/workspace-validation.md"
@@ -85,8 +101,8 @@
     "Old G7 credentials are confirmed still active for other systems and remain untouched. This project is restricted to credentialless offline contracts until a coordinated cutover, rotation evidence and Harness SANDBOX Secret bindings exist. The prototype AMap key also requires rotation before use.",
     "ZHLDEMO is confirmed as the dedicated target application and authenticated G7 workbench inventory is complete, but Harness Secret binding plus SANDBOX request/response contract evidence remain missing; ten G7-GAP records remain proposed and unapproved.",
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
-    "The project-owned identity direction is confirmed as proposed self-hosted Keycloak plus application TenantScope/RBAC/ABAC, but Security/Product/Data approval, OQ-008 semantics, G7-GAP-001/008 and production identity infrastructure remain unresolved.",
+    "The project-owned identity direction is confirmed as proposed self-hosted Keycloak plus application TenantScope/RBAC/ABAC. 周贺龙 is named for Product, Security and Data responsibilities, but this does not provide independent review; no distinct second R3 approver exists, so R3 actions remain disabled. OQ-008, G7-GAP-001/008 and production identity infrastructure remain unresolved.",
     "Production infrastructure, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T12:08:21Z"
+  "updatedAt": "2026-08-24T12:12:59Z"
 }

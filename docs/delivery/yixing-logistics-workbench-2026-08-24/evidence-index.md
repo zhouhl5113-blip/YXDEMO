@@ -20,6 +20,7 @@
 | `evidence/harness-scope-create.json` | Controlled Harness scope mutation/readback | Project + dev/preprod/prod created; no deployment, Secret or RBAC mutation |
 | `evidence/local-runtime-discovery.json` | Local host capability and setup decision | WSL 1 selected; production unsuitable |
 | `evidence/local-runtime-setup.json` | Installed local data services and repeatable health checks | PostgreSQL 16 and Redis 7 healthy; Redis Streams passed; loopback-only |
+| `evidence/identity-governance-assignment.json` | Named identity-governance responsibilities and separation-of-duties status | 周贺龙 assigned Product/Security/Data; independent R3 approver absent and R3 disabled |
 | `repo:docs/security/YXDEMO-threat-model.md` | Repository-grounded assets, boundaries, abuse paths and prioritized mitigations | Context confirmed for local/intranet/VPN; 10 threats recorded; security review required |
 | `repo:docs/security/identity-access-decision-brief.md` | Account, role, session and authorization proposal | Option A confirmed; implementation remains blocked pending approval |
 | `repo:docs/architecture/adr-0003-keycloak-identity-application-authorization.md` | Identity provider and application authorization boundary | `PROPOSED`; Security/Product/Data approval pending |

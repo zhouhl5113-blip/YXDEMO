@@ -6,6 +6,8 @@
 
 The project initiator confirmed the direction by instructing the delivery to continue after reviewing the recommended option. Security, product and data-owner approval is still required before implementation. This ADR is not authorization to deploy Keycloak, create identity tables or bind production infrastructure.
 
+周贺龙 is now the named Product approver, Security responsible person and Data owner. Because all three responsibilities are held by one person, independent review is not demonstrated. No distinct second R3 approver exists, so R3 actions remain disabled.
+
 ## Date
 
 2026-08-24
@@ -108,6 +110,18 @@ Before implementation:
 - Product and Security approve OQ-008 intersection and deny semantics.
 - Product, Security and Data owners approve the minimum local identity mapping under `G7-GAP-001` and driver session state under `G7-GAP-008`.
 - A Security architect accepts this ADR and the repository threat model.
+
+## Named Governance Assignment
+
+| Responsibility | Assignment | Effect |
+| --- | --- | --- |
+| Product approver | 周贺龙 | Named; action-specific Product approval is still recorded separately |
+| Security responsible person | 周贺龙 | Named; independent security review is not available |
+| Data owner | 周贺龙 | Named; data-retention and gap decisions still require explicit approval |
+| Independent R3 second approver | `UNASSIGNED` | R3 actions are disabled |
+| Design/Acceptance/Production approvers | `UNASSIGNED` | Corresponding gates remain blocked or pending |
+
+Evidence: `docs/delivery/yixing-logistics-workbench-2026-08-24/evidence/identity-governance-assignment.json`.
 
 Before production:
 

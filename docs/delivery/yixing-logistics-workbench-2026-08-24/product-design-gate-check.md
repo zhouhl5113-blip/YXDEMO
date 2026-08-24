@@ -1,6 +1,6 @@
 # Product And Design Gate Check
 
-Observed: `2026-08-24T12:03:07Z`.
+Observed: `2026-08-24T12:12:59Z`.
 
 ## Verdict
 
@@ -29,9 +29,9 @@ Regression result: 15 tests passed, 0 failed. The strict `--require-pass` comman
 
 1. Product Gate remains `blocked` and Design Gate remains `blocked` in the control record.
 2. Ten `G7-GAP-*` records are proposed but not approved; no gap ADR authorizes local persistence.
-3. Sixteen administrator/product decisions remain open or partially resolved. The identity technology direction is recorded, but its security/data approvals, data-scope semantics, retention, production infrastructure and named approval owners remain outstanding.
+3. Sixteen administrator/product decisions remain open or partially resolved. 周贺龙 is named for Product, Security and Data responsibilities, but independent review, data-scope semantics, retention, production infrastructure and remaining gate approvers are outstanding.
 4. Signed G7 SANDBOX request/response evidence is intentionally absent while this project is credentialless.
-5. ADR-0003 remains `PROPOSED`; Product, Security and Data owners have not approved OQ-008 or `G7-GAP-001/008` for identity implementation.
+5. ADR-0003 remains `PROPOSED`; OQ-008 and `G7-GAP-001/008` are not action-specifically approved. A distinct second R3 approver is absent, so all R3 actions must remain disabled.
 6. `US-069..US-074` still have no stable `TEST-*` acceptance IDs.
 
 ## Minimum Path To Pass
