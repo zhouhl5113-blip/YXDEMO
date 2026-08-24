@@ -8,14 +8,16 @@
     "node": ">=24.12 <25"
   },
   "scripts": {
-    "format": "biome format --write --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages tests",
-    "format:check": "biome format --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages tests",
-    "lint": "biome lint --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages tests",
+    "format": "biome format --write --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages scripts tests",
+    "format:check": "biome format --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages scripts tests",
+    "lint": "biome lint --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages scripts tests",
     "typecheck": "tsc --project tsconfig.json",
+    "verify:evidence": "node scripts/verify-delivery-evidence.ts",
+    "gate:product-design": "node scripts/verify-delivery-evidence.ts --require-pass",
     "test": "node --test",
     "test:unit": "node --test \"tests/unit/**/*.test.ts\"",
     "test:contract": "node --test \"tests/contract/**/*.test.ts\"",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test"
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm verify:evidence"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.10",

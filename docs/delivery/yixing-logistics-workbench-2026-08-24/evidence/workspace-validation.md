@@ -17,6 +17,7 @@ Results:
 - Generated evidence contains 82 G7 matrix rows and 446 traceability rows with exact stable-ID counts.
 - The credentialless Foundation workspace passed frozen dependency installation, Biome formatting/lint, TypeScript strict checking and 11/11 unit/offline contract tests. Coverage was 100% lines, 93.94% branches and 100% functions for the implemented contract surface.
 - Traceability marks only NFR-003, NFR-005, AD-001, AD-002 and AD-038 as partial Foundation contracts; all business Stories and their acceptance tests remain blocked or not started.
+- The Product/Design evidence validator passed all 10 structure checks and its 15 regression tests. Its strict gate mode returned non-zero with verdict `BLOCKED`, as required while approvals, signed G7 evidence and the final threat model are absent.
 - The repository prototype contains one empty AMap key declaration and no embedded key value.
 - GitHub `main` is the default branch at audited commit `21d209fe970fef89dfe3ca8052efe4437796f48b`; the original evidence branch remains available.
 - Harness delivery evidence is published on `codex/harness-scope-evidence` for review in Draft PR #1; the last published head before this validation was `d5260fc7a5fe9ebf4f84c9f7a942f4078f438e77`.

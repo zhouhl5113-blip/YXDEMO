@@ -25,9 +25,13 @@
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\Invoke-Workspace.ps1 -Task install
 powershell -ExecutionPolicy Bypass -File .\scripts\Invoke-Workspace.ps1 -Task check
+powershell -ExecutionPolicy Bypass -File .\scripts\Invoke-Workspace.ps1 -Task verify:evidence
+powershell -ExecutionPolicy Bypass -File .\scripts\Invoke-Workspace.ps1 -Task gate:product-design
 ```
 
 `check` 会依次执行格式检查、lint、TypeScript strict 和全部单元/离线合同测试。测试不会读取 `.env`、G7 凭据或生产数据。
+
+`verify:evidence` 检查 82 行 G7 能力矩阵、446 行追踪和门禁边界是否自洽；`gate:product-design` 只在 Product/Design Gate 真正可放行时成功。当前它应返回 `BLOCKED` 和非零退出码。
 
 ## 当前代码边界
 

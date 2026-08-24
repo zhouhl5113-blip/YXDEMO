@@ -7,6 +7,9 @@
 | `evidence/delivery-artifact-generation.json` | Stable-ID extraction counts | 446 trace rows; 82 matrix rows |
 | `evidence/foundation-credentialless-build.json` | Pre-gate toolchain, TDD, coverage and boundary assertions | 11/11 tests pass; TypeScript/Biome pass; no live G7 call, migration, Service or deployment |
 | `evidence/foundation-credentialless-tests.junit.xml` | Machine-readable Foundation unit/contract result | 11 tests, 0 failures, 0 skipped |
+| `product-design-gate-check.md` | Human-readable Product/Design readiness verdict | `FAIL (BLOCKED)`; structure valid, mandatory approvals/evidence absent |
+| `evidence/product-design-gate-check.json` | Machine-readable gate structure and blocker result | 10/10 structure checks pass; verdict `BLOCKED` |
+| `evidence/product-design-gate-tests.junit.xml` | Gate-validator regression evidence | 15 tests, 0 failures, 0 skipped |
 | `g7-capability-matrix.csv` | One row per FR with ownership/reuse/gap decision | 82 rows updated with authenticated inventory; contract tests blocked |
 | `evidence/g7-public-api-catalog.json` | Hashed public G7 catalog/OpenAPI evidence | 107 catalog, 30 selected schemas |
 | `evidence/g7-target-application-confirmation.json` | Product-owner target application and credential-status confirmation | `ZHLDEMO` confirmed dedicated; old credentials remain active for dependent systems and are prohibited for this project |
@@ -20,4 +23,4 @@
 | `traceability.csv` | RQ/UJ/FR/NFR/AD/EP/US/TEST/OQ linkage | 446 rows; selected Foundation contracts partially implemented; all business Stories remain blocked/not started |
 | `open-decisions.md` | Blocking administrator/product decisions | G7 workbench access resolved; credential contracts and governance remain open |
 | `release-plan.md` | Immutable promotion and rollback | Draft, target/owners unresolved |
-| `evidence/workspace-validation.md` | Control-record validation | Passed at `intake`; local runtime and setup script passed |
+| `evidence/workspace-validation.md` | Control-record validation | Passed at `intake`; local runtime, Foundation checks and gate structure passed |

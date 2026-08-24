@@ -57,6 +57,7 @@
     "open-decisions.md",
     "release-plan.md",
     "first-batch-stories.md",
+    "product-design-gate-check.md",
     "evidence/github-repository-discovery.json",
     "evidence/harness-discovery-summary.json",
     "evidence/g7-credential-dependency-decision.json",
@@ -68,6 +69,8 @@
     "evidence/delivery-artifact-generation.json",
     "evidence/foundation-credentialless-build.json",
     "evidence/foundation-credentialless-tests.junit.xml",
+    "evidence/product-design-gate-check.json",
+    "evidence/product-design-gate-tests.junit.xml",
     "evidence/harness-scope-create.json",
     "evidence/local-runtime-discovery.json",
     "evidence/local-runtime-setup.json",
@@ -81,5 +84,5 @@
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
     "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T11:11:36Z"
+  "updatedAt": "2026-08-24T11:40:03Z"
 }
