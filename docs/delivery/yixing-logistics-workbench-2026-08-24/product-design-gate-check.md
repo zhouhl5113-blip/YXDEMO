@@ -1,6 +1,6 @@
 # Product And Design Gate Check
 
-Observed: `2026-08-24T12:53:29Z`.
+Observed: `2026-08-24T13:52:13Z`.
 
 ## Verdict
 
@@ -23,7 +23,7 @@ The evidence bundle itself is structurally valid. This failure is an intentional
 | Open-decision registry | PASS | All 16 required decision records present |
 | Pre-gate implementation boundary | PASS | No application, migration or SQL implementation path exists |
 
-Regression result: 27 tests passed, 0 failed, including 12 focused local authorization-policy tests. The strict `--require-pass` command returned non-zero because the verdict is `BLOCKED`.
+Regression result: 42 tests passed, 0 failed, including 15 focused session-version, selected-role, approval-separation and minimal authorization-audit contract tests added in this checkpoint. The strict `--require-pass` command returned non-zero because the verdict is `BLOCKED`.
 
 ## Blocking Conditions
 

@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-24T13:28:27Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "scope": "LOCAL_SESSION_AUTHORIZATION_CONTRACTS_ONLY",
+  "result": "PASS_WITH_RUNTIME_LIMITATIONS",
+  "implementationCommit": "TO_BE_RECORDED_AFTER_COMMIT",
+  "approvalEvidence": "evidence/local-design-approval.json",
+  "requirements": [
+    "FR-017",
+    "FR-057",
+    "NFR-003",
+    "NFR-005",
+    "US-001",
+    "TEST-001",
+    "TEST-002",
+    "TEST-003"
+  ],
+  "code": [
+    "packages/identity-policy/src/session-policy.ts",
+    "packages/identity-policy/src/approval-policy.ts",
+    "packages/identity-policy/src/authorization-audit.ts"
+  ],
+  "tests": {
+    "path": "tests/unit/session-authorization-contracts.test.ts",
+    "tddRed": [
+      {
+        "result": "EXPECTED_FAILURE",
+        "reason": "New session and audit contracts were not exported before implementation"
+      },
+      {
+        "result": "EXPECTED_FAILURE",
+        "reason": "Unknown authorization audit decision was accepted before runtime validation"
+      }
+    ],
+    "green": {
+      "result": "PASS",
+      "tests": 15,
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "verifiedRules": [
+    "selected role must be present in the trusted server-derived TenantScope",
+    "stale authorization versions fail on the next policy evaluation",
+    "explicitly revoked sessions fail closed",
+    "authorization versions must be non-negative safe integers",
+    "R2 initiators cannot approve their own action",
+    "R2 requires at least one distinct approver",
+    "R3 remains disabled at the approval boundary",
+    "authorization audit records are immutable and contain request and trace IDs",
+    "object references in authorization audit records are SHA-256 digests, not raw identifiers",
+    "unapproved audit decision values fail closed",
+    "malformed audit fields, timestamps, reason codes and source applications fail closed",
+    "extra object name, vehicle plate and count fields are not copied into audit records"
+  ],
+  "negativeAssertions": {
+    "bffRuntimeCreated": 0,
+    "sessionStoreCreated": 0,
+    "auditPersistenceCreated": 0,
+    "identityTablesOrMigrationsCreated": 0,
+    "keycloakRuntimeCreated": 0,
+    "liveG7Calls": 0,
+    "r3Enabled": false,
+    "productionDeployments": 0,
+    "secretOrRbacChanges": 0
+  },
+  "limitations": [
+    "TEST-001 still requires an actual BFF to derive TenantScope and ignore browser tenant/role/scope values end to end.",
+    "TEST-002 still requires append-only audit persistence and readback evidence.",
+    "TEST-003 still requires a session store, revocation propagation and next-request integration evidence.",
+    "PostgreSQL RLS, identity persistence and Keycloak runtime remain prohibited until the relevant G7 gaps, ADRs and gates pass.",
+    "This is not Build, Acceptance, Release or Production Gate approval."
+  ]
+}

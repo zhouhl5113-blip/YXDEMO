@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="foundation-session-authorization" tests="15" failures="0" errors="0" skipped="0">
+  <testsuite name="session authorization contracts" tests="15" failures="0" errors="0" skipped="0" timestamp="2026-08-24T13:28:27Z">
+    <testcase name="TEST-001 accepts only a server-assigned selected role" />
+    <testcase name="TEST-001 rejects a client-selected unassigned role" />
+    <testcase name="TEST-003 permits a current active authorization snapshot" />
+    <testcase name="TEST-003 rejects a stale authorization snapshot" />
+    <testcase name="TEST-003 rejects an explicitly revoked session" />
+    <testcase name="invalid authorization version fails closed" />
+    <testcase name="R2 self-approval is rejected" />
+    <testcase name="R2 review by a distinct approver is permitted" />
+    <testcase name="R2 without an approver is rejected" />
+    <testcase name="R3 remains disabled through the approval boundary" />
+    <testcase name="TEST-002 creates a minimal immutable denial audit record" />
+    <testcase name="raw resource identifiers are rejected from audit references" />
+    <testcase name="audit record may omit an object reference" />
+    <testcase name="unknown authorization decision fails closed" />
+    <testcase name="malformed audit fields fail closed" />
+  </testsuite>
+</testsuites>

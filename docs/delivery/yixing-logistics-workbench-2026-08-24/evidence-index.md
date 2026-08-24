@@ -9,9 +9,11 @@
 | `evidence/foundation-credentialless-tests.junit.xml` | Machine-readable Foundation unit/contract result | 11 tests, 0 failures, 0 skipped |
 | `evidence/foundation-authorization-policy.json` | Local authorization policy TDD, trace links and negative assertions | 12/12 focused tests pass; runtime, persistence and production limitations retained |
 | `evidence/foundation-authorization-tests.junit.xml` | Machine-readable local authorization test result | 12 tests, 0 failures, 0 skipped |
+| `evidence/foundation-session-authorization-policy.json` | Session version, selected-role, approval separation and minimal audit contract evidence | 15/15 focused tests pass; BFF, persistence, revocation propagation and RLS remain absent |
+| `evidence/foundation-session-authorization-tests.junit.xml` | Machine-readable session authorization contract result | 15 tests, 0 failures, 0 skipped |
 | `product-design-gate-check.md` | Human-readable Product/Design readiness verdict | `FAIL (BLOCKED)`; structure valid, mandatory approvals/evidence absent |
 | `evidence/product-design-gate-check.json` | Machine-readable gate structure and blocker result | 10/10 structure checks pass; verdict `BLOCKED` |
-| `evidence/product-design-gate-tests.junit.xml` | Prior gate-validator regression evidence | 15 tests at the previous checkpoint; current combined regression is 27/27 in `product-design-gate-check.md` |
+| `evidence/product-design-gate-tests.junit.xml` | Prior gate-validator regression evidence | 15 tests at the previous checkpoint; current combined regression is 42/42 in `product-design-gate-check.md` |
 | `g7-capability-matrix.csv` | One row per FR with ownership/reuse/gap decision | 82 rows updated with authenticated inventory; contract tests blocked |
 | `evidence/g7-public-api-catalog.json` | Hashed public G7 catalog/OpenAPI evidence | 107 catalog, 30 selected schemas |
 | `evidence/g7-target-application-confirmation.json` | Product-owner target application and credential-status confirmation | `ZHLDEMO` confirmed dedicated; old credentials remain active for dependent systems and are prohibited for this project |

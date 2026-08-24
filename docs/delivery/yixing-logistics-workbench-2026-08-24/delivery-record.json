@@ -94,6 +94,8 @@
     "evidence/foundation-credentialless-tests.junit.xml",
     "evidence/foundation-authorization-policy.json",
     "evidence/foundation-authorization-tests.junit.xml",
+    "evidence/foundation-session-authorization-policy.json",
+    "evidence/foundation-session-authorization-tests.junit.xml",
     "evidence/product-design-gate-check.json",
     "evidence/product-design-gate-tests.junit.xml",
     "evidence/harness-scope-create.json",
