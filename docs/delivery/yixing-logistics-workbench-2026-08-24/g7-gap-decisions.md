@@ -1,0 +1,20 @@
+# G7 Gap Decisions
+
+Status: `PROPOSED_NOT_APPROVED`. These records are review candidates, not authorization to create tables, queues, state machines or services.
+
+Public documentation evidence is stored in `evidence/g7-public-api-catalog.json`: 107 catalog entries and 30 selected OpenAPI documents were fetched and hashed. The developer workbench requires authentication, target-tenant SANDBOX contracts have not run, and `deprecated=false` does not prove released maturity. Architecture independently marks `/trips/_search` as `developing`; it must remain behind a feature flag.
+
+| Gap | Requirements | Platform search evidence / why reuse is not yet sufficient | Minimum local candidate | Approval and review |
+| --- | --- | --- | --- | --- |
+| G7-GAP-001 | FR-001..003, FR-010..011, FR-016..017 | Public G7 APIs expose facts and master objects, not the product's TenantScope, work ownership, audit, idempotency and outbox contract. Authenticated workbench search still required. | Tenant-scoped work/audit/idempotency/outbox records; external IDs only | Product, security, data owner: `PENDING`; review date `TBD` |
+| G7-GAP-002 | FR-001..004, FR-006 | Search, queue and freshness performance may require a replayable read projection; no local master ownership. | Source ID/version, happened/received time, freshness, cursor, sync state and replay checkpoint | G7 integration + data owner: `PENDING`; `TBD` |
+| G7-GAP-003 | FR-007..009, FR-027..036, FR-061, FR-081 | Assets, assignments, location, events and sites compose into dispatch evidence, but order/plan/dispatch workflow coverage is unverified. `/trips/_search` is developing. | Order/segment/stop/plan/dispatch work state keyed to G7 objects, plus idempotency/readback | Product + G7 integration: `PENDING`; `TBD` |
+| G7-GAP-004 | FR-018..026, FR-043..049, FR-067, FR-082 | No public Agent runtime/governance contract was established; Agent must use G7 only through registered product tools. | AgentThread, evidence ledger, tool/approval/run events and evaluation metadata | AI governance + security: `PENDING`; `TBD` |
+| G7-GAP-005 | FR-037..042 | No matching public customer case/settlement lifecycle was established; authenticated workbench composition search required. | SLA/case/communication/charge matching extensions with immutable source evidence | Product + finance + data owner: `PENDING`; `TBD` |
+| G7-GAP-006 | FR-043..049 | No public Playbook/knowledge lifecycle was established. Tool execution can compose G7 facts but governance is product-specific. | Versioned Playbook/knowledge metadata, approvals, run references and rollback pointer | Product + AI governance: `PENDING`; `TBD` |
+| G7-GAP-007 | FR-050..056 | G7 facts can feed metrics; no public semantic-layer, forecast or profit contract was established. | Versioned definitions, lineage/input snapshot references and replayable derived projections | Product + finance + data owner: `PENDING`; `TBD` |
+| G7-GAP-008 | FR-057..068 | Assignments, assets, location, media and broadcast APIs are composable; role workspace, shift/handoff, device session and offline command behavior remains unverified. | Role policy, shift/handoff, resource lease, device/offline command ledger | Security + fleet operations: `PENDING`; `TBD` |
+| G7-GAP-009 | FR-014, FR-070..077, FR-081 | Qualification, media, mileage and event APIs exist; inspection/defect/maintenance/diagnostic lifecycle coverage remains unverified. | Defect/work linkage and derived availability keyed to G7 asset ID; never duplicate asset master | Fleet maintenance + G7 integration: `PENDING`; `TBD` |
+| G7-GAP-010 | FR-078..080 | Vehicle stats/mileage/location exist; fuel-card, invoice and cost ownership/composition remains unverified. | Source-separated transaction references, quality state and derived cost projection | Finance + data owner: `PENDING`; `TBD` |
+
+Every approved record must gain authenticated workbench screenshots/exports, SANDBOX request/response contract evidence with secrets redacted, endpoint maturity/authorization/limit results, an ADR, named approver, approval date and review date. Build Gate rejects any migration without that evidence.

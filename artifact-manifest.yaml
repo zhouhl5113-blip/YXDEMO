@@ -1,0 +1,112 @@
+schema_version: "1.0"
+package:
+  name: fleet-office-harness-input
+  created_at: "2026-08-24T00:00:00+08:00"
+  status: ready-for-harness-import
+  source_root: repository-root
+
+product:
+  name: 易行物流智能工作台
+  prd_version: "2.1"
+  stage: design-complete-implementation-not-started
+  requirements:
+    journeys: 15
+    functional: 82
+    non_functional: 25
+    stories: 74
+    test_ids: 145
+    user_voice_problems: 120
+
+precedence:
+  - requirements-ledger
+  - prd
+  - architecture
+  - experience
+  - design
+  - stories
+  - prototype
+  - research
+
+artifacts:
+  - id: requirements-ledger
+    path: _bmad-output/planning-artifacts/change-control/requirements-ledger-2026-08-22.md
+    required: true
+    purpose: non-loss scope and change constraints
+    sha256: 223232DD374D64555E2743FB41DD6348D029E0F5908EEA0112553679C46CE684
+  - id: prd
+    path: _bmad-output/planning-artifacts/prds/prd-fleet-office-2026-08-20/prd.md
+    required: true
+    purpose: behavioral requirements and release acceptance
+    sha256: D7D06B90719A06CC21213A91633FD385E363B9595F5447B3EA2FACA28579A3B7
+  - id: architecture
+    path: _bmad-output/planning-artifacts/architecture/architecture-fleet-office-2026-08-20/architecture.md
+    required: true
+    purpose: production architecture and integration boundaries
+    sha256: 12455292D2B6F511DD335D50615A6765FA623F03D5A9EEE815E71F334F3D0247
+  - id: design
+    path: _bmad-output/planning-artifacts/ux-designs/ux-fleet-office-2026-08-20/DESIGN.md
+    required: true
+    purpose: visual tokens and component baseline
+    sha256: 4FC67724FD2B46AB949309B24EA3F7017D75080A530AFF8639173EDE0F16F53B
+  - id: experience
+    path: _bmad-output/planning-artifacts/ux-designs/ux-fleet-office-2026-08-20/EXPERIENCE.md
+    required: true
+    purpose: role UX, states, interactions and copy
+    sha256: FF3F0B4FA40355DD77E7B62941132E77C2E40C38494DB061B36BD07EAF3A54D6
+  - id: stories
+    path: _bmad-output/implementation-artifacts/fleet-office-epics-and-stories.md
+    required: true
+    purpose: EP, US and TEST traceability
+    sha256: 0B96A2D0535C5EB8D787F1D640E4010FDD614CAA59E49E2500375E7A154D3F07
+  - id: prototype
+    path: _bmad-output/planning-artifacts/ux-designs/ux-fleet-office-2026-08-20/.working/fleet-tms-workbench.html
+    required: true
+    purpose: interaction and visual reference only
+    sha256: 2275438CA379109804C018CE8560DE96FF8E798B681F3ACA64041B728B95C5AC
+  - id: user-voice
+    path: _bmad-output/planning-artifacts/research/tms-saas-user-voice-2026-08-23/problem-catalog.md
+    required: true
+    purpose: usability risks and remediation rationale
+    sha256: 4591B89643823D860941FF3EEF469E39F584942E8C6E7109B46EDB88608A4F3C
+
+release_slices:
+  - id: foundation-0
+    epics: [EP-001]
+    outcome: repository, security, tenancy, audit, outbox and integration foundation
+  - id: v1-a
+    epics: [EP-001, EP-002, EP-006, EP-007]
+    outcome: trusted workbench and transport fulfillment
+  - id: v1-b
+    epics: [EP-004, EP-011, EP-012]
+    outcome: six roles, driver loop and fleet readiness
+  - id: v1-c
+    epics: [EP-003, EP-005]
+    outcome: exception closure and controlled agent execution
+  - id: v1-5
+    epics: [EP-008, EP-009]
+    outcome: customer, settlement, automation and governance
+  - id: v2
+    epics: [EP-010]
+    outcome: business optimization and AI economics
+
+release_gates:
+  - product
+  - design
+  - build
+  - security
+  - acceptance
+  - release
+  - production
+
+security:
+  embedded_production_secrets: false
+  prototype_contains_local_map_key: false
+  instruction: repository prototype key was removed; rotate the exposed key and bind production values from Harness secrets
+
+g7_platform_first:
+  workbench_url: https://dp-openapi.g7.com.cn/workbench/apps
+  api_docs_url: https://dp-openapi.g7.com.cn/apidocs/
+  capability_matrix_gate: required
+  sandbox_first: true
+  local_database_rule: each local table or aggregate requires an approved G7-GAP record
+  production_secret_binding: blocked-until-acceptance-and-human-approval

@@ -1,0 +1,9 @@
+{
+  "observedAt": "2026-08-24T03:14:13Z",
+  "entries": [
+    {"url": "https://dp-openapi.g7.com.cn/workbench/apps", "httpStatus": 200, "contractEvidence": false},
+    {"url": "https://dp-openapi.g7.com.cn/apidocs/", "httpStatus": 200, "contractEvidence": false}
+  ],
+  "sandboxCredentialsUsed": false,
+  "reason": "Required Harness secret references are absent and credential rotation evidence is required before first real use."
+}

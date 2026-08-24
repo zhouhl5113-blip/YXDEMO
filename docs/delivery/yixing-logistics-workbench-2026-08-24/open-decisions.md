@@ -1,0 +1,23 @@
+# Open Decisions and Administrator Inputs
+
+These are the exact remaining inputs. Do not place credential values in chat, Git, screenshots or evidence; rotate them at the provider, then create Harness Secret entries by identifier only.
+
+| ID | Required decision/evidence | What the responsible administrator must do | Blocking gate / owner |
+| --- | --- | --- | --- |
+| HAR-001 | Target Harness binding | Confirm or create a dedicated Org/Project, then provide Account/Org/Project UI URL or IDs; approve Service, Pipeline and dev/preprod/prod Environment identifiers | Product / Harness project admin |
+| HAR-002 | Runtime and connectors | Select Kubernetes/ECS/other runtime, region and namespace/account; provide Infrastructure IDs and source, registry, runtime, observability and Secret Manager connector refs | Design / Platform owner |
+| HAR-003 | Approval and policy | Name Product, Design, Security, Acceptance and Production approver groups; specify freeze window, exemption policy and CV/SLO refs | Product + Release / Project admin |
+| G7-001 | Credential rotation | In G7 developer workbench rotate all previously communicated PROD/SANDBOX keys before use; save only `G7_TENANT_CODE`, `G7_SANDBOX_ACCESS_KEY`, `G7_SANDBOX_SECRET_KEY`, `G7_PROD_ACCESS_KEY`, `G7_PROD_SECRET_KEY` in the approved Harness scope; record rotation timestamp/key fingerprint, never the values | Product/Design / G7 tenant admin + Secret admin |
+| G7-002 | SANDBOX application contract | Grant the integration owner workbench access; confirm enabled applications, released/developing maturity, read/write permission, signing, pagination/cursor, callbacks, quotas and retention; allow controlled SANDBOX tests only | Product/Design / G7 integration owner |
+| OQ-006 | G7 limits/signature/retention | Provide target-tenant limits, signing rotation/clock-skew rules, event retention, media authorization lifetime and callback allowlists | Product/Design / G7 + Security |
+| OQ-007 | Location retention | Approve whether raw location may be stored, its precision, region, retention, access/export/delete and legal hold behavior | Design / Data protection + Product |
+| OQ-008 | Data-scope semantics | Decide intersection/union and deny precedence across tenant, role, organization, tag, fleet, assignment, shift and delegation | Design / Security + Product |
+| OQ-009 | Model/data governance | Select provider/model/region; approve retention, training use, redaction, prompt/tool logs, budgets, evaluation thresholds and kill switch | Design / AI governance + Security |
+| AUTH-001 | Workforce and driver identity | Select IdP/protocol, MFA/session lifetime, provisioning/deprovisioning, driver lightweight auth, device binding/revocation and two-person R3 approver groups | Design / Security architect |
+| DATA-001 | PostgreSQL/Redis and retention | Select managed services, region, HA, encryption/KMS, backup/restore objectives, tenant isolation, audit/order/media retention and private connectivity | Design / Platform + Data owner |
+| MAP-001 | AMap production integration | Rotate the key found in the prototype; create `AMAP_WEB_KEY` and `AMAP_SECURITY_JS_CODE` secrets; configure domain whitelist/proxy/quota and approve degraded behavior | Design / Platform + Security |
+| MODEL-001 | Agent provider | After OQ-009, create `MODEL_PROVIDER_API_KEY` only if V1-C is enabled; repair or replace the currently failing model connector | Design / AI governance |
+| RELEASE-001 | Rollout and rollback | Approve canary or rolling percentages, observation windows, SLO thresholds, freeze windows, rollback authority and last-known-good ownership | Release / Release manager + SRE |
+| STORY-001 | Missing acceptance IDs | Add stable TEST IDs and Given/When/Then clauses for US-069..074; correct the obsolete “68 FR” Build Ready assertion without renumbering existing TEST-001..145 | Product / Product owner + QA |
+
+The current GitHub URL is sufficient and the source assets are no longer missing. Everything above remains genuinely absent or undecided; “highest authorization” does not supply these technical identifiers or provider-side rotations.

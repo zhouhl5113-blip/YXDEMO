@@ -1,0 +1,1283 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-24T03:58:02.426Z",
+  "source": "G7 official public API documentation",
+  "scope": "Public documentation only; no target-tenant or SANDBOX call was made.",
+  "workbench": {
+    "url": "https://dp-openapi.g7.com.cn/workbench/apps",
+    "result": "AUTHENTICATION_REQUIRED",
+    "note": "The browser was redirected to the G7 login page; no session was available."
+  },
+  "catalog": {
+    "url": "https://dp-openapi.g7.com.cn/apidocs/llms.txt",
+    "status": 200,
+    "contentType": "text/plain; charset=utf-8",
+    "lastModified": null,
+    "sha256": "691e1dee6e8a190b9d76dcc334a875f0e102fefdcd6fc5557d140cd85282f9e6",
+    "entryCount": 107,
+    "entries": [
+      {
+        "category": "根目录 > 资产与设备 > 地址围栏",
+        "title": "Create an address",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449512e0.md",
+        "documentId": "485449512e0",
+        "description": "创建一个地址实体"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 地址围栏",
+        "title": "Search all addresses",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449513e0.md",
+        "documentId": "485449513e0",
+        "description": "地址（Address）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的地址将不会被返回。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 地址围栏",
+        "title": "Delete an address",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449514e0.md",
+        "documentId": "485449514e0",
+        "description": "删除特定地址。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 地址围栏",
+        "title": "Retrieve an address",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449515e0.md",
+        "documentId": "485449515e0",
+        "description": "返回特定地址。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 地址围栏",
+        "title": "Update an address",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449516e0.md",
+        "documentId": "485449516e0",
+        "description": "更新具体地址。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 地址围栏",
+        "title": "Bulk Address Spatial Matching",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449517e0.md",
+        "documentId": "485449517e0",
+        "description": "接受批量经纬度坐标，返回每个坐标命中的围栏列表（圆形 / 多边形 / 线路三类围栏）。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 地址围栏",
+        "title": "Search geofence enter exit records",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449545e0.md",
+        "documentId": "485449545e0",
+        "description": "围栏进出记录（Geofence Enter/Exit Record）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 资产通用",
+        "title": "Search all assets",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449518e0.md",
+        "documentId": "485449518e0",
+        "description": "资产（Asset）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0` / `_deleted = true`）的资产将不会被返回。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 资产通用",
+        "title": "Retrieve a asset",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449519e0.md",
+        "documentId": "485449519e0",
+        "description": "查询单个资产详情"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 资产通用",
+        "title": "Get assets gateways",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449520e0.md",
+        "documentId": "485449520e0",
+        "description": "获取指定资产（车辆/挂车等）所有网关信息"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 车辆",
+        "title": "Creates a new vehicle",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449521e0.md",
+        "documentId": "485449521e0",
+        "description": "创建一个车辆资产"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 车辆",
+        "title": "Search all vehicles",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449522e0.md",
+        "documentId": "485449522e0",
+        "description": "车辆（Vehicle）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0` / `_deleted = true`）的车辆将不会被返回。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 车辆",
+        "title": "Update a vehicle",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449523e0.md",
+        "documentId": "485449523e0",
+        "description": "更新给定的车辆对象。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 车辆",
+        "title": "Delete a vehicle",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449524e0.md",
+        "documentId": "485449524e0",
+        "description": "删除一个已存在的 **vehicle** 记录，用于清理不再需要、且确认不会再被业务引用的车辆主数据。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 车辆",
+        "title": "Retrieve a vehicle",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449525e0.md",
+        "documentId": "485449525e0",
+        "description": "获取有关特定车辆的信息。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 挂车",
+        "title": "Creates a new trailer",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449526e0.md",
+        "documentId": "485449526e0",
+        "description": "创建一个挂车资产"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 挂车",
+        "title": "Search all trailers",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449527e0.md",
+        "documentId": "485449527e0",
+        "description": "挂车（Trailer）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0` / `_deleted = true`）的挂车将不会被返回。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 挂车",
+        "title": "Update a trailer",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449528e0.md",
+        "documentId": "485449528e0",
+        "description": "更新一个**挂车资产（Trailer）**的可编辑信息，用于维护挂车主数据的准确性，并确保挂车在调度、作业与关联业务中的引用一致。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 挂车",
+        "title": "Delete a trailer",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449529e0.md",
+        "documentId": "485449529e0",
+        "description": "删除一个已存在的 **trailer** 记录，用于清理不再需要、且确认不会再被业务引用的挂车主数据。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 挂车",
+        "title": "Retrieve a trailer",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449530e0.md",
+        "documentId": "485449530e0",
+        "description": "查询并返回单个 **trailer** 的详细信息，用于获取某一挂车的完整主数据内容，及证照资质相关信息。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 场站",
+        "title": "Create a new site",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449531e0.md",
+        "documentId": "485449531e0",
+        "description": "创建一条新的 **Site（场站/仓库）主数据实体**。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 场站",
+        "title": "Search all sites",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449532e0.md",
+        "documentId": "485449532e0",
+        "description": "场站（Site）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0` / `_deleted = true`）的场站将不会被返回。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 场站",
+        "title": "Update a site",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449533e0.md",
+        "documentId": "485449533e0",
+        "description": "更新一个已存在的 **site** 信息"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 场站",
+        "title": "Delete a site",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449534e0.md",
+        "documentId": "485449534e0",
+        "description": "删除一个已存在的 **site** 记录"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 场站",
+        "title": "Retrieve a site",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449535e0.md",
+        "documentId": "485449535e0",
+        "description": "查询并返回单个 **site** 的详细信息，用于获取某一仓库数据"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 非动力设备",
+        "title": "Create a new nonpoweredequipment",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449536e0.md",
+        "documentId": "485449536e0",
+        "description": "创建一条新的 **NonPoweredEquipment（非动力设备/无动力资产）资产主数据实体**"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 非动力设备",
+        "title": "Update a nonpoweredequipment",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449537e0.md",
+        "documentId": "485449537e0",
+        "description": "更新一个已存在的 **nonpoweredequipment** 信息"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 非动力设备",
+        "title": "Delete a nonpoweredequipment",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449538e0.md",
+        "documentId": "485449538e0",
+        "description": "删除一个已存在的 **nonpoweredequipment** 记录"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 非动力设备",
+        "title": "Retrieve a nonpoweredequipment",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449539e0.md",
+        "documentId": "485449539e0",
+        "description": "查询并返回单个 **nonpoweredequipment** 的详细信息，用于获取某一无动力资产"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 网关设备",
+        "title": "Retrieve a gateway",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449540e0.md",
+        "documentId": "485449540e0",
+        "description": "查询网关的静态基础信息"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 网关设备",
+        "title": "Update a Gateway",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449541e0.md",
+        "documentId": "485449541e0",
+        "description": "更新网关信息"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 网关设备",
+        "title": "Search all gateways",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449542e0.md",
+        "documentId": "485449542e0",
+        "description": "网关（Gateway）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted=true`）的网关将不会被返回。"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 网关设备",
+        "title": "Bind a Gateway With an Asset",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449543e0.md",
+        "documentId": "485449543e0",
+        "description": "网关绑定"
+      },
+      {
+        "category": "根目录 > 资产与设备 > 网关设备",
+        "title": "Gateway and Asset bind history",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449544e0.md",
+        "documentId": "485449544e0",
+        "description": "查询网关和资产的绑定历史"
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司机",
+        "title": "Create a driver",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449579e0.md",
+        "documentId": "485449579e0",
+        "description": "- 根目录 > 司机与司乘 > 司机 [Search all drivers](https://dp-openapi.g7.com.cn/apidocs/485449580e0.md): 司机（Driver）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted=true` / `is_deleted != 0`）的司机数据不会被返回。"
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司机",
+        "title": "Update a driver",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449581e0.md",
+        "documentId": "485449581e0",
+        "description": "更新一个已存在的driver信息，用于维护司机主数据的准确性。"
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司机",
+        "title": "Retrieve a driver",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449582e0.md",
+        "documentId": "485449582e0",
+        "description": "获取某个司机的信息。"
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司机",
+        "title": "Delete a driver",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449583e0.md",
+        "documentId": "485449583e0",
+        "description": "删除指定司机主数据。"
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司车分配",
+        "title": "Create a new driver-vehicle assignment",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449584e0.md",
+        "documentId": "485449584e0",
+        "description": "将**指定车辆**在**指定时间段**内的使用/行驶归属，分配给**指定司机**；可通过 `driver_identity` 区分主驾与随车人员（司机/押运员），并用 `metadata.source_name` 标注分配来源便于追溯。 "
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司车分配",
+        "title": "Unbind API generated driver-vehicle assignments",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449585e0.md",
+        "documentId": "485449585e0",
+        "description": "解绑使用车辆、驾驶员分配关系。"
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司车分配",
+        "title": "Update API generated driver-vehicle assignments",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449586e0.md",
+        "documentId": "485449586e0",
+        "description": "更新使用车队、驾驶员车辆分配关系"
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司车分配",
+        "title": "Search all driver-vehicle assignments",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449587e0.md",
+        "documentId": "485449587e0",
+        "description": "司机-车辆行程分配（Driver Vehicle Assignment）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的分配记录将不会被返回。"
+      },
+      {
+        "category": "根目录 > 司机与司乘 > 司车分配",
+        "title": " Driver-vehicle assignment snapshot",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449588e0.md",
+        "documentId": "485449588e0",
+        "description": "查询车辆与司机实时关系快照结果，即查询的当前车辆与司机关系数据。（高性能场景）"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Gateways Stats snapshot",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449546e0.md",
+        "documentId": "485449546e0",
+        "description": "返回所有网关在指定时间点的最新已知状态数据。当需要获取网关的当前状态时使用此接口。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Gateways Stats feed",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449547e0.md",
+        "documentId": "485449547e0",
+        "description": "返回自上次请求以来的所有增量更新数据，专用于持续数据同步场景。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Gateways Historical stats",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449548e0.md",
+        "documentId": "485449548e0",
+        "description": "返回指定时间范围内的全部网关统计数据，专用于历史数据分析场景。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Vehicle mileage",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449549e0.md",
+        "documentId": "485449549e0",
+        "description": "查询指定时间范围内车辆的里程数据，包括 GPS 累计里程、设备总里程差值和行驶时长。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Vehicle Stats snapshot",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449550e0.md",
+        "documentId": "485449550e0",
+        "description": "返回所有车辆在指定时间点的最新已知状态数据（快照）。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Vehicle Stats feed",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449551e0.md",
+        "documentId": "485449551e0",
+        "description": "返回自上次请求以来的所有增量更新数据，专用于持续数据同步场景。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Vehicle Historical stats",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449552e0.md",
+        "documentId": "485449552e0",
+        "description": "返回指定时间范围内的全部车辆遥测数据，按时间序列返回设备上报的各类状态事实数据。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Trailers Stats snapshot",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449553e0.md",
+        "documentId": "485449553e0",
+        "description": "返回所有车辆在指定时间点的最新已知状态数据。当需要获取车辆的当前状态时使用此接口。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Trailers Stats feed",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449554e0.md",
+        "documentId": "485449554e0",
+        "description": "返回自上次请求以来的所有增量更新数据，专用于持续数据同步场景。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 运行状态遥测",
+        "title": "Trailers Historical stats",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449555e0.md",
+        "documentId": "485449555e0",
+        "description": "返回指定时间范围内的全部车辆统计数据，专用于历史数据分析场景。"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 位置轨迹",
+        "title": "Asset location and speed snapshot",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449556e0.md",
+        "documentId": "485449556e0",
+        "description": "查询最新定位和速度"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 位置轨迹",
+        "title": "Asset location and speed feed ",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449557e0.md",
+        "documentId": "485449557e0",
+        "description": "查询变更的定位和速度"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 位置轨迹",
+        "title": "Asset location and speed Historical",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449558e0.md",
+        "documentId": "485449558e0",
+        "description": "查询历史定位和速度"
+      },
+      {
+        "category": "根目录 > 遥测与行程 > 行程",
+        "title": "Search all trip segments",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449559e0.md",
+        "documentId": "485449559e0",
+        "description": "行程段（Trip Segment）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的行程段将不会被返回。"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 告警配置",
+        "title": "Create an alert config ",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449565e0.md",
+        "documentId": "485449565e0",
+        "description": "创建一条告警配置，定义触发器（订阅事件类型）、动作（通知渠道和接收人）、运营时间设置及适用范围。新创建的配置默认状态为ENABLE。同一租户下告警配置名称不可重复。"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 告警配置",
+        "title": "Search alert configs",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449566e0.md",
+        "documentId": "485449566e0",
+        "description": "告警配置（Alert Config）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted=true`）的告警配置将不会被返回。"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 告警配置",
+        "title": "Get an alert config ",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449567e0.md",
+        "documentId": "485449567e0",
+        "description": "获取一个（事件及其他业务）警告配置"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 告警配置",
+        "title": "Update an alert config",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449568e0.md",
+        "documentId": "485449568e0",
+        "description": "更新一条（事件及其他业务）警告配置"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 告警配置",
+        "title": "Delete an alert config",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449569e0.md",
+        "documentId": "485449569e0",
+        "description": "删除一条（事件及其他业务）警告配置"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 事件配置",
+        "title": "Create an event config template",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449570e0.md",
+        "documentId": "485449570e0",
+        "description": "创建一个事件配置模板"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 事件配置",
+        "title": "Update an event config template",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449571e0.md",
+        "documentId": "485449571e0",
+        "description": "更新一个事件配置模板"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 事件配置",
+        "title": "Delete an event config template ",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449572e0.md",
+        "documentId": "485449572e0",
+        "description": "删除一个事件配置模板"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 事件配置",
+        "title": "Set or unset default event config template ",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449573e0.md",
+        "documentId": "485449573e0",
+        "description": "设置事件配置的缺省模板"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 事件配置",
+        "title": "Bind event config template to organizations or entities",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449574e0.md",
+        "documentId": "485449574e0",
+        "description": "为车辆、围栏或者组织绑定事件配置模板"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 事件配置",
+        "title": "Unbind event config template",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449575e0.md",
+        "documentId": "485449575e0",
+        "description": "车辆、组织、围栏解绑事件配置模板"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 安全事件",
+        "title": "Update a event",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449576e0.md",
+        "documentId": "485449576e0",
+        "description": "更新事件"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 安全事件",
+        "title": "Search Events Historical",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449577e0.md",
+        "documentId": "485449577e0",
+        "description": "事件历史（Events Historical）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。仅返回 `visible=true` 的事件（服务端自动过滤），调用方无需也不能传 `visible` 字段。"
+      },
+      {
+        "category": "根目录 > 安全与事件 > 安全事件",
+        "title": "Get Events Feed",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449578e0.md",
+        "documentId": "485449578e0",
+        "description": "根据事件 ID 或增量游标获取安全事件的实时更新数据。"
+      },
+      {
+        "category": "根目录 > 消息与触达 > 终端播报",
+        "title": "Search all asset broadcast tasks",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449589e0.md",
+        "documentId": "485449589e0",
+        "description": "资产广播任务（Asset Broadcast Task）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的广播任务将不会被返回。"
+      },
+      {
+        "category": "根目录 > 消息与触达 > 终端播报",
+        "title": "Get a asset broadcast task",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449590e0.md",
+        "documentId": "485449590e0",
+        "description": "根据任务 ID 查询资产广播消息下发任务详情，包含完整的播报配置、任务状态、统计数据等信息。"
+      },
+      {
+        "category": "根目录 > 消息与触达 > 终端播报",
+        "title": "Get details of asset broadcast task",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449591e0.md",
+        "documentId": "485449591e0",
+        "description": "查询指定任务下的消息下发明细列表"
+      },
+      {
+        "category": "根目录 > 消息与触达 > 终端播报",
+        "title": "Get asset broadcast task detail",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449592e0.md",
+        "documentId": "485449592e0",
+        "description": "根据明细 ID 查询单条消息下发明细详情，包含 IMEI、消息内容、播报配置、发送状态、失败原因等完整信息。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 资质证照",
+        "title": "Create a qualification record",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449484e0.md",
+        "documentId": "485449484e0",
+        "description": "创建资质/证照记录的原子 API。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 资质证照",
+        "title": "Update a qualification record",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449485e0.md",
+        "documentId": "485449485e0",
+        "description": "更新资质/证照记录的原子 API。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 资质证照",
+        "title": "Search a list of specified qualification records",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449486e0.md",
+        "documentId": "485449486e0",
+        "description": "资质记录（Qualification Record）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0`）的资质记录将不会被返回。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 资质证照",
+        "title": "Archive a qualification record",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449487e0.md",
+        "documentId": "485449487e0",
+        "description": "归档资质/证照记录的原子 API。 "
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 资质证照",
+        "title": "Unarchive a qualification record",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449488e0.md",
+        "documentId": "485449488e0",
+        "description": "反归档资质/证照记录的原子 API。 "
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 资质证照",
+        "title": "Delete a qualification record",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449489e0.md",
+        "documentId": "485449489e0",
+        "description": "删除资质/证照记录的原子 API。 "
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 资质证照",
+        "title": "Get a list of qualification types",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449490e0.md",
+        "documentId": "485449490e0",
+        "description": "获取资质/证照类型定义列表的原子 API。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 多媒体",
+        "title": "Update a media",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449491e0.md",
+        "documentId": "485449491e0",
+        "description": "更新多媒体，支持的字段只有tag 和 attribute"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 多媒体",
+        "title": "Get media status",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449492e0.md",
+        "documentId": "485449492e0",
+        "description": "根据 media_id 与显式 media_type 统一查询媒体（照片/视频）的异步获取进度和状态。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 多媒体",
+        "title": "Get playback video calendar",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449493e0.md",
+        "documentId": "485449493e0",
+        "description": "查询指定资产在某个月份中哪些日期有历史视频可供回放。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 多媒体",
+        "title": "Get playback video files",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449494e0.md",
+        "documentId": "485449494e0",
+        "description": "查询指定资产在指定时间范围内的历史视频文件列表。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 多媒体",
+        "title": "Get details for a media retrieval request",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449495e0.md",
+        "documentId": "485449495e0",
+        "description": "根据检索请求ID（retrieval_id）查询媒体下载/拍照请求的状态和结果。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 多媒体",
+        "title": "Search uploaded media by time range",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449496e0.md",
+        "documentId": "485449496e0",
+        "description": "上传媒体（Uploaded Media）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted=true`）的媒体记录将不会被返回。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 多媒体",
+        "title": "Save an external media link",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449497e0.md",
+        "documentId": "485449497e0",
+        "description": "将外部已直传至云存储的多媒体文件（拍照 / 视频 / 音频）URL 与元数据汇聚到开发者平台，使该文件可被既有检索接口统一查询。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 文件存储",
+        "title": "Apply for STS temporary credentials",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449498e0.md",
+        "documentId": "485449498e0",
+        "description": "申请 STS 临时凭证，客户端获取凭证后使用云厂商 SDK 直接向云存储发起上传、下载等操作。"
+      },
+      {
+        "category": "根目录 > 文件与媒体 > 文件存储",
+        "title": "Create download URLs",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449499e0.md",
+        "documentId": "485449499e0",
+        "description": "获取已存在对象的临时下载链接。支持为每个对象单独指定有效期，未指定时由服务端使用默认时长。"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 标签",
+        "title": "Create a tag",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449500e0.md",
+        "documentId": "485449500e0",
+        "description": "创建租户级自定义的TAG"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 标签",
+        "title": "Search all tags",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449501e0.md",
+        "documentId": "485449501e0",
+        "description": "标签（Tag）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的标签将不会被返回。"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 标签",
+        "title": "List simplify tags ",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449502e0.md",
+        "documentId": "485449502e0",
+        "description": "查询简化的TAG列表，高性能版本，仅返回TAG ID，TAG名称，父级TAG ID，仅适用于后台程序交互。"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 标签",
+        "title": "Delete a tag",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449503e0.md",
+        "documentId": "485449503e0",
+        "description": "永久删除标签。"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 标签",
+        "title": "Retrieve a tag",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449504e0.md",
+        "documentId": "485449504e0",
+        "description": "通过 id 获取标签。"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 标签",
+        "title": "Update a tag",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449505e0.md",
+        "documentId": "485449505e0",
+        "description": "更新某个标签的所有信息。"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 属性",
+        "title": "Create an attribute",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449506e0.md",
+        "documentId": "485449506e0",
+        "description": "创建一个租户级自定义属性"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 属性",
+        "title": "Search all attributes",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449507e0.md",
+        "documentId": "485449507e0",
+        "description": "自定义属性（Attribute）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的属性将不会被返回。"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 属性",
+        "title": "List simplify attributes",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449508e0.md",
+        "documentId": "485449508e0",
+        "description": "- 根目录 > 标签与属性 > 属性 [Delete an attribute](https://dp-openapi.g7.com.cn/apidocs/485449509e0.md): 删除租户级自定义属性"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 属性",
+        "title": "Update an attribute",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449510e0.md",
+        "documentId": "485449510e0",
+        "description": "更新租户级自定义属性。"
+      },
+      {
+        "category": "根目录 > 标签与属性 > 属性",
+        "title": "Retrieve an attribute",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449511e0.md",
+        "documentId": "485449511e0",
+        "description": "通过 id 获取属性详情"
+      },
+      {
+        "category": "根目录 > 平台工具 > 地图地理",
+        "title": "Batch geocode addresses",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449560e0.md",
+        "documentId": "485449560e0",
+        "description": "批量国内地址编码：一次提交多个国内地址（最多 10 条），批量解析为经纬度坐标，按提交顺序逐条返回结果。"
+      },
+      {
+        "category": "根目录 > 平台工具 > 地图地理",
+        "title": "Batch reverse geocode locations",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449561e0.md",
+        "documentId": "485449561e0",
+        "description": "批量逆地理编码：一次提交多组国内经纬度（最多 10 组），批量解析为结构化地址，按提交顺序逐条返回。"
+      },
+      {
+        "category": "根目录 > 平台工具 > 地图地理",
+        "title": "Suggest places by keyword",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449562e0.md",
+        "documentId": "485449562e0",
+        "description": "关键词输入联想：根据用户输入的关键词实时返回建议列表，辅助用户快速补全或选定目标地点。"
+      },
+      {
+        "category": "根目录 > 平台工具 > 地图地理",
+        "title": "Search places by keyword",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449563e0.md",
+        "documentId": "485449563e0",
+        "description": "关键词搜索地点或地址：根据关键词查询 POI（兴趣点）信息。在用户已有明确搜索意图时提供完整的地点检索结果。常与关键词输入联想搭配使用。"
+      },
+      {
+        "category": "根目录 > 平台工具 > 地图地理",
+        "title": "Get current weather by location",
+        "url": "https://dp-openapi.g7.com.cn/apidocs/485449564e0.md",
+        "documentId": "485449564e0",
+        "description": "通过经纬度查询当前天气：传入一组国内经纬度，直接获取该位置所属区域的当前实时天气。"
+      }
+    ]
+  },
+  "curatedSchemas": [
+    {
+      "category": "根目录 > 资产与设备 > 地址围栏",
+      "title": "Search all addresses",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449513e0.md",
+      "documentId": "485449513e0",
+      "description": "地址（Address）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的地址将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "3c28c3ce745c95e42062e2dc9be47cee9eb3b0ec96bd5c42b00257492ebe9d1c",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/addresses/_search",
+      "operationId": "listAddresses",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 资产与设备 > 地址围栏",
+      "title": "Search geofence enter exit records",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449545e0.md",
+      "documentId": "485449545e0",
+      "description": "围栏进出记录（Geofence Enter/Exit Record）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "29f18f15a1448b30d572f1bb2642e9e7f6ded98563e34d3958243e85f938972d",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/addresses/geofence_enter_exit_records/_search",
+      "operationId": "SearchGeofenceEnterExitRecords",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 资产与设备 > 资产通用",
+      "title": "Search all assets",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449518e0.md",
+      "documentId": "485449518e0",
+      "description": "资产（Asset）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0` / `_deleted = true`）的资产将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "24245ae65479e5a11f42815b8ec3969ba4353a776b5cd03c2f966357ba9ff1ca",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/assets/_search",
+      "operationId": "listAssets",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 资产与设备 > 车辆",
+      "title": "Search all vehicles",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449522e0.md",
+      "documentId": "485449522e0",
+      "description": "车辆（Vehicle）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0` / `_deleted = true`）的车辆将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "643ef392e080d83c89c80e3fffdb4c4ff076287b1a08aaf371789b3a2e565705",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/vehicles/_search",
+      "operationId": "SearchVehicles",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 资产与设备 > 挂车",
+      "title": "Search all trailers",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449527e0.md",
+      "documentId": "485449527e0",
+      "description": "挂车（Trailer）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0` / `_deleted = true`）的挂车将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "a7904c404245e5a92c89d94f43566fa126b78d3c09a2ccf03ad54642a943e7db",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/trailers/_search",
+      "operationId": "SearchTrailers",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 资产与设备 > 场站",
+      "title": "Search all sites",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449532e0.md",
+      "documentId": "485449532e0",
+      "description": "场站（Site）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0` / `_deleted = true`）的场站将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "35afe0c76a2b1768af3fe6eed84e6f1fed4eb86c33a60c6e17e4314693e7a080",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/sites/_search",
+      "operationId": "listSites",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 资产与设备 > 网关设备",
+      "title": "Search all gateways",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449542e0.md",
+      "documentId": "485449542e0",
+      "description": "网关（Gateway）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted=true`）的网关将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "01deb8c3c9f6560ee06a95483dfa7f556fec2d2b62f3df4faffeb8cc3e5f3c15",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/gateways/_search",
+      "operationId": "SearchGateways",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 资产与设备 > 网关设备",
+      "title": "Gateway and Asset bind history",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449544e0.md",
+      "documentId": "485449544e0",
+      "description": "查询网关和资产的绑定历史",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "0ea69db524ff74af78328f16659a9d13d8d44614c1311d22bb92775d682becb3",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/gateways/assignments",
+      "operationId": "getGatewayAssetAssignments",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 司机与司乘 > 司车分配",
+      "title": "Create a new driver-vehicle assignment",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449584e0.md",
+      "documentId": "485449584e0",
+      "description": "将**指定车辆**在**指定时间段**内的使用/行驶归属，分配给**指定司机**；可通过 `driver_identity` 区分主驾与随车人员（司机/押运员），并用 `metadata.source_name` 标注分配来源便于追溯。 ",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "dd17c35cab047fd70d676bb04af49bcb93a740e3a615fd0f824e8354fe50f1aa",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/drivers/vehicle_assignments",
+      "operationId": "createDriverVehicleAssignment",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 司机与司乘 > 司车分配",
+      "title": "Update API generated driver-vehicle assignments",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449586e0.md",
+      "documentId": "485449586e0",
+      "description": "更新使用车队、驾驶员车辆分配关系",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "366b83eb2d7b6f573f384cdf2812ee1ac19e9f177583bb2b2aaf492447058cfd",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "PATCH",
+      "path": "/drivers/vehicle_assignments/{id}",
+      "operationId": "updateDriverVehicleAssignment",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 司机与司乘 > 司车分配",
+      "title": "Search all driver-vehicle assignments",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449587e0.md",
+      "documentId": "485449587e0",
+      "description": "司机-车辆行程分配（Driver Vehicle Assignment）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的分配记录将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "556c9b87730ec72cd5905094b7e238168526499cdfc5f5d1768887aa18b74b66",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/drivers/vehicle_assignments/_search",
+      "operationId": "SearchDriverVehicleAssignments",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 司机与司乘 > 司车分配",
+      "title": " Driver-vehicle assignment snapshot",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449588e0.md",
+      "documentId": "485449588e0",
+      "description": "查询车辆与司机实时关系快照结果，即查询的当前车辆与司机关系数据。（高性能场景）",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "f5f39526ef9f862e963dd1bfed8f9a4e23333810c5ebf3b0ff9da14cf8ae156d",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/drivers/vehicle_assignments/snapshot",
+      "operationId": "' DriverVehicleAssignmentSnapshot'",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 遥测与行程 > 运行状态遥测",
+      "title": "Vehicle mileage",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449549e0.md",
+      "documentId": "485449549e0",
+      "description": "查询指定时间范围内车辆的里程数据，包括 GPS 累计里程、设备总里程差值和行驶时长。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "d39d78436bab72b336602d402d3ed3f6135b259a6d9c6605e31b77f8342597c3",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/vehicles/mileage",
+      "operationId": "getVehicleMileage",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 遥测与行程 > 运行状态遥测",
+      "title": "Vehicle Stats snapshot",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449550e0.md",
+      "documentId": "485449550e0",
+      "description": "返回所有车辆在指定时间点的最新已知状态数据（快照）。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "56b8ae534ad6900a26b0a1f8df27a6db85c64007c85888b1bf0321175745723d",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/vehicles/stats",
+      "operationId": "getVehicleStats",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 遥测与行程 > 运行状态遥测",
+      "title": "Vehicle Stats feed",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449551e0.md",
+      "documentId": "485449551e0",
+      "description": "返回自上次请求以来的所有增量更新数据，专用于持续数据同步场景。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "fd1d0825385d93335fc2ad9be9500d5d0596fcc0d3190dc4955a8b17382eb55b",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/vehicles/stats/feed",
+      "operationId": "getVehicleStatsFeed",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 遥测与行程 > 运行状态遥测",
+      "title": "Vehicle Historical stats",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449552e0.md",
+      "documentId": "485449552e0",
+      "description": "返回指定时间范围内的全部车辆遥测数据，按时间序列返回设备上报的各类状态事实数据。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "a5587d5c70ab5d45ec06209b20d8efc053a82c68bc36a803aa70ad1b8b4ee217",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/vehicles/stats/history",
+      "operationId": "getVehicleStatsHistory",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 遥测与行程 > 位置轨迹",
+      "title": "Asset location and speed snapshot",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449556e0.md",
+      "documentId": "485449556e0",
+      "description": "查询最新定位和速度",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "82260b7a88b514cc64b2b415c5114321e782bf9c0ed8e558c04b6b941210ae8a",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/assets/location_and_speed",
+      "operationId": "getLocationAndSpeedSnapshot",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 遥测与行程 > 位置轨迹",
+      "title": "Asset location and speed feed ",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449557e0.md",
+      "documentId": "485449557e0",
+      "description": "查询变更的定位和速度",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "f0d4570e9fb3301603e6dc6065042de8319542b175776fa46ffa9f74aba1261f",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/assets/location_and_speed/feed",
+      "operationId": "getLocationAndSpeedStream",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 遥测与行程 > 位置轨迹",
+      "title": "Asset location and speed Historical",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449558e0.md",
+      "documentId": "485449558e0",
+      "description": "查询历史定位和速度",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "fcdf3d2663f47b9b999db815beb13f8bc5cafb5795aabbef78c4f4464ee2aac4",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/assets/location_and_speed/history",
+      "operationId": "getLocationAndSpeedHistory",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 遥测与行程 > 行程",
+      "title": "Search all trip segments",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449559e0.md",
+      "documentId": "485449559e0",
+      "description": "行程段（Trip Segment）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的行程段将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "79e8d2f03cac24b3e9bfead780dd256aa867b576a30ff1d78b96fe1adb1b6518",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/trips/_search",
+      "operationId": "searchTripSegments",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 安全与事件 > 安全事件",
+      "title": "Search Events Historical",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449577e0.md",
+      "documentId": "485449577e0",
+      "description": "事件历史（Events Historical）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。仅返回 `visible=true` 的事件（服务端自动过滤），调用方无需也不能传 `visible` 字段。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "be99b24ea56ff0b8f44afdd00914eb322ba291820016169d8938831f8bf57408",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/events/_search",
+      "operationId": "searchHistoricalEvents",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 安全与事件 > 安全事件",
+      "title": "Get Events Feed",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449578e0.md",
+      "documentId": "485449578e0",
+      "description": "根据事件 ID 或增量游标获取安全事件的实时更新数据。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "db7e20fb9a147c105cfdd5594a6f057b372254155044a4c0d3348dcc7f357a9d",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/events/feed",
+      "operationId": "getEventsFeed",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 消息与触达 > 终端播报",
+      "title": "Search all asset broadcast tasks",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449589e0.md",
+      "documentId": "485449589e0",
+      "description": "资产广播任务（Asset Broadcast Task）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的广播任务将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "cf60e6a18b6118ad6e3aa7becd269eb2496aa03c94db17878547735acece145d",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/assets/broadcasts/tasks/_search",
+      "operationId": "searchAssetBroadcastTasks",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 文件与媒体 > 资质证照",
+      "title": "Search a list of specified qualification records",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449486e0.md",
+      "documentId": "485449486e0",
+      "description": "资质记录（Qualification Record）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`is_deleted != 0`）的资质记录将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "97068f6e039cc70bfb40cc3c1cced23a004ca0d4d3644572f97cc8a346af4822",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/qualification_records/_search",
+      "operationId": "SearchQualificationRecords",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 文件与媒体 > 多媒体",
+      "title": "Get media status",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449492e0.md",
+      "documentId": "485449492e0",
+      "description": "根据 media_id 与显式 media_type 统一查询媒体（照片/视频）的异步获取进度和状态。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "64e24e71391f4e2678f02d6d650fd2dcbd673547faa68e3784a0c1da705e137b",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "GET",
+      "path": "/cameras/media/status/{media_id}",
+      "operationId": "getMediaStatus",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 文件与媒体 > 多媒体",
+      "title": "Search uploaded media by time range",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449496e0.md",
+      "documentId": "485449496e0",
+      "description": "上传媒体（Uploaded Media）检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted=true`）的媒体记录将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "b16c295284d3b94649e8b6028060851a821acaca93022ea9f13032879d126513",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/cameras/media/_search",
+      "operationId": "SearchUploadedMedia",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 文件与媒体 > 文件存储",
+      "title": "Apply for STS temporary credentials",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449498e0.md",
+      "documentId": "485449498e0",
+      "description": "申请 STS 临时凭证，客户端获取凭证后使用云厂商 SDK 直接向云存储发起上传、下载等操作。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "e749895ed4ba90dd9d9c39949e54100ac348908084de7e34b737ca91526d952c",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/storages/sts_token",
+      "operationId": "applyStsToken",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 文件与媒体 > 文件存储",
+      "title": "Create download URLs",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449499e0.md",
+      "documentId": "485449499e0",
+      "description": "获取已存在对象的临时下载链接。支持为每个对象单独指定有效期，未指定时由服务端使用默认时长。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "f1601c6b12c7cd3bd3a912b210d816747d089bacd538eab0bbca368b80fb7251",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/storages/download_urls",
+      "operationId": "postDownloadUrls",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 标签与属性 > 标签",
+      "title": "Search all tags",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449501e0.md",
+      "documentId": "485449501e0",
+      "description": "标签（Tag）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的标签将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "c70f8232783836f981db966fcbe02684e396b4a60951fadccae5aabff208a463",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/tags/_search",
+      "operationId": "searchTags",
+      "deprecated": false
+    },
+    {
+      "category": "根目录 > 标签与属性 > 属性",
+      "title": "Search all attributes",
+      "url": "https://dp-openapi.g7.com.cn/apidocs/485449507e0.md",
+      "documentId": "485449507e0",
+      "description": "自定义属性（Attribute）主数据检索接口，基于布尔树结构的统一查询 DSL，支持聚合统计。已删除（`_deleted = true`）的属性将不会被返回。",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "lastModified": null,
+      "sha256": "b7b40d1923c94659b9be2e48549c6555f300a65eacc462d6a54542c3b0562c70",
+      "openApiVersion": "3.0.1",
+      "infoVersion": "1.0.0",
+      "method": "POST",
+      "path": "/attributes/_search",
+      "operationId": "SearchAttributes",
+      "deprecated": false
+    }
+  ],
+  "maturityCaveat": "Published OpenAPI and deprecated=false do not establish released maturity. The architecture contract independently marks /trips/_search as developing."
+}

@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-08-24T06:23:17.981Z",
+  "repositoryRoot": "D:\\Harness\\YXDEMO",
+  "deliveryRoot": "D:\\Harness\\deliveries\\yixing-logistics-workbench-2026-08-24",
+  "assetVerification": {
+    "required": 8,
+    "matched": 8
+  },
+  "extracted": {
+    "rq": 44,
+    "uj": 15,
+    "fr": 82,
+    "nfr": 25,
+    "oq": 4,
+    "ad": 45,
+    "ep": 12,
+    "us": 74,
+    "tests": 145
+  },
+  "traceabilityRows": 446,
+  "matrixRows": 82,
+  "storyContractDefect": {
+    "affectedStories": [
+      "US-069",
+      "US-070",
+      "US-071",
+      "US-072",
+      "US-073",
+      "US-074"
+    ],
+    "detail": "US-069..US-074 have no TEST identifiers; Build Ready also incorrectly says 68 FR after FR-069..082 were added."
+  }
+}

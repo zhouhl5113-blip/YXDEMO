@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-08-24T06:10:00Z",
+  "readOnly": true,
+  "describeCalledBeforeList": ["organization", "project", "service", "environment", "infrastructure", "connector", "secret", "pipeline"],
+  "accountId": "VR3gJDjcRkq7ocR7ywpT-Q",
+  "organizations": [{"identifier": "default"}],
+  "projects": [{"orgIdentifier": "default", "identifier": "default_project", "targetBinding": false}],
+  "targetMatches": 0,
+  "unrelatedResources": {
+    "services": ["word_realm_card_journey"],
+    "environments": ["word_realm_staging"],
+    "infrastructuresUnderWordRealmStaging": [],
+    "pipelines": ["word_realm_delivery"]
+  },
+  "connectors": {
+    "success": ["harnessImage", "harnessSecretManager"],
+    "failure": ["harnessOpenAI", "harnessAnthropic"],
+    "approvedForThisDelivery": []
+  },
+  "projectSecretCount": 0,
+  "accountSecretCount": 0,
+  "mutationsAttempted": 0
+}

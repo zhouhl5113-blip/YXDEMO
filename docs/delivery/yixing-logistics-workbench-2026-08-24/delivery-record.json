@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "stage": "intake",
+  "requirementSource": "_bmad-output/planning-artifacts/change-control/requirements-ledger-2026-08-22.md",
+  "harnessScope": {
+    "accountId": "VR3gJDjcRkq7ocR7ywpT-Q",
+    "organizationId": "",
+    "projectId": "",
+    "serviceId": "",
+    "pipelineId": "",
+    "preProductionEnvironmentId": "",
+    "productionEnvironmentId": ""
+  },
+  "repository": {
+    "path": "D:\\Harness\\YXDEMO",
+    "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
+    "branch": "main (unborn; remote has no branch)",
+    "commit": "",
+    "pullRequest": ""
+  },
+  "gates": [
+    {"id": "product", "status": "blocked", "evidence": ["asset-verification.csv", "g7-capability-matrix.csv", "g7-gap-decisions.md", "open-decisions.md", "traceability.csv"]},
+    {"id": "design", "status": "blocked", "evidence": ["g7-gap-decisions.md", "open-decisions.md", "release-plan.md"]},
+    {"id": "build", "status": "pending", "evidence": []},
+    {"id": "security", "status": "pending", "evidence": []},
+    {"id": "acceptance", "status": "pending", "evidence": []},
+    {"id": "release", "status": "pending", "evidence": []},
+    {"id": "production", "status": "pending", "evidence": []}
+  ],
+  "releaseCandidate": {"artifact": "", "version": "", "digest": ""},
+  "rollout": {
+    "strategy": "PROVISIONAL_5_25_100_CANARY_PENDING_RELEASE_001",
+    "abortConditions": [
+      "required test, policy or acceptance failure",
+      "artifact digest mismatch",
+      "unaccepted critical/high vulnerability",
+      "tenant isolation, G7 write/readback, R2/R3 or driver safety failure",
+      "smoke, Continuous Verification or SLO threshold breach",
+      "rollback unavailable"
+    ],
+    "rollbackTarget": "LAST_APPROVED_DIGEST_TBD",
+    "rollbackTested": false
+  },
+  "approvals": {"production": null},
+  "evidenceIndex": [
+    "evidence-index.md",
+    "harness-discovery.md",
+    "repository-discovery.md",
+    "asset-verification.csv",
+    "g7-capability-matrix.csv",
+    "g7-gap-decisions.md",
+    "delivery-plan.md",
+    "traceability.csv",
+    "open-decisions.md",
+    "release-plan.md",
+    "first-batch-stories.md",
+    "evidence/github-repository-discovery.json",
+    "evidence/harness-discovery-summary.json",
+    "evidence/g7-entry-reachability.json",
+    "evidence/g7-public-api-catalog.json",
+    "evidence/manifest-amendment.md",
+    "evidence/delivery-artifact-generation.json",
+    "evidence/workspace-validation.md"
+  ],
+  "residualRisks": [
+    "The only discovered Harness project contains unrelated Word Realm resources and is not bound to this delivery.",
+    "Required G7 SANDBOX secrets are absent; all previously communicated G7 credentials and the prototype AMap key require rotation before use.",
+    "Authenticated G7 workbench inventory and target-tenant SANDBOX contract evidence are missing; ten G7-GAP records remain proposed and unapproved.",
+    "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
+    "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
+  ],
+  "updatedAt": "2026-08-24T06:30:00Z"
+}
