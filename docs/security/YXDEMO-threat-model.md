@@ -169,4 +169,3 @@ flowchart LR
 - 仅内网/VPN 被作为暴露假设，而不是身份或授权保证。
 - Secret、真实账号、车辆、司机和租户值均未写入文档。
 - 未关闭事项仍在 `open-decisions.md`；本模型不构成 Product、Design、Security 或生产批准。
-
