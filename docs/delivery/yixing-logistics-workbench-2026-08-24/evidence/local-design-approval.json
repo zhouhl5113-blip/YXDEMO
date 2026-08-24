@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-24T12:49:15Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "source": "PROJECT_INITIATOR_EXPLICIT_APPROVAL",
+  "approver": {
+    "displayName": "周贺龙",
+    "roles": [
+      "PRODUCT_APPROVER",
+      "SECURITY_RESPONSIBLE_PERSON",
+      "DATA_OWNER",
+      "LOCAL_DESIGN_GATE_APPROVER"
+    ]
+  },
+  "scope": "LOCAL_DEVELOPMENT_AND_TEST_ONLY",
+  "approved": {
+    "adr0003": true,
+    "oq008ScopeRule": "INTERSECTION_WITH_EXPLICIT_DENY_PRECEDENCE",
+    "authorizationPolicyContracts": true,
+    "syntheticAutomatedTests": true
+  },
+  "mandatoryDisabledControls": {
+    "rawLocationHistoryPersistence": false,
+    "agent": false,
+    "r3Actions": false,
+    "liveG7Writes": false,
+    "productionDeployment": false,
+    "secretChanges": false
+  },
+  "notApproved": [
+    "KEYCLOAK_RUNTIME_DEPLOYMENT",
+    "IDENTITY_DATABASE_OR_MIGRATIONS",
+    "G7_GAP_APPROVAL",
+    "REAL_G7_CREDENTIAL_USE",
+    "HARNESS_SECRET_OR_RBAC_MUTATION",
+    "PREPRODUCTION_OR_PRODUCTION_DEPLOYMENT"
+  ],
+  "separationOfDuties": {
+    "independentR3SecondApproverAssigned": false,
+    "r3MustRemainDisabled": true
+  }
+}

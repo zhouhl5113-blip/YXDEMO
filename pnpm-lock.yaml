@@ -20,6 +20,8 @@ importers:
 
   packages/contracts: {}
 
+  packages/identity-policy: {}
+
   packages/integrations/g7: {}
 
 packages:

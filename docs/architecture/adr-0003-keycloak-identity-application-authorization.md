@@ -2,9 +2,9 @@
 
 ## Status
 
-`PROPOSED`
+`ACCEPTED_FOR_LOCAL_DEVELOPMENT_AND_TEST`
 
-The project initiator confirmed the direction by instructing the delivery to continue after reviewing the recommended option. Security, product and data-owner approval is still required before implementation. This ADR is not authorization to deploy Keycloak, create identity tables or bind production infrastructure.
+On 2026-08-24, project initiator, Product approver, Security responsible person, Data owner and local Design Gate approver 周贺龙 explicitly accepted this ADR for local development and testing. The acceptance authorizes pure authorization-policy contracts and synthetic tests only. It does not authorize deploying Keycloak, creating identity tables or migrations, changing Secrets/RBAC, calling real G7 write APIs, enabling Agent/R3 capabilities or binding production infrastructure.
 
 周贺龙 is now the named Product approver, Security responsible person and Data owner. Because all three responsibilities are held by one person, independent review is not demonstrated. No distinct second R3 approver exists, so R3 actions remain disabled.
 
@@ -18,7 +18,7 @@ The product requires workforce and driver identities, six role-oriented workspac
 
 Building password storage, MFA, recovery, OIDC, token rotation and session administration directly inside the logistics application would create a high-risk security subsystem unrelated to logistics differentiation. Conversely, placing all authorization in an identity-provider role claim would be too coarse: authorization depends on tenant, organization, tag, fleet, assignment, shift, delegation, object, field and action state. A role switch must not expand the underlying data scope.
 
-The current host is approved only for local development and testing under ADR-0001. Product and Design gates remain blocked, `G7-GAP-001` and `G7-GAP-008` are unapproved, and OQ-008 data-scope semantics still need security and product approval.
+The current host is approved only for local development and testing under ADR-0001. Product and Design gates remain blocked because `G7-GAP-001` and `G7-GAP-008` are unapproved and other Product/Design evidence is absent. OQ-008 data-scope semantics are approved only for the local contract work covered by this ADR.
 
 ## Decision
 
@@ -43,7 +43,7 @@ Adopt a split identity and authorization architecture:
 2. Tenant membership must be active and is resolved server-side from the immutable IdP subject.
 3. A role switch can only retain or reduce the existing data range.
 4. Delegation cannot exceed the delegator's permissions or its approved time window.
-5. The effective data scope is the intersection of all applicable constraints; any explicit deny wins. This remains proposed until OQ-008 is approved.
+5. The effective data scope is the intersection of all applicable constraints; any explicit deny wins. OQ-008 approves this invariant for local development and testing.
 6. Object and field authorization is re-evaluated on every request and before every tool or G7 call.
 7. PostgreSQL RLS independently rejects a tenant mismatch.
 8. Driver sessions become invalid on driver, device, task or vehicle reassignment and require lightweight reauthentication.
@@ -105,9 +105,9 @@ Negative:
 
 ## Approval And Exit Conditions
 
-Before implementation:
+Before identity runtime or persistence implementation:
 
-- Product and Security approve OQ-008 intersection and deny semantics.
+- OQ-008 intersection and deny semantics are approved for local policy-contract implementation. Production use requires confirmation at the applicable Design/Release Gate.
 - Product, Security and Data owners approve the minimum local identity mapping under `G7-GAP-001` and driver session state under `G7-GAP-008`.
 - A Security architect accepts this ADR and the repository threat model.
 
@@ -119,9 +119,10 @@ Before implementation:
 | Security responsible person | 周贺龙 | Named; independent security review is not available |
 | Data owner | 周贺龙 | Named; data-retention and gap decisions still require explicit approval |
 | Independent R3 second approver | `UNASSIGNED` | R3 actions are disabled |
-| Design/Acceptance/Production approvers | `UNASSIGNED` | Corresponding gates remain blocked or pending |
+| Local Design Gate approver | 周贺龙 | Assigned for the explicitly limited local development/test approval |
+| Acceptance/Production approvers | `UNASSIGNED` | Corresponding gates remain pending; no production approval exists |
 
-Evidence: `docs/delivery/yixing-logistics-workbench-2026-08-24/evidence/identity-governance-assignment.json`.
+Evidence: `docs/delivery/yixing-logistics-workbench-2026-08-24/evidence/identity-governance-assignment.json` and `docs/delivery/yixing-logistics-workbench-2026-08-24/evidence/local-design-approval.json`.
 
 Before production:
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-24T12:12:59Z",
+  "observedAt": "2026-08-24T12:53:29Z",
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
   "target": "PRODUCT_AND_DESIGN_GATES",
   "implementationCommit": "7592695fc8496b690b827e107772ff7c588c115b",
@@ -16,17 +16,17 @@
     "pendingGapRecords": 10,
     "localDecisionRows": 31,
     "openDecisions": 16,
-    "regressionTestsPassed": 15,
-    "coverageLinesPercent": 92.06,
-    "coverageBranchesPercent": 72.32,
-    "coverageFunctionsPercent": 94.87
+    "regressionTestsPassed": 27,
+    "coverageLinesPercent": 93.46,
+    "coverageBranchesPercent": 78.88,
+    "coverageFunctionsPercent": 96.49
   },
   "blockers": [
     "Product Gate is blocked",
     "Design Gate is blocked",
     "10 G7 gap records remain proposed and unapproved",
-    "16 administrator/product decisions remain open",
-    "ADR-0003 remains proposed; OQ-008 and G7-GAP-001/008 lack action-specific approval, and R3 is disabled because no distinct second approver exists",
+    "The 16-item administrator/product decision registry is not fully resolved; OQ-008 is approved only for local contract scope",
+    "ADR-0003 is accepted only for local policy contracts; G7-GAP-001/008, identity runtime and persistence remain unapproved, and R3 is disabled because no distinct second approver exists",
     "Signed G7 SANDBOX request/response evidence is absent by approved design",
     "US-069..US-074 have no stable TEST identifiers"
   ],

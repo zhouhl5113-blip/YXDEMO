@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-24T12:53:29Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "scope": "LOCAL_AUTHORIZATION_POLICY_CONTRACT_ONLY",
+  "result": "PASS_WITH_RUNTIME_LIMITATIONS",
+  "implementationCommit": "TO_BE_RECORDED_AFTER_COMMIT",
+  "approvalEvidence": "evidence/local-design-approval.json",
+  "requirements": ["FR-017", "FR-057", "US-001", "TEST-001", "TEST-002", "TEST-003", "OQ-008"],
+  "code": [
+    "packages/contracts/src/tenant-scope.ts",
+    "packages/identity-policy/src/policy.ts"
+  ],
+  "tests": {
+    "path": "tests/unit/authorization-policy.test.ts",
+    "tddRed": {
+      "result": "EXPECTED_FAILURE",
+      "reason": "ERR_MODULE_NOT_FOUND before packages/identity-policy implementation"
+    },
+    "green": {
+      "result": "PASS",
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "verifiedRules": [
+    "trusted tenant mismatch is denied",
+    "explicit permission deny takes precedence",
+    "organization, tag, fleet and assignment constraints are intersected",
+    "missing dimension constraints behave as ALL, not empty scope",
+    "zero trusted scope layers fail closed",
+    "role switching may only retain or reduce effective scope",
+    "role switching cannot remove an existing deny or replace a bounded scope with ALL",
+    "R3 remains unavailable without a distinct second approver",
+    "approval evidence keeps Agent, live G7 writes, raw location history, production and Secret changes disabled"
+  ],
+  "negativeAssertions": {
+    "keycloakRuntimeCreated": 0,
+    "identityTablesOrMigrationsCreated": 0,
+    "liveG7Calls": 0,
+    "agentEnabled": false,
+    "r3Enabled": false,
+    "productionDeployments": 0,
+    "secretOrRbacChanges": 0
+  },
+  "limitations": [
+    "TEST-001 still requires BFF request/trace evidence and proof that browser tenant_id is ignored end to end.",
+    "TEST-002 still requires immutable sensitive-denial audit evidence.",
+    "TEST-003 still requires live session revocation and next-request enforcement evidence.",
+    "RLS, identity persistence and Keycloak runtime remain prohibited until the relevant G7 gaps, ADRs and gates pass.",
+    "This is not Build, Acceptance, Release or Production Gate approval."
+  ]
+}
