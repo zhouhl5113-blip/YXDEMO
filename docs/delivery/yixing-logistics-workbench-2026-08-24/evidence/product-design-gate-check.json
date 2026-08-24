@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-24T11:40:03Z",
+  "observedAt": "2026-08-24T12:03:07Z",
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
   "target": "PRODUCT_AND_DESIGN_GATES",
   "implementationCommit": "87091fb72d65a1fc99abd9ea6766a6c3658c9f4e",
@@ -26,7 +26,7 @@
     "Design Gate is blocked",
     "10 G7 gap records remain proposed and unapproved",
     "16 administrator/product decisions remain open",
-    "Final repository threat model is pending context confirmation",
+    "ADR-0003 remains proposed pending Security, Product and Data approval of OQ-008 and G7-GAP-001/008",
     "Signed G7 SANDBOX request/response evidence is absent by approved design",
     "US-069..US-074 have no stable TEST identifiers"
   ],

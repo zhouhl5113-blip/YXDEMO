@@ -1,6 +1,6 @@
 # Product And Design Gate Check
 
-Observed: `2026-08-24T11:40:03Z`.
+Observed: `2026-08-24T12:03:07Z`.
 
 ## Verdict
 
@@ -29,15 +29,15 @@ Regression result: 15 tests passed, 0 failed. The strict `--require-pass` comman
 
 1. Product Gate remains `blocked` and Design Gate remains `blocked` in the control record.
 2. Ten `G7-GAP-*` records are proposed but not approved; no gap ADR authorizes local persistence.
-3. Sixteen administrator/product decisions remain open, including identity, data scope, retention, production infrastructure and approval owners.
+3. Sixteen administrator/product decisions remain open or partially resolved. The identity technology direction is recorded, but its security/data approvals, data-scope semantics, retention, production infrastructure and named approval owners remain outstanding.
 4. Signed G7 SANDBOX request/response evidence is intentionally absent while this project is credentialless.
-5. The final repository threat model is pending confirmation of exposure and authentication assumptions.
+5. ADR-0003 remains `PROPOSED`; Product, Security and Data owners have not approved OQ-008 or `G7-GAP-001/008` for identity implementation.
 6. `US-069..US-074` still have no stable `TEST-*` acceptance IDs.
 
 ## Minimum Path To Pass
 
-1. Confirm the threat-model service context and approve the resulting Design Gate security model.
-2. Resolve the Product/Design-owned open decisions and assign named approvers.
+1. Review and approve the repository threat model and ADR-0003 security model.
+2. Resolve the Product/Design-owned open decisions, including OQ-008, and assign named approvers.
 3. Coordinate G7 credential cutover, bind rotated SANDBOX secrets in Harness and collect signed contract evidence.
 4. Approve or reject each proposed local gap with its ADR; keep rejected local capabilities absent.
 5. Add stable acceptance IDs for `US-069..US-074`, rerun the gate and obtain explicit Product/Design approval.

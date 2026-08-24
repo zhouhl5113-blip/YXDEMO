@@ -23,7 +23,7 @@
   },
   "gates": [
     {"id": "product", "status": "blocked", "evidence": ["asset-verification.csv", "g7-capability-matrix.csv", "g7-gap-decisions.md", "open-decisions.md", "traceability.csv"]},
-    {"id": "design", "status": "blocked", "evidence": ["g7-gap-decisions.md", "open-decisions.md", "release-plan.md"]},
+    {"id": "design", "status": "blocked", "evidence": ["g7-gap-decisions.md", "open-decisions.md", "release-plan.md", "repo:docs/security/YXDEMO-threat-model.md", "repo:docs/architecture/adr-0003-keycloak-identity-application-authorization.md"]},
     {"id": "build", "status": "pending", "evidence": []},
     {"id": "security", "status": "pending", "evidence": []},
     {"id": "acceptance", "status": "pending", "evidence": []},
@@ -58,6 +58,9 @@
     "release-plan.md",
     "first-batch-stories.md",
     "product-design-gate-check.md",
+    "repo:docs/security/YXDEMO-threat-model.md",
+    "repo:docs/security/identity-access-decision-brief.md",
+    "repo:docs/architecture/adr-0003-keycloak-identity-application-authorization.md",
     "evidence/github-repository-discovery.json",
     "evidence/harness-discovery-summary.json",
     "evidence/g7-credential-dependency-decision.json",
@@ -82,7 +85,8 @@
     "Old G7 credentials are confirmed still active for other systems and remain untouched. This project is restricted to credentialless offline contracts until a coordinated cutover, rotation evidence and Harness SANDBOX Secret bindings exist. The prototype AMap key also requires rotation before use.",
     "ZHLDEMO is confirmed as the dedicated target application and authenticated G7 workbench inventory is complete, but Harness Secret binding plus SANDBOX request/response contract evidence remain missing; ten G7-GAP records remain proposed and unapproved.",
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
-    "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
+    "The project-owned identity direction is confirmed as proposed self-hosted Keycloak plus application TenantScope/RBAC/ABAC, but Security/Product/Data approval, OQ-008 semantics, G7-GAP-001/008 and production identity infrastructure remain unresolved.",
+    "Production infrastructure, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T11:45:38Z"
+  "updatedAt": "2026-08-24T12:03:07Z"
 }

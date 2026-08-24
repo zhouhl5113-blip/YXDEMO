@@ -20,7 +20,10 @@
 | `evidence/harness-scope-create.json` | Controlled Harness scope mutation/readback | Project + dev/preprod/prod created; no deployment, Secret or RBAC mutation |
 | `evidence/local-runtime-discovery.json` | Local host capability and setup decision | WSL 1 selected; production unsuitable |
 | `evidence/local-runtime-setup.json` | Installed local data services and repeatable health checks | PostgreSQL 16 and Redis 7 healthy; Redis Streams passed; loopback-only |
+| `repo:docs/security/YXDEMO-threat-model.md` | Repository-grounded assets, boundaries, abuse paths and prioritized mitigations | Context confirmed for local/intranet/VPN; 10 threats recorded; security review required |
+| `repo:docs/security/identity-access-decision-brief.md` | Account, role, session and authorization proposal | Option A confirmed; implementation remains blocked pending approval |
+| `repo:docs/architecture/adr-0003-keycloak-identity-application-authorization.md` | Identity provider and application authorization boundary | `PROPOSED`; Security/Product/Data approval pending |
 | `traceability.csv` | RQ/UJ/FR/NFR/AD/EP/US/TEST/OQ linkage | 446 rows; selected Foundation contracts partially implemented; all business Stories remain blocked/not started |
-| `open-decisions.md` | Blocking administrator/product decisions | G7 workbench access resolved; credential contracts and governance remain open |
+| `open-decisions.md` | Blocking administrator/product decisions | Identity direction recorded; credential, scope, approval and production governance remain open |
 | `release-plan.md` | Immutable promotion and rollback | Draft, target/owners unresolved |
 | `evidence/workspace-validation.md` | Control-record validation | Passed at `intake`; local runtime, Foundation checks and gate structure passed |

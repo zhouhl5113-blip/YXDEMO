@@ -11,6 +11,7 @@
 - `ZHLDEMO` 已确认，但现有 G7 凭据仍被其他系统使用。本项目只允许脱敏清单、官方公开合同和合成夹具，live G7 调用会失败关闭。
 - Product Gate 与 Design Gate 均处于阻断状态，因此尚未创建生产应用服务、数据库迁移或部署资源。
 - 已建立 Node.js 24、TypeScript 5 strict、Biome、Node test runner、共享契约和 `packages/integrations/g7` 的无凭据边界。
+- 已完成仓库威胁模型并确认账号技术方向：自托管 Keycloak 负责认证，应用 BFF + PostgreSQL RLS 负责细粒度业务授权；ADR-0003 仍待 Security/Product/Data 审批。
 
 交付证据快照位于 `docs/delivery/yixing-logistics-workbench-2026-08-24/`。控制记录的权威工作副本由 Harness Delivery Workspace 管理。
 
@@ -40,4 +41,4 @@ powershell -ExecutionPolicy Bypass -File .\scripts\Invoke-Workspace.ps1 -Task ga
 - `tests/unit`：共享契约的确定性测试。
 - `tests/contract`：基于脱敏证据和合成数据的离线 G7 边界测试，不是 SANDBOX 行为证据。
 
-详见 `docs/architecture/adr-0002-credentialless-g7-development.md`。
+详见 `docs/architecture/adr-0002-credentialless-g7-development.md`、`docs/architecture/adr-0003-keycloak-identity-application-authorization.md` 和 `docs/security/YXDEMO-threat-model.md`。
