@@ -18,7 +18,7 @@
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
     "branch": "codex/harness-scope-evidence",
     "baseBranch": "main",
-    "commit": "2e2afa506466a061ff46e22bc79d652d402957b8",
+    "commit": "7592695fc8496b690b827e107772ff7c588c115b",
     "pullRequest": "https://github.com/zhouhl5113-blip/YXDEMO/pull/1"
   },
   "gates": [
@@ -104,5 +104,5 @@
     "The project-owned identity direction is confirmed as proposed self-hosted Keycloak plus application TenantScope/RBAC/ABAC. 周贺龙 is named for Product, Security and Data responsibilities, but this does not provide independent review; no distinct second R3 approver exists, so R3 actions remain disabled. OQ-008, G7-GAP-001/008 and production identity infrastructure remain unresolved.",
     "Production infrastructure, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T12:12:59Z"
+  "updatedAt": "2026-08-24T12:15:45Z"
 }
