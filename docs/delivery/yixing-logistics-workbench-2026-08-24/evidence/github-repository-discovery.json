@@ -8,10 +8,12 @@
   "defaultBranch": "main",
   "publishedSourceBaselineCommit": "c94ca688b869a8cb7f624ccee845728d9bc3bd6b",
   "currentDefaultBranchCommit": "21d209fe970fef89dfe3ca8052efe4437796f48b",
+  "reviewBranch": "codex/harness-scope-evidence",
+  "reviewEvidenceCommit": "62ba59ee0d90e1d424ad690560b7a22acee16bbc",
   "requiredAssetsPresent": 8,
   "requiredAssetsHashMatched": 8,
   "prototypeAmapKeySanitized": true,
   "productionApplicationPresent": false,
-  "draftPullRequest": null,
-  "draftPullRequestReason": "No implementation change is ready for review; Product and Design gates remain blocked."
+  "draftPullRequest": "https://github.com/zhouhl5113-blip/YXDEMO/pull/1",
+  "draftPullRequestReason": "Harness scope evidence is ready for review; implementation remains blocked by Product and Design gates."
 }

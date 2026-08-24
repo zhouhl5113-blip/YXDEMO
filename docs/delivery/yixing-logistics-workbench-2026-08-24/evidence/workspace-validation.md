@@ -17,6 +17,7 @@ Results:
 - Generated evidence contains 82 G7 matrix rows and 446 traceability rows with exact stable-ID counts.
 - The repository prototype contains one empty AMap key declaration and no embedded key value.
 - GitHub `main` is the default branch at audited commit `21d209fe970fef89dfe3ca8052efe4437796f48b`; the original evidence branch remains available.
+- Harness scope evidence commit `62ba59ee0d90e1d424ad690560b7a22acee16bbc` is published on `codex/harness-scope-evidence` for review in Draft PR #1.
 - Harness Project `default/yixing_logistics_workbench` and Environment boundaries `yixing_dev`, `yixing_preprod`, `yixing_prod` were created in a one-shot confirmed session and independently read back through the default read-only connection.
 - Service, Pipeline, project Secrets and all three Infrastructure definitions remain absent.
 - `gitleaks` is not installed locally; Harness Secret scanning remains mandatory at Security Gate.
