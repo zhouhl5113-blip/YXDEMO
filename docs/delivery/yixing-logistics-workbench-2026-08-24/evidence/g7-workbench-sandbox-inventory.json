@@ -14,7 +14,8 @@
     "type": "客户自研",
     "status": "ENABLED",
     "createdAtLocal": "2026-08-24T10:57:14+08:00",
-    "selectionStatus": "PROVISIONAL_TARGET_PENDING_OWNER_CONFIRMATION"
+    "selectionStatus": "CONFIRMED_DEDICATED_TARGET_BY_PROJECT_OWNER",
+    "selectionConfirmationEvidence": "evidence/g7-target-application-confirmation.json"
   },
   "productionScopeInventory": {
     "scopeCount": 41,

@@ -1,0 +1,11 @@
+{
+  "confirmedAt": "2026-08-24T09:55:13Z",
+  "confirmationSource": "project_owner_in_delivery_thread",
+  "application": {
+    "systemCode": "ZHLDEMO",
+    "purpose": "DEDICATED_TO_YIXING_LOGISTICS_WORKBENCH"
+  },
+  "credentialRotationStatus": "UNRESOLVED_OWNER_REPLY_CONTAINED_BOTH_CHOICES",
+  "secretValuesRecorded": false,
+  "result": "TARGET_APPLICATION_CONFIRMED_CREDENTIAL_USE_BLOCKED"
+}
