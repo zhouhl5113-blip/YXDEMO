@@ -15,8 +15,8 @@
   "repository": {
     "path": "D:\\Harness\\YXDEMO",
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
-    "branch": "main (unborn; remote has no branch)",
-    "commit": "",
+    "branch": "codex/product-assets-baseline",
+    "commit": "c94ca688b869a8cb7f624ccee845728d9bc3bd6b",
     "pullRequest": ""
   },
   "gates": [
@@ -70,5 +70,5 @@
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
     "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T06:30:00Z"
+  "updatedAt": "2026-08-24T06:45:00Z"
 }

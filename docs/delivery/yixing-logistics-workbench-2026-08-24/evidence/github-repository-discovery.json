@@ -1,14 +1,16 @@
 {
-  "observedAt": "2026-08-24T06:30:00Z",
+  "observedAt": "2026-08-24T06:45:00Z",
   "owner": "zhouhl5113-blip",
   "repository": "YXDEMO",
   "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
   "localPath": "D:\\Harness\\YXDEMO",
   "remoteInitiallyEmpty": true,
-  "localUnbornBranch": "main",
+  "defaultBranch": "codex/product-assets-baseline",
+  "publishedSourceBaselineCommit": "c94ca688b869a8cb7f624ccee845728d9bc3bd6b",
   "requiredAssetsPresent": 8,
   "requiredAssetsHashMatched": 8,
   "prototypeAmapKeySanitized": true,
   "productionApplicationPresent": false,
-  "mutationsAttemptedAtDiscovery": 0
+  "draftPullRequest": null,
+  "draftPullRequestReason": "No distinct base branch exists in the repository after its first branch was published."
 }
