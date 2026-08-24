@@ -4,7 +4,7 @@
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
   "scope": "LOCAL_AUTHORIZATION_POLICY_CONTRACT_ONLY",
   "result": "PASS_WITH_RUNTIME_LIMITATIONS",
-  "implementationCommit": "TO_BE_RECORDED_AFTER_COMMIT",
+  "implementationCommit": "6892dacc7d21beb526bb0c0bd7fa8b648e8f3e58",
   "approvalEvidence": "evidence/local-design-approval.json",
   "requirements": ["FR-017", "FR-057", "US-001", "TEST-001", "TEST-002", "TEST-003", "OQ-008"],
   "code": [
