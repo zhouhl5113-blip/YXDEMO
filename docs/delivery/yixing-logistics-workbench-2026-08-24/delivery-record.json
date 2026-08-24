@@ -64,14 +64,16 @@
     "evidence/manifest-amendment.md",
     "evidence/delivery-artifact-generation.json",
     "evidence/harness-scope-create.json",
+    "evidence/local-runtime-discovery.json",
     "evidence/workspace-validation.md"
   ],
   "residualRisks": [
     "The dedicated Harness project and environment shells are bound, but Service, Pipeline and all three Infrastructure definitions remain absent pending a runtime decision.",
+    "The current Windows Server host is approved only for local development and acceptance; WSL is enabled and Ubuntu is installed, but a restart is required before PostgreSQL/Redis setup can continue.",
     "Required G7 SANDBOX secrets are absent; all previously communicated G7 credentials and the prototype AMap key require rotation before use.",
     "Authenticated G7 workbench inventory and target-tenant SANDBOX contract evidence are missing; ten G7-GAP records remain proposed and unapproved.",
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
     "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T07:39:09Z"
+  "updatedAt": "2026-08-24T07:52:00Z"
 }

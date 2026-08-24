@@ -1,6 +1,6 @@
 # Delivery Workspace Validation
 
-Observed: `2026-08-24T07:30:29Z`. Result: `PASSED` at lifecycle stage `intake`.
+Observed: `2026-08-24T07:52:00Z`. Result: `PASSED` at lifecycle stage `intake`.
 
 Validated commands:
 
@@ -20,6 +20,8 @@ Results:
 - Harness scope evidence commit `62ba59ee0d90e1d424ad690560b7a22acee16bbc` is published on `codex/harness-scope-evidence` for review in Draft PR #1.
 - Harness Project `default/yixing_logistics_workbench` and Environment boundaries `yixing_dev`, `yixing_preprod`, `yixing_prod` were created in a one-shot confirmed session and independently read back through the default read-only connection.
 - Service, Pipeline, project Secrets and all three Infrastructure definitions remain absent.
+- Local host discovery identified Windows Server 2025 with no exposed hardware virtualization. The WSL feature was enabled without restarting, and Canonical Ubuntu 24.04 package `2404.0.5.0` was installed after publisher hash verification.
+- `scripts/Setup-LocalRuntime.ps1` passed PowerShell parser validation. PSScriptAnalyzer is not installed, so lint evidence is not claimed.
 - `gitleaks` is not installed locally; Harness Secret scanning remains mandatory at Security Gate.
 
-No gate transition, Secret/RBAC change, database migration or deployment was attempted. Product and Design gates remain blocked by the decisions in `open-decisions.md`.
+No restart, gate transition, Secret/RBAC change, firewall change, database migration or deployment was attempted. Product and Design gates remain blocked by the decisions in `open-decisions.md`.

@@ -1,0 +1,35 @@
+{
+  "observedAt": "2026-08-24T07:52:00Z",
+  "host": {
+    "operatingSystem": "Microsoft Windows Server 2025 Datacenter",
+    "architecture": "64-bit",
+    "logicalProcessors": 8,
+    "totalMemoryGb": 15.5,
+    "freeMemoryGbObserved": 7.3,
+    "driveDFreeGbObserved": 87.7,
+    "hardwareVirtualizationExposed": false,
+    "slatExposed": false
+  },
+  "portsObservedFree": [3000, 3001, 5432, 6379, 8123, 8080, 8443],
+  "runtimeDiscovery": {
+    "dockerCliPresent": false,
+    "dockerDesktopSupported": false,
+    "wslInitiallyPresent": false,
+    "wslFeatureEnabled": true,
+    "ubuntuPackageId": "Canonical.Ubuntu.2404",
+    "ubuntuPackageVersion": "2404.0.5.0",
+    "ubuntuPackageInstalled": true,
+    "restartRequired": true
+  },
+  "mutations": {
+    "wslFeatureEnabledWithoutRestart": true,
+    "ubuntuPackageInstalledAfterPublisherHashVerification": true,
+    "restartExecuted": false,
+    "secretOrRbacMutation": false,
+    "firewallMutation": false,
+    "databaseOrSchemaCreated": false,
+    "deploymentAttempted": false
+  },
+  "decision": "LOCAL_DEV_AND_ACCEPTANCE_ONLY_PENDING_RESTART",
+  "productionSuitability": "BLOCKED_SINGLE_FAILURE_DOMAIN_NO_HA_OR_RECOVERY_EVIDENCE"
+}
