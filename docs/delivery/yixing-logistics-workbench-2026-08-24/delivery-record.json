@@ -18,7 +18,7 @@
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
     "branch": "codex/harness-scope-evidence",
     "baseBranch": "main",
-    "commit": "413417a04c9d4408c350234a988f9d295ed41ad2",
+    "commit": "d5260fc7a5fe9ebf4f84c9f7a942f4078f438e77",
     "pullRequest": "https://github.com/zhouhl5113-blip/YXDEMO/pull/1"
   },
   "gates": [
@@ -59,12 +59,15 @@
     "first-batch-stories.md",
     "evidence/github-repository-discovery.json",
     "evidence/harness-discovery-summary.json",
+    "evidence/g7-credential-dependency-decision.json",
     "evidence/g7-entry-reachability.json",
     "evidence/g7-public-api-catalog.json",
     "evidence/g7-target-application-confirmation.json",
     "evidence/g7-workbench-sandbox-inventory.json",
     "evidence/manifest-amendment.md",
     "evidence/delivery-artifact-generation.json",
+    "evidence/foundation-credentialless-build.json",
+    "evidence/foundation-credentialless-tests.junit.xml",
     "evidence/harness-scope-create.json",
     "evidence/local-runtime-discovery.json",
     "evidence/local-runtime-setup.json",
@@ -73,10 +76,10 @@
   "residualRisks": [
     "The dedicated Harness project and environment shells are bound, but Service, Pipeline and all three Infrastructure definitions remain absent pending a runtime decision.",
     "The current Windows Server host is approved only for local development and acceptance; WSL 1, PostgreSQL 16 and Redis 7 are validated, but the single host remains unsuitable for production.",
-    "Old G7 credentials are confirmed still active and are prohibited from use; action-specific rotation approval, provider-side invalidation evidence and required Harness SANDBOX Secret bindings remain absent. The prototype AMap key also requires rotation before use.",
+    "Old G7 credentials are confirmed still active for other systems and remain untouched. This project is restricted to credentialless offline contracts until a coordinated cutover, rotation evidence and Harness SANDBOX Secret bindings exist. The prototype AMap key also requires rotation before use.",
     "ZHLDEMO is confirmed as the dedicated target application and authenticated G7 workbench inventory is complete, but Harness Secret binding plus SANDBOX request/response contract evidence remain missing; ten G7-GAP records remain proposed and unapproved.",
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
     "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T10:05:18Z"
+  "updatedAt": "2026-08-24T11:03:10Z"
 }

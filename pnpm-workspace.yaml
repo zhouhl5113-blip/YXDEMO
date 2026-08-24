@@ -1,0 +1,7 @@
+packages:
+  - "packages/*"
+  - "packages/integrations/*"
+
+catalogMode: strict
+
+strictPeerDependencies: true
