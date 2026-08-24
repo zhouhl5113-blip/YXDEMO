@@ -18,7 +18,7 @@
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
     "branch": "codex/harness-scope-evidence",
     "baseBranch": "main",
-    "commit": "e77937165c1bc02b3a1088a31f28313d64af5f03",
+    "commit": "413417a04c9d4408c350234a988f9d295ed41ad2",
     "pullRequest": "https://github.com/zhouhl5113-blip/YXDEMO/pull/1"
   },
   "gates": [
@@ -73,10 +73,10 @@
   "residualRisks": [
     "The dedicated Harness project and environment shells are bound, but Service, Pipeline and all three Infrastructure definitions remain absent pending a runtime decision.",
     "The current Windows Server host is approved only for local development and acceptance; WSL 1, PostgreSQL 16 and Redis 7 are validated, but the single host remains unsuitable for production.",
-    "Required G7 SANDBOX secrets are absent; all previously communicated G7 credentials and the prototype AMap key require rotation before use.",
-    "ZHLDEMO is confirmed as the dedicated target application and authenticated G7 workbench inventory is complete, but credential rotation status is unresolved and Harness Secret binding plus SANDBOX request/response contract evidence remain missing; ten G7-GAP records remain proposed and unapproved.",
+    "Old G7 credentials are confirmed still active and are prohibited from use; action-specific rotation approval, provider-side invalidation evidence and required Harness SANDBOX Secret bindings remain absent. The prototype AMap key also requires rotation before use.",
+    "ZHLDEMO is confirmed as the dedicated target application and authenticated G7 workbench inventory is complete, but Harness Secret binding plus SANDBOX request/response contract evidence remain missing; ten G7-GAP records remain proposed and unapproved.",
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
     "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T09:55:13Z"
+  "updatedAt": "2026-08-24T10:05:18Z"
 }

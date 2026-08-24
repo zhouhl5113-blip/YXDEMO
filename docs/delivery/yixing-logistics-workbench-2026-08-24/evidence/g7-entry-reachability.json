@@ -9,5 +9,5 @@
   "targetApplicationConfirmed": true,
   "targetApplicationConfirmationEvidence": "evidence/g7-target-application-confirmation.json",
   "sandboxCredentialsUsed": false,
-  "reason": "Target application ZHLDEMO is confirmed and authenticated workbench inventory is complete. Signed SANDBOX request/response tests remain blocked because credential rotation status is unresolved and required Harness Secret references are absent."
+  "reason": "Target application ZHLDEMO is confirmed and authenticated workbench inventory is complete. The owner confirmed old credentials remain active; they are prohibited from use. Signed SANDBOX request/response tests remain blocked until action-specific rotation approval, rotation evidence and Harness Secret binding exist."
 }

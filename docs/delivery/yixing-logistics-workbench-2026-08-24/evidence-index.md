@@ -7,7 +7,7 @@
 | `evidence/delivery-artifact-generation.json` | Stable-ID extraction counts | 446 trace rows; 82 matrix rows |
 | `g7-capability-matrix.csv` | One row per FR with ownership/reuse/gap decision | 82 rows updated with authenticated inventory; contract tests blocked |
 | `evidence/g7-public-api-catalog.json` | Hashed public G7 catalog/OpenAPI evidence | 107 catalog, 30 selected schemas |
-| `evidence/g7-target-application-confirmation.json` | Product-owner target application confirmation | `ZHLDEMO` confirmed dedicated; credential rotation unresolved |
+| `evidence/g7-target-application-confirmation.json` | Product-owner target application and credential-status confirmation | `ZHLDEMO` confirmed dedicated; old credentials still active and blocked pending approved rotation |
 | `evidence/g7-workbench-sandbox-inventory.json` | Redacted target-tenant application, Scope and SANDBOX inventory | Confirmed target; 41 active scopes/107 endpoints; SANDBOX 82 supported/25 unsupported; no credential inspected |
 | `g7-gap-decisions.md` | Proposed local-gap review records | 10 proposed, 0 approved |
 | `harness-discovery.md` | Live Harness scope and independent readback | Project + 3 environments bound; Service/Pipeline/Infrastructure/Secrets absent |

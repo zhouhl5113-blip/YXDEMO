@@ -1,6 +1,6 @@
 # Delivery Workspace Validation
 
-Observed: `2026-08-24T09:55:13Z`. Result: `PASSED` at lifecycle stage `intake`.
+Observed: `2026-08-24T10:05:18Z`. Result: `PASSED` at lifecycle stage `intake`.
 
 Validated commands:
 
@@ -27,7 +27,7 @@ Results:
 - `gitleaks` is not installed locally; Harness Secret scanning remains mandatory at Security Gate.
 - Authenticated G7 workbench discovery completed for application `ZHLDEMO`: 41 active scopes cover 107 production endpoints. The project owner confirmed it is dedicated to this project; confirmation is recorded without credential values.
 - G7 SANDBOX is ready and isolated from production. Its inventory reports 82 supported and 25 unsupported REST endpoints plus 18 message-subscription scopes; unsupported REST coverage is recorded as a composition/contract question, not as proof that the platform lacks the capability.
-- The 82-row G7 capability matrix now references authenticated workbench inventory and target-application confirmation. Signed SANDBOX request/response contract tests remain blocked by unresolved credential rotation status and Harness Secret binding.
+- The 82-row G7 capability matrix now references authenticated workbench inventory and target-application confirmation. The owner confirmed old credentials remain active; they are blocked from use. Signed SANDBOX request/response contract tests remain blocked by action-specific rotation approval, rotation evidence and Harness Secret binding.
 - G7 credential details were not opened or recorded. No API request, SANDBOX reset, scope mutation, credential mutation or production write was attempted.
 
 No gate transition, Secret/RBAC change, firewall change, application database/schema creation, database migration or deployment was attempted. PostgreSQL package installation created only its default system cluster. Product and Design gates remain blocked by the decisions in `open-decisions.md`, the unapproved `G7-GAP-*` records and the missing signed G7 contracts.
