@@ -4,6 +4,7 @@ These are the exact remaining inputs. Do not place credential values in chat, Gi
 
 | ID | Required decision/evidence | What the responsible administrator must do | Blocking gate / owner |
 | --- | --- | --- | --- |
+| GIT-001 | Default branch and review policy | Decide whether to rename/create `main`; configure branch protection, required checks, CODEOWNERS/review count and merge policy. Current default is the first published branch `codex/product-assets-baseline`, so no distinct Draft PR base exists yet | Product / Repository admin |
 | HAR-001 | Target Harness binding | Confirm or create a dedicated Org/Project, then provide Account/Org/Project UI URL or IDs; approve Service, Pipeline and dev/preprod/prod Environment identifiers | Product / Harness project admin |
 | HAR-002 | Runtime and connectors | Select Kubernetes/ECS/other runtime, region and namespace/account; provide Infrastructure IDs and source, registry, runtime, observability and Secret Manager connector refs | Design / Platform owner |
 | HAR-003 | Approval and policy | Name Product, Design, Security, Acceptance and Production approver groups; specify freeze window, exemption policy and CV/SLO refs | Product + Release / Project admin |

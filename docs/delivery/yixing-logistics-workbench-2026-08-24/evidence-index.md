@@ -10,6 +10,6 @@
 | `g7-gap-decisions.md` | Proposed local-gap review records | 10 proposed, 0 approved |
 | `harness-discovery.md` | Live Harness read-only scope | No target binding; zero secrets |
 | `traceability.csv` | RQ/UJ/FR/NFR/AD/EP/US/TEST/OQ linkage | 446 rows; implementation not started |
-| `open-decisions.md` | Blocking administrator/product decisions | 15 open items |
+| `open-decisions.md` | Blocking administrator/product decisions | 16 open items |
 | `release-plan.md` | Immutable promotion and rollback | Draft, target/owners unresolved |
 | `evidence/workspace-validation.md` | Control-record validation | Re-run required after this update |
