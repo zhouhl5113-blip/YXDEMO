@@ -18,7 +18,7 @@
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
     "branch": "codex/harness-scope-evidence",
     "baseBranch": "main",
-    "commit": "d5260fc7a5fe9ebf4f84c9f7a942f4078f438e77",
+    "commit": "6651b2c4f7e118a8a9b3c56690c86a1a921fb687",
     "pullRequest": "https://github.com/zhouhl5113-blip/YXDEMO/pull/1"
   },
   "gates": [
@@ -81,5 +81,5 @@
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
     "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T11:03:10Z"
+  "updatedAt": "2026-08-24T11:11:36Z"
 }
