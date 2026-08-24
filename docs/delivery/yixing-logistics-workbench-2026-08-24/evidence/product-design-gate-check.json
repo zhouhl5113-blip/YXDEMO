@@ -3,6 +3,7 @@
   "observedAt": "2026-08-24T11:40:03Z",
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
   "target": "PRODUCT_AND_DESIGN_GATES",
+  "implementationCommit": "87091fb72d65a1fc99abd9ea6766a6c3658c9f4e",
   "structureValid": true,
   "verdict": "BLOCKED",
   "automatedChecks": {
