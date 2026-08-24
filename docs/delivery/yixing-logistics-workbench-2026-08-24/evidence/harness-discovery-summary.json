@@ -1,11 +1,22 @@
 {
-  "observedAt": "2026-08-24T06:10:00Z",
-  "readOnly": true,
+  "observedAt": "2026-08-24T07:30:29Z",
+  "readOnlyVerification": true,
   "describeCalledBeforeList": ["organization", "project", "service", "environment", "infrastructure", "connector", "secret", "pipeline"],
   "accountId": "VR3gJDjcRkq7ocR7ywpT-Q",
   "organizations": [{"identifier": "default"}],
-  "projects": [{"orgIdentifier": "default", "identifier": "default_project", "targetBinding": false}],
-  "targetMatches": 0,
+  "projects": [{"orgIdentifier": "default", "identifier": "yixing_logistics_workbench", "targetBinding": true}],
+  "targetMatches": 1,
+  "targetEnvironments": [
+    {"identifier": "yixing_dev", "type": "PreProduction"},
+    {"identifier": "yixing_preprod", "type": "PreProduction"},
+    {"identifier": "yixing_prod", "type": "Production"}
+  ],
+  "targetResourceCounts": {
+    "services": 0,
+    "pipelines": 0,
+    "projectSecrets": 0,
+    "infrastructuresByEnvironment": {"yixing_dev": 0, "yixing_preprod": 0, "yixing_prod": 0}
+  },
   "unrelatedResources": {
     "services": ["word_realm_card_journey"],
     "environments": ["word_realm_staging"],
@@ -13,11 +24,12 @@
     "pipelines": ["word_realm_delivery"]
   },
   "connectors": {
-    "success": ["harnessImage", "harnessSecretManager"],
-    "failure": ["harnessOpenAI", "harnessAnthropic"],
-    "approvedForThisDelivery": []
+    "projectSuccess": ["harnessSecretManager"],
+    "approvedForSecretStorage": ["harnessSecretManager"],
+    "approvedForSourceRegistryRuntimeObservability": []
   },
   "projectSecretCount": 0,
-  "accountSecretCount": 0,
-  "mutationsAttempted": 0
+  "oneShotScopeMutations": ["project:create", "environment:create:yixing_dev", "environment:create:yixing_preprod", "environment:create:yixing_prod"],
+  "secretOrRbacMutations": 0,
+  "deploymentAttempts": 0
 }

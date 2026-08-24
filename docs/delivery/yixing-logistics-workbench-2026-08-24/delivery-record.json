@@ -5,18 +5,19 @@
   "requirementSource": "_bmad-output/planning-artifacts/change-control/requirements-ledger-2026-08-22.md",
   "harnessScope": {
     "accountId": "VR3gJDjcRkq7ocR7ywpT-Q",
-    "organizationId": "",
-    "projectId": "",
+    "organizationId": "default",
+    "projectId": "yixing_logistics_workbench",
     "serviceId": "",
     "pipelineId": "",
-    "preProductionEnvironmentId": "",
-    "productionEnvironmentId": ""
+    "developmentEnvironmentId": "yixing_dev",
+    "preProductionEnvironmentId": "yixing_preprod",
+    "productionEnvironmentId": "yixing_prod"
   },
   "repository": {
     "path": "D:\\Harness\\YXDEMO",
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
-    "branch": "codex/product-assets-baseline",
-    "commit": "c94ca688b869a8cb7f624ccee845728d9bc3bd6b",
+    "branch": "main",
+    "commit": "21d209fe970fef89dfe3ca8052efe4437796f48b",
     "pullRequest": ""
   },
   "gates": [
@@ -61,14 +62,15 @@
     "evidence/g7-public-api-catalog.json",
     "evidence/manifest-amendment.md",
     "evidence/delivery-artifact-generation.json",
+    "evidence/harness-scope-create.json",
     "evidence/workspace-validation.md"
   ],
   "residualRisks": [
-    "The only discovered Harness project contains unrelated Word Realm resources and is not bound to this delivery.",
+    "The dedicated Harness project and environment shells are bound, but Service, Pipeline and all three Infrastructure definitions remain absent pending a runtime decision.",
     "Required G7 SANDBOX secrets are absent; all previously communicated G7 credentials and the prototype AMap key require rotation before use.",
     "Authenticated G7 workbench inventory and target-tenant SANDBOX contract evidence are missing; ten G7-GAP records remain proposed and unapproved.",
     "US-069..US-074 have no TEST identifiers and the source Build Ready count is obsolete.",
     "Production infrastructure, identity, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T06:45:00Z"
+  "updatedAt": "2026-08-24T07:30:29Z"
 }

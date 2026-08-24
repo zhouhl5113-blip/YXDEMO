@@ -1,0 +1,41 @@
+{
+  "observedAt": "2026-08-24T07:30:29.404Z",
+  "accountId": "VR3gJDjcRkq7ocR7ywpT-Q",
+  "organizationId": "default",
+  "projectId": "yixing_logistics_workbench",
+  "oneShotWriteSession": true,
+  "defaultMcpRemainsReadOnly": true,
+  "secretOrRbacMutation": false,
+  "infrastructureAttached": false,
+  "deploymentAttempted": false,
+  "changes": [
+    {
+      "resourceType": "project",
+      "identifier": "yixing_logistics_workbench",
+      "action": "CREATED"
+    },
+    {
+      "resourceType": "environment",
+      "identifier": "yixing_dev",
+      "action": "CREATED"
+    },
+    {
+      "resourceType": "environment",
+      "identifier": "yixing_preprod",
+      "action": "CREATED"
+    },
+    {
+      "resourceType": "environment",
+      "identifier": "yixing_prod",
+      "action": "CREATED"
+    }
+  ],
+  "readback": {
+    "projectPresent": true,
+    "environments": [
+      "yixing_dev",
+      "yixing_preprod",
+      "yixing_prod"
+    ]
+  }
+}

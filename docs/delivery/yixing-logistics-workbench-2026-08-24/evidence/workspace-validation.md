@@ -1,6 +1,6 @@
 # Delivery Workspace Validation
 
-Observed: `2026-08-24T06:35:00Z`. Result: `PASSED` at lifecycle stage `intake`.
+Observed: `2026-08-24T07:30:29Z`. Result: `PASSED` at lifecycle stage `intake`.
 
 Validated commands:
 
@@ -16,7 +16,9 @@ Results:
 - Required asset verification passed 8/8.
 - Generated evidence contains 82 G7 matrix rows and 446 traceability rows with exact stable-ID counts.
 - The repository prototype contains one empty AMap key declaration and no embedded key value.
-- Source/evidence baseline commit `c94ca688b869a8cb7f624ccee845728d9bc3bd6b` was published to `codex/product-assets-baseline`.
+- GitHub `main` is the default branch at audited commit `21d209fe970fef89dfe3ca8052efe4437796f48b`; the original evidence branch remains available.
+- Harness Project `default/yixing_logistics_workbench` and Environment boundaries `yixing_dev`, `yixing_preprod`, `yixing_prod` were created in a one-shot confirmed session and independently read back through the default read-only connection.
+- Service, Pipeline, project Secrets and all three Infrastructure definitions remain absent.
 - `gitleaks` is not installed locally; Harness Secret scanning remains mandatory at Security Gate.
 
-No gate transition, Harness mutation, Secret read/write, database migration or deployment was attempted. Product and Design gates remain blocked by the decisions in `open-decisions.md`.
+No gate transition, Secret/RBAC change, database migration or deployment was attempted. Product and Design gates remain blocked by the decisions in `open-decisions.md`.
