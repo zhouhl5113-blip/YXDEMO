@@ -2,7 +2,7 @@
 
 ## Status
 
-`PROPOSED_LOCAL_ONLY`
+`ACCEPTED_LOCAL_ONLY`
 
 This decision is approved by the project initiator for local development and testing. It is not approval to bind the Harness Production environment or to claim production readiness.
 
@@ -60,6 +60,7 @@ Negative:
 
 - WSL feature and Ubuntu package installation are recorded without secrets.
 - PostgreSQL `pg_isready` and Redis `PING` succeed after restart.
+- Redis Streams `XADD`, `XRANGE` and cleanup succeed using a temporary local key.
 - Services bind locally until a reviewed network exposure decision exists.
 - Separate dev/preproduction data identities are tested before either Harness Infrastructure is created.
 - Product and Design gates remain blocked until G7 SANDBOX evidence, gap approvals and remaining governance decisions are complete.
@@ -70,3 +71,4 @@ Negative:
 - NFR-001, NFR-002, NFR-003, NFR-004, NFR-005, NFR-008
 - `docs/delivery/yixing-logistics-workbench-2026-08-24/open-decisions.md`
 - `docs/delivery/yixing-logistics-workbench-2026-08-24/evidence/local-runtime-discovery.json`
+- `docs/delivery/yixing-logistics-workbench-2026-08-24/evidence/local-runtime-setup.json`

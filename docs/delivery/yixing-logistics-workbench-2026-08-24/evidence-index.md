@@ -10,8 +10,9 @@
 | `g7-gap-decisions.md` | Proposed local-gap review records | 10 proposed, 0 approved |
 | `harness-discovery.md` | Live Harness scope and independent readback | Project + 3 environments bound; Service/Pipeline/Infrastructure/Secrets absent |
 | `evidence/harness-scope-create.json` | Controlled Harness scope mutation/readback | Project + dev/preprod/prod created; no deployment, Secret or RBAC mutation |
-| `evidence/local-runtime-discovery.json` | Local host capability and setup state | WSL enabled, Ubuntu installed, restart required; production unsuitable |
+| `evidence/local-runtime-discovery.json` | Local host capability and setup decision | WSL 1 selected; production unsuitable |
+| `evidence/local-runtime-setup.json` | Installed local data services and repeatable health checks | PostgreSQL 16 and Redis 7 healthy; Redis Streams passed; loopback-only |
 | `traceability.csv` | RQ/UJ/FR/NFR/AD/EP/US/TEST/OQ linkage | 446 rows; implementation not started |
 | `open-decisions.md` | Blocking administrator/product decisions | 13 open and 3 partially resolved items |
 | `release-plan.md` | Immutable promotion and rollback | Draft, target/owners unresolved |
-| `evidence/workspace-validation.md` | Control-record validation | Passed at `intake`; local setup script syntax passed |
+| `evidence/workspace-validation.md` | Control-record validation | Passed at `intake`; local runtime and setup script passed |

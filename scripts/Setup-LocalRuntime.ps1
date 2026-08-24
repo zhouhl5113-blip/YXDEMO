@@ -29,11 +29,27 @@ if ($feature.State -ne "Enabled") {
     throw "The Windows Subsystem for Linux feature is not enabled."
 }
 
-& wsl.exe --status *> $null
+& winget.exe list --id Microsoft.WSL --exact --accept-source-agreements *> $null
+if ($LASTEXITCODE -ne 0) {
+    Invoke-CheckedCommand -FilePath "winget.exe" -ArgumentList @(
+        "install",
+        "--id", "Microsoft.WSL",
+        "--exact",
+        "--accept-source-agreements",
+        "--accept-package-agreements",
+        "--silent"
+    )
+}
+$wslPackage = Get-AppxPackage -Name MicrosoftCorporationII.WindowsSubsystemForLinux
+if (-not $wslPackage) {
+    throw "Microsoft.WSL is installed but its Appx package registration cannot be read."
+}
+$wslPackageVersion = $wslPackage.Version.ToString()
+
+& wsl.exe --version *> $null
 if ($LASTEXITCODE -ne 0) {
     throw "WSL is not active yet. Restart Windows, then run this script again."
 }
-
 Invoke-CheckedCommand -FilePath "wsl.exe" -ArgumentList @("--set-default-version", "1")
 
 & winget.exe list --id Canonical.Ubuntu.2404 --exact --accept-source-agreements *> $null
@@ -60,7 +76,14 @@ if ($registered -notcontains $DistroName) {
     Invoke-CheckedCommand -FilePath $launcher.Source -ArgumentList @("install", "--root")
 }
 
-Invoke-CheckedCommand -FilePath "wsl.exe" -ArgumentList @("--set-version", $DistroName, "1")
+$kernelRelease = (& wsl.exe -d $DistroName -u root -- uname -r | Out-String).Trim()
+if ($LASTEXITCODE -ne 0) {
+    throw "Unable to verify the registered Ubuntu kernel."
+}
+if ($kernelRelease -match "WSL2|microsoft-standard") {
+    throw "The registered Ubuntu distribution is WSL2; this host is approved for WSL1 only."
+}
+
 Invoke-CheckedCommand -FilePath "wsl.exe" -ArgumentList @("-d", $DistroName, "-u", "root", "--", "apt-get", "update")
 Invoke-CheckedCommand -FilePath "wsl.exe" -ArgumentList @(
     "-d", $DistroName, "-u", "root", "--",
@@ -78,6 +101,24 @@ if ($postgresExitCode -ne 0 -or $redisExitCode -ne 0 -or $redisOutput.Trim() -ne
     throw "Local data service verification failed."
 }
 
+$postgresVersion = (& wsl.exe -d $DistroName -u postgres -- psql -tAc "SHOW server_version" | Out-String).Trim()
+$postgresListenAddresses = (& wsl.exe -d $DistroName -u postgres -- psql -tAc "SHOW listen_addresses" | Out-String).Trim()
+$redisVersion = (& wsl.exe -d $DistroName -u root -- redis-cli INFO server | Select-String -Pattern "^redis_version:" | ForEach-Object { $_.Line.Split(":", 2)[1].Trim() }).Trim()
+$redisBind = (& wsl.exe -d $DistroName -u root -- redis-cli CONFIG GET bind | Select-Object -Last 1).Trim()
+$redisProtectedMode = (& wsl.exe -d $DistroName -u root -- redis-cli CONFIG GET protected-mode | Select-Object -Last 1).Trim()
+
+$streamKey = "yixing:runtime:setup-check"
+$streamReset = (& wsl.exe -d $DistroName -u root -- redis-cli DEL $streamKey | Out-String).Trim()
+if ($LASTEXITCODE -ne 0 -or $streamReset -notmatch "^[01]$") {
+    throw "Unable to reset the temporary Redis Streams verification key."
+}
+$streamWrite = (& wsl.exe -d $DistroName -u root -- redis-cli XADD $streamKey "1-0" field value | Out-String).Trim()
+$streamRead = (& wsl.exe -d $DistroName -u root -- redis-cli XRANGE $streamKey - + | Out-String).Trim()
+$streamDelete = (& wsl.exe -d $DistroName -u root -- redis-cli DEL $streamKey | Out-String).Trim()
+if ($streamWrite -ne "1-0" -or $streamRead -notmatch "field" -or $streamRead -notmatch "value" -or $streamDelete -ne "1") {
+    throw "Redis Streams write/read/cleanup verification failed."
+}
+
 if (-not $EvidencePath) {
     $repositoryRoot = Split-Path -Parent $PSScriptRoot
     $workspaceRoot = Split-Path -Parent $repositoryRoot
@@ -89,11 +130,21 @@ $evidence = [ordered]@{
     hostOperatingSystem = "Windows Server 2025 Datacenter"
     distro = $DistroName
     wslVersion = 1
+    wslPackage = "Microsoft.WSL"
+    wslPackageVersion = $wslPackageVersion
+    kernelRelease = $kernelRelease
     packages = @("postgresql", "redis-server", "ca-certificates", "curl")
+    postgresVersion = $postgresVersion
     postgresCheck = ($postgresOutput -join "`n").Trim()
+    postgresListenAddresses = $postgresListenAddresses
+    postgresDefaultClusterCreated = $true
+    redisVersion = $redisVersion
     redisCheck = ($redisOutput -join "`n").Trim()
+    redisBind = $redisBind
+    redisProtectedMode = $redisProtectedMode
+    redisStreamsCheck = "XADD/XRANGE/DEL passed; temporary key removed"
     secretsCreated = $false
-    databaseOrApplicationSchemaCreated = $false
+    applicationDatabaseOrSchemaCreated = $false
     publicFirewallRuleCreated = $false
     deploymentAttempted = $false
 }

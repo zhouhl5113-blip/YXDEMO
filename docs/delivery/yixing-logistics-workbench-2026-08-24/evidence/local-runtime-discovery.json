@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-08-24T07:52:00Z",
+  "observedAt": "2026-08-24T08:58:23Z",
   "host": {
     "operatingSystem": "Microsoft Windows Server 2025 Datacenter",
     "architecture": "64-bit",
@@ -16,20 +16,29 @@
     "dockerDesktopSupported": false,
     "wslInitiallyPresent": false,
     "wslFeatureEnabled": true,
+    "wslPackageId": "Microsoft.WSL",
+    "wslPackageVersion": "2.7.12.0",
+    "wslDistroVersion": 1,
+    "kernelRelease": "4.4.0-26100-Microsoft",
     "ubuntuPackageId": "Canonical.Ubuntu.2404",
     "ubuntuPackageVersion": "2404.0.5.0",
     "ubuntuPackageInstalled": true,
-    "restartRequired": true
+    "restartRequired": false,
+    "postgresVersion": "16.15",
+    "redisVersion": "7.0.15",
+    "windowsLoopbackPortsReachable": [5432, 6379]
   },
   "mutations": {
     "wslFeatureEnabledWithoutRestart": true,
     "ubuntuPackageInstalledAfterPublisherHashVerification": true,
-    "restartExecuted": false,
+    "restartExecuted": true,
+    "localDataServicesInstalled": true,
+    "redisStreamsTemporaryTestRemoved": true,
     "secretOrRbacMutation": false,
     "firewallMutation": false,
     "databaseOrSchemaCreated": false,
     "deploymentAttempted": false
   },
-  "decision": "LOCAL_DEV_AND_ACCEPTANCE_ONLY_PENDING_RESTART",
+  "decision": "LOCAL_DEV_AND_ACCEPTANCE_READY",
   "productionSuitability": "BLOCKED_SINGLE_FAILURE_DOMAIN_NO_HA_OR_RECOVERY_EVIDENCE"
 }
