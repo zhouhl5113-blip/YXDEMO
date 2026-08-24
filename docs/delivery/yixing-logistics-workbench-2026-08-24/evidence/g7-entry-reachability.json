@@ -1,9 +1,11 @@
 {
-  "observedAt": "2026-08-24T03:14:13Z",
+  "observedAt": "2026-08-24T09:26:10Z",
   "entries": [
     {"url": "https://dp-openapi.g7.com.cn/workbench/apps", "httpStatus": 200, "contractEvidence": false},
     {"url": "https://dp-openapi.g7.com.cn/apidocs/", "httpStatus": 200, "contractEvidence": false}
   ],
+  "authenticatedWorkbenchInventory": true,
+  "authenticatedInventoryEvidence": "evidence/g7-workbench-sandbox-inventory.json",
   "sandboxCredentialsUsed": false,
-  "reason": "Required Harness secret references are absent and credential rotation evidence is required before first real use."
+  "reason": "Authenticated workbench inventory is complete. Signed SANDBOX request/response tests remain blocked because required Harness Secret references are absent and credential rotation evidence is required before first real use."
 }

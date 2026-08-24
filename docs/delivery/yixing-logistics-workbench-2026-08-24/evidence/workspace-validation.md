@@ -1,6 +1,6 @@
 # Delivery Workspace Validation
 
-Observed: `2026-08-24T09:03:40Z`. Result: `PASSED` at lifecycle stage `intake`.
+Observed: `2026-08-24T09:32:30Z`. Result: `PASSED` at lifecycle stage `intake`.
 
 Validated commands:
 
@@ -17,7 +17,7 @@ Results:
 - Generated evidence contains 82 G7 matrix rows and 446 traceability rows with exact stable-ID counts.
 - The repository prototype contains one empty AMap key declaration and no embedded key value.
 - GitHub `main` is the default branch at audited commit `21d209fe970fef89dfe3ca8052efe4437796f48b`; the original evidence branch remains available.
-- Harness delivery evidence is published on `codex/harness-scope-evidence` for review in Draft PR #1; the last published head before this validation was `60ca72758ada1c324c02fdfdba0b1db025181cc3`.
+- Harness delivery evidence is published on `codex/harness-scope-evidence` for review in Draft PR #1; the last published head before this validation was `44ccfdbe943ab8d51e4017e910aed74f9283d389`.
 - Harness Project `default/yixing_logistics_workbench` and Environment boundaries `yixing_dev`, `yixing_preprod`, `yixing_prod` were created in a one-shot confirmed session and independently read back through the default read-only connection.
 - Service, Pipeline, project Secrets and all three Infrastructure definitions remain absent.
 - Local host discovery identified Windows Server 2025 with no exposed hardware virtualization. The approved restart completed; Microsoft WSL `2.7.12.0` now runs Ubuntu 24.04 as WSL 1 with kernel `4.4.0-26100-Microsoft`.
@@ -25,5 +25,9 @@ Results:
 - Redis Streams `XADD`, `XRANGE` and `DEL` passed, and the temporary verification key was removed.
 - `scripts/Setup-LocalRuntime.ps1` passed PowerShell parser validation and a repeat execution. PSScriptAnalyzer is not installed, so lint evidence is not claimed.
 - `gitleaks` is not installed locally; Harness Secret scanning remains mandatory at Security Gate.
+- Authenticated G7 workbench discovery completed for provisional application `ZHLDEMO`: 41 active scopes cover 107 production endpoints. The application remains provisional until the product owner confirms it is dedicated to this project.
+- G7 SANDBOX is ready and isolated from production. Its inventory reports 82 supported and 25 unsupported REST endpoints plus 18 message-subscription scopes; unsupported REST coverage is recorded as a composition/contract question, not as proof that the platform lacks the capability.
+- The 82-row G7 capability matrix now references authenticated workbench inventory. Signed SANDBOX request/response contract tests remain blocked by credential rotation, Harness Secret binding and target-application confirmation.
+- G7 credential details were not opened or recorded. No API request, SANDBOX reset, scope mutation, credential mutation or production write was attempted.
 
-No gate transition, Secret/RBAC change, firewall change, application database/schema creation, database migration or deployment was attempted. PostgreSQL package installation created only its default system cluster. Product and Design gates remain blocked by the decisions in `open-decisions.md`.
+No gate transition, Secret/RBAC change, firewall change, application database/schema creation, database migration or deployment was attempted. PostgreSQL package installation created only its default system cluster. Product and Design gates remain blocked by the decisions in `open-decisions.md`, the unapproved `G7-GAP-*` records and the missing signed G7 contracts.
