@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "observedAt": "2026-08-24T15:33:55Z",
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "changeCommit": "f93edf6abebc6b866cde52cbc44381229effc3c7",
   "decisionId": "STORY-001",
   "result": "RESOLVED",
   "approver": "周贺龙",

@@ -18,7 +18,7 @@
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
     "branch": "codex/harness-scope-evidence",
     "baseBranch": "main",
-    "commit": "23f8e0089f2849caf404224fa38098a749b2a290",
+    "commit": "f93edf6abebc6b866cde52cbc44381229effc3c7",
     "pullRequest": "https://github.com/zhouhl5113-blip/YXDEMO/pull/1"
   },
   "gates": [
@@ -118,5 +118,5 @@
     "ADR-0003 and OQ-008 intersection/deny precedence are approved only for local authorization-policy contracts and synthetic tests. 周贺龙 is the local Design approver, but independent review is not demonstrated; no distinct second R3 approver exists, so R3 remains disabled. G7-GAP-001/008, identity persistence, Keycloak runtime and production identity infrastructure remain unresolved.",
     "Production infrastructure, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-24T14:34:17Z"
+  "updatedAt": "2026-08-25T02:25:54Z"
 }

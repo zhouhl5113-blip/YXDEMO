@@ -4,6 +4,7 @@
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
   "target": "PRODUCT_AND_DESIGN_GATES",
   "implementationCommit": "23f8e0089f2849caf404224fa38098a749b2a290",
+  "evidenceCommit": "f93edf6abebc6b866cde52cbc44381229effc3c7",
   "structureValid": true,
   "verdict": "BLOCKED",
   "automatedChecks": {
