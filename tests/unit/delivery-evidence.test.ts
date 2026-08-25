@@ -33,6 +33,7 @@ async function actualInput(): Promise<DeliveryEvidenceInput> {
     gapDecisionsMarkdown: gapDecisions,
     openDecisionsMarkdown: openDecisions,
     prohibitedImplementationPaths: [],
+    localApplicationShellApproved: true,
     threatModelPresent: false,
     openDecisionsResolved: false,
     signedSandboxEvidencePresent: false,
@@ -53,13 +54,18 @@ describe("delivery evidence gate", () => {
     assert.equal(report.verdict, "BLOCKED");
     assert.equal(report.counts.matrixRows, 82);
     assert.equal(report.counts.traceabilityRows, 464);
-    assert.equal(report.counts.pendingGapRecords, 10);
+    assert.equal(report.counts.pendingGapRecords, 0);
     assert.equal(report.counts.localDecisionRows, 31);
     assert.equal(report.counts.openDecisions, 15);
     assert.deepEqual(report.failedChecks, []);
     assert.ok(report.blockers.some((blocker) => blocker.includes("Product Gate")));
     assert.ok(report.blockers.some((blocker) => blocker.includes("Design Gate")));
+    assert.equal(
+      report.blockers.some((blocker) => blocker.includes("gap records remain")),
+      false,
+    );
     assert.ok(report.blockers.some((blocker) => blocker.includes("15 administrator/product")));
+    assert.ok(report.blockers.some((blocker) => blocker.includes("Signed G7 SANDBOX")));
     assert.ok(report.blockers.some((blocker) => blocker.includes("threat model")));
   });
 
@@ -91,11 +97,31 @@ describe("delivery evidence gate", () => {
         "apps/web/package.json",
         "packages/orders/migrations/001.sql",
       ],
+      localApplicationShellApproved: false,
     });
 
     assert.equal(report.structureValid, false);
     assert.equal(report.verdict, "FAIL");
     assert.ok(report.failedChecks.includes("pre-gate implementation boundary"));
+  });
+
+  it("allows an approved local application shell but keeps executable migrations blocked", async () => {
+    const input = await actualInput();
+    const approvedShell = evaluateDeliveryEvidence({
+      ...input,
+      prohibitedImplementationPaths: ["apps/web/package.json"],
+    });
+    const executableMigration = evaluateDeliveryEvidence({
+      ...input,
+      prohibitedImplementationPaths: [
+        "apps/web/package.json",
+        "packages/orders/migrations/001.sql",
+      ],
+    });
+
+    assert.equal(approvedShell.structureValid, true);
+    assert.equal(executableMigration.structureValid, false);
+    assert.ok(executableMigration.failedChecks.includes("pre-gate implementation boundary"));
   });
 
   it("rejects duplicate requirement IDs in the G7 capability matrix", async () => {

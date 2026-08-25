@@ -8,10 +8,12 @@
     "node": ">=24.12 <25"
   },
   "scripts": {
-    "format": "biome format --write --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages scripts tests",
-    "format:check": "biome format --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages scripts tests",
-    "lint": "biome lint --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json packages scripts tests",
-    "typecheck": "tsc --project tsconfig.json",
+    "format": "biome format --write --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json apps packages scripts tests",
+    "format:check": "biome format --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json apps packages scripts tests",
+    "lint": "biome lint --files-ignore-unknown=true package.json pnpm-workspace.yaml tsconfig.json tsconfig.base.json biome.json apps packages scripts tests",
+    "typecheck": "tsc --project tsconfig.json && pnpm --filter @yixing/web typecheck",
+    "dev:web": "pnpm --filter @yixing/web dev",
+    "build:web": "pnpm --filter @yixing/web build",
     "verify:evidence": "node scripts/verify-delivery-evidence.ts",
     "gate:product-design": "node scripts/verify-delivery-evidence.ts --require-pass",
     "test": "node --test",

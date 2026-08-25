@@ -2,11 +2,19 @@
 
 ## Status
 
-`PROPOSED_PENDING_G7_EVIDENCE_AND_APPROVAL`
+`ACCEPTED_FOR_LOCAL_DESIGN_TEST_AND_MIGRATION_REVIEW`
 
-This ADR is ready for Product, Security, Data and G7 integration review. It does
-not authorize a migration, live G7 call, Agent execution, R3 action, Secret
-change or deployment.
+On 2026-08-25, project owner, Product approver, Security responsible person,
+Data owner and local Design approver 周贺龙 accepted this ADR and the ownership
+boundaries of `G7-GAP-001..010` for local design, interfaces, tests, draft
+migrations and migration review. This acceptance does not authorize executing a
+migration, calling live G7, enabling Agent/model/R3 capabilities, changing a
+Secret or RBAC assignment, or deploying to production.
+
+Every physical migration remains blocked until its gap has signed SANDBOX
+request/response evidence and a named activation reviewer. Raw location history
+remains prohibited. Evidence:
+`docs/delivery/yixing-logistics-workbench-2026-08-24/evidence/g7-gap-local-design-approval.json`.
 
 ## Date
 
@@ -146,12 +154,13 @@ Negative:
 - Raw location history, production credentials, Agent and R3 remain absent while
   their decisions are unresolved.
 
-## Approval Required
+## Activation Approval Required
 
-Acceptance requires named Product, Security, Data and G7 integration approval,
-an approval/review date for every `G7-GAP-*`, and signed SANDBOX evidence for
-each activated source contract. Production requires a separate decision against
-the exact release digest and production infrastructure.
+Local design/test/migration-review acceptance is recorded. Activation still
+requires a named G7 integration or domain reviewer, a review date for every
+executed `G7-GAP-*`, and signed SANDBOX evidence for each activated source
+contract. Production requires a separate decision against the exact release
+digest and production infrastructure.
 
 ## Related Requirements And Evidence
 

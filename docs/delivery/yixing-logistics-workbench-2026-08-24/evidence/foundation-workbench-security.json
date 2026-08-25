@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-25T03:49:03Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "scope": "LOCAL_DEVELOPMENT_AND_TEST_ONLY",
+  "result": "PASS_WITH_SECURITY_GATE_BLOCKED",
+  "staticReview": {
+    "scope": [
+      "apps/web",
+      "packages/workbench-session"
+    ],
+    "result": "PASS",
+    "observations": [
+      "No DOM HTML injection sink, dynamic code execution, browser token storage, postMessage handler, command execution or third-party runtime script was found",
+      "No G7 or AMap credential identifier, endpoint or credential value was found in the reviewed runtime surface",
+      "Synthetic identity is guarded by NODE_ENV and marked server-only",
+      "The only browser fetch targets the same-origin BFF route"
+    ]
+  },
+  "runtimeChecks": [
+    {
+      "id": "SEC-WEB-001",
+      "result": "PASS",
+      "assertion": "GET / returns CSP base-uri/frame-ancestors/form-action/object-src restrictions plus COOP, Permissions-Policy, Referrer-Policy, nosniff and X-Frame-Options headers"
+    },
+    {
+      "id": "SEC-WEB-002",
+      "result": "PASS",
+      "assertion": "A valid role request returns 200 with Cache-Control no-store and derives tenant-yixing-local instead of the submitted browser tenant_id"
+    },
+    {
+      "id": "SEC-WEB-003",
+      "result": "PASS",
+      "assertion": "A request marked Sec-Fetch-Site cross-site is rejected with 403"
+    },
+    {
+      "id": "SEC-WEB-004",
+      "result": "PASS",
+      "assertion": "A JSON request body larger than 1024 bytes is rejected with 413"
+    },
+    {
+      "id": "SEC-WEB-005",
+      "result": "PASS",
+      "assertion": "Malformed JSON is rejected with a sanitized 400 response and Cache-Control no-store"
+    }
+  ],
+  "dependencyAdvisoryCheck": {
+    "result": "NOT_AVAILABLE",
+    "command": "pnpm audit --prod --audit-level=high --registry=https://registry.npmmirror.com",
+    "reason": "The configured mirror does not implement the npm bulk advisory endpoint; the official registry was not reachable reliably from this host",
+    "gateImpact": "Security Gate remains blocked"
+  },
+  "remainingSecurityGateWork": [
+    "Replace synthetic identity with the approved real authentication runtime and validate session revocation",
+    "Add a nonce-based script-src CSP at the approved deployment proxy without unsafe-inline or unsafe-eval",
+    "Run repository, dependency, Secret, container and DAST scans in Harness and retain SARIF/JUnit evidence",
+    "Generate SBOM and provenance for an immutable candidate artifact",
+    "Validate RLS, persistent audit, multi-tenant isolation and production rate limiting",
+    "Resolve and accept any critical or high vulnerability before gate transition"
+  ],
+  "forbiddenActionsObserved": {
+    "liveG7Calls": 0,
+    "productionCredentials": 0,
+    "databaseMigrations": 0,
+    "agentOrModelCalls": 0,
+    "deployments": 0,
+    "secretChanges": 0,
+    "rbacChanges": 0
+  }
+}

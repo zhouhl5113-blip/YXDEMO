@@ -59,6 +59,7 @@ export interface DeliveryEvidenceInput {
   readonly gapDecisionsMarkdown: string;
   readonly openDecisionsMarkdown: string;
   readonly prohibitedImplementationPaths: readonly string[];
+  readonly localApplicationShellApproved: boolean;
   readonly threatModelPresent: boolean;
   readonly openDecisionsResolved: boolean;
   readonly signedSandboxEvidencePresent: boolean;
@@ -278,13 +279,27 @@ export function evaluateDeliveryEvidence(input: DeliveryEvidenceInput): Delivery
     `${openDecisionIds.size} decision records found; ${unresolvedDecisionIds.length} remain open`,
   );
 
-  const preGateBoundaryValid = input.prohibitedImplementationPaths.length === 0;
+  const executableMigrationPaths = input.prohibitedImplementationPaths.filter((path) => {
+    const normalizedPath = path.replaceAll("\\", "/").toLowerCase();
+    return normalizedPath.endsWith(".sql") || normalizedPath.split("/").includes("migrations");
+  });
+  const applicationShellPaths = input.prohibitedImplementationPaths.filter(
+    (path) => !executableMigrationPaths.includes(path),
+  );
+  const preGateBoundaryValid =
+    executableMigrationPaths.length === 0 &&
+    (applicationShellPaths.length === 0 || input.localApplicationShellApproved);
   addCheck(
     "pre-gate implementation boundary",
     preGateBoundaryValid,
     preGateBoundaryValid
-      ? "no application, migration or SQL implementation path found"
-      : input.prohibitedImplementationPaths.join(";"),
+      ? applicationShellPaths.length > 0
+        ? "approved local application shell present; no executable migration path found"
+        : "no application, migration or SQL implementation path found"
+      : [
+          ...executableMigrationPaths,
+          ...(input.localApplicationShellApproved ? [] : applicationShellPaths),
+        ].join(";"),
   );
 
   const productGate = record.gates.find((gate) => gate.id === "product")?.status ?? "missing";
@@ -345,6 +360,9 @@ function runCli(): void {
     gapDecisionsMarkdown: readRequired(resolve(deliveryRoot, "g7-gap-decisions.md")),
     openDecisionsMarkdown: readRequired(resolve(deliveryRoot, "open-decisions.md")),
     prohibitedImplementationPaths,
+    localApplicationShellApproved: existsSync(
+      resolve(deliveryRoot, "evidence/g7-gap-local-design-approval.json"),
+    ),
     threatModelPresent: existsSync(resolve(repositoryRoot, "docs/security/YXDEMO-threat-model.md")),
     openDecisionsResolved: existsSync(
       resolve(deliveryRoot, "evidence/open-decisions-resolution.json"),

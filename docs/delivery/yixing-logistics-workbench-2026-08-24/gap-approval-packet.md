@@ -23,10 +23,9 @@ evidence and named reviewers exist. Keep these controls unchanged:
 - R3 stays disabled until an independent second approver is assigned.
 - Production deployment and Harness Secret/RBAC changes require separate approval.
 
-## Exact Approval Text
+## Decision Recorded
 
-The project owner may approve the next local-development stage by sending this
-exact statement in the Codex task:
+周贺龙 sent the following exact approval in the Codex task on 2026-08-25:
 
 ```text
 批准仅限本地开发测试：接受 ADR-0004；批准 G7-GAP-001..010 的数据所有权和最小本地候选进入设计、接口、测试与迁移评审。任何迁移执行仍须对应缺口的签名 SANDBOX 证据和具名复核；G7/高德生产凭据、真实 G7 写入、Agent、模型调用、R3、生产部署、Secret 和 RBAC 变更保持关闭。周贺龙担任 Product、Security、Data 和本地 Design 批准人。
@@ -51,6 +50,7 @@ creation and Harness Secret mutation require a separate explicit approval.
 
 ## Gate Effect
 
-After the approval text is recorded, Design work may proceed under ADR-0004.
+The approval text is recorded in
+`evidence/g7-gap-local-design-approval.json`. Design work may proceed under ADR-0004.
 Product and Design gates remain blocked until the signed SANDBOX evidence,
 remaining retention/runtime decisions and action-specific approvals are complete.

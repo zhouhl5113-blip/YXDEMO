@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testsuite name="G7 credentialless boundary" time="0.033237" disabled="0" errors="0" tests="6" failures="0" skipped="0" timestamp="2026-08-25T03:30:27.388Z" hostname="aqanvguu50uxko4">
+		<testcase name="allows synthetic offline contract verification" time="0.002599" classname="test" file="D:\Harness\YXDEMO\tests\contract\g7-boundary.test.ts"/>
+		<testcase name="fails closed for a live SANDBOX read while shared credentials remain active" time="0.008738" classname="test" file="D:\Harness\YXDEMO\tests\contract\g7-boundary.test.ts"/>
+		<testcase name="fails closed for every production operation" time="0.000552" classname="test" file="D:\Harness\YXDEMO\tests\contract\g7-boundary.test.ts"/>
+		<testcase name="exposes only approved Harness Secret identifiers" time="0.002491" classname="test" file="D:\Harness\YXDEMO\tests\contract\g7-boundary.test.ts"/>
+		<testcase name="preserves the documented header and pagination contract" time="0.000818" classname="test" file="D:\Harness\YXDEMO\tests\contract\g7-boundary.test.ts"/>
+		<testcase name="matches the sanitized workbench inventory without claiming behavioral evidence" time="0.010935" classname="test" file="D:\Harness\YXDEMO\tests\contract\g7-boundary.test.ts"/>
+	</testsuite>
+	<testsuite name="local authorization policy" time="0.040759" disabled="0" errors="0" tests="12" failures="0" skipped="0" timestamp="2026-08-25T03:30:27.484Z" hostname="aqanvguu50uxko4">
+		<testcase name="TEST-001 policy prerequisite rejects a tenant outside trusted server claims" time="0.003422" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="TEST-002 policy prerequisite gives explicit deny precedence over a role grant" time="0.000569" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="OQ-008 intersects every applicable scope layer and applies deny last" time="0.002466" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="treats a missing layer constraint as ALL, never as accidental empty access" time="0.000455" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="fails closed when no trusted scope layer is supplied" time="0.000352" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="TEST-003 policy prerequisite permits a role switch that only narrows scope" time="0.000791" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="TEST-003 policy prerequisite rejects a role switch that expands scope" time="0.000449" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="rejects a role switch that removes an existing explicit deny" time="0.000556" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="rejects switching from an explicit scope to ALL" time="0.000547" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="rejects an action that was never granted" time="0.000537" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="keeps R3 actions unavailable without a distinct second approver" time="0.000395" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+		<testcase name="matches the action-specific approval boundary without enabling runtime features" time="0.026331" classname="test" file="D:\Harness\YXDEMO\tests\unit\authorization-policy.test.ts"/>
+	</testsuite>
+	<testsuite name="shared contracts" time="0.012584" disabled="0" errors="0" tests="5" failures="0" skipped="0" timestamp="2026-08-25T03:30:27.513Z" hostname="aqanvguu50uxko4">
+		<testcase name="normalizes and freezes trusted TenantScope claims without deciding scope semantics" time="0.004372" classname="test" file="D:\Harness\YXDEMO\tests\unit\contracts.test.ts"/>
+		<testcase name="rejects an empty trusted tenant or user claim" time="0.001285" classname="test" file="D:\Harness\YXDEMO\tests\unit\contracts.test.ts"/>
+		<testcase name="serializes structured errors without leaking their cause" time="0.000630" classname="test" file="D:\Harness\YXDEMO\tests\unit\contracts.test.ts"/>
+		<testcase name="creates an immutable event envelope with ordered timestamps" time="0.001317" classname="test" file="D:\Harness\YXDEMO\tests\unit\contracts.test.ts"/>
+		<testcase name="rejects invalid or reversed event timestamps" time="0.000864" classname="test" file="D:\Harness\YXDEMO\tests\unit\contracts.test.ts"/>
+	</testsuite>
+	<testsuite name="delivery evidence gate" time="0.228517" disabled="0" errors="0" tests="7" failures="0" skipped="0" timestamp="2026-08-25T03:30:27.513Z" hostname="aqanvguu50uxko4">
+		<testcase name="parses quoted RFC 4180 fields without splitting embedded commas" time="0.003604" classname="test" file="D:\Harness\YXDEMO\tests\unit\delivery-evidence.test.ts"/>
+		<testcase name="reports the current evidence as structurally valid but gate blocked" time="0.067690" classname="test" file="D:\Harness\YXDEMO\tests\unit\delivery-evidence.test.ts"/>
+		<testcase name="keeps TEST-001..163 stable and closes the US-069..074 acceptance-ID gap" time="0.034929" classname="test" file="D:\Harness\YXDEMO\tests\unit\delivery-evidence.test.ts"/>
+		<testcase name="fails structural validation if implementation appears before gap approval" time="0.014367" classname="test" file="D:\Harness\YXDEMO\tests\unit\delivery-evidence.test.ts"/>
+		<testcase name="allows an approved local application shell but keeps executable migrations blocked" time="0.077872" classname="test" file="D:\Harness\YXDEMO\tests\unit\delivery-evidence.test.ts"/>
+		<testcase name="rejects duplicate requirement IDs in the G7 capability matrix" time="0.012041" classname="test" file="D:\Harness\YXDEMO\tests\unit\delivery-evidence.test.ts"/>
+		<testcase name="rejects a duplicate stable TEST ID even when the row count is unchanged" time="0.013901" classname="test" file="D:\Harness\YXDEMO\tests\unit\delivery-evidence.test.ts"/>
+	</testsuite>
+	<testsuite name="session authorization contracts" time="0.015681" disabled="0" errors="0" tests="15" failures="0" skipped="0" timestamp="2026-08-25T03:30:27.776Z" hostname="aqanvguu50uxko4">
+		<testcase name="TEST-001 prerequisite accepts only a server-assigned selected role" time="0.001883" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="TEST-001 prerequisite rejects a client-selected unassigned role" time="0.000887" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="TEST-003 prerequisite permits a current active authorization snapshot" time="0.000462" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="TEST-003 prerequisite rejects a stale authorization snapshot" time="0.000382" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="TEST-003 prerequisite rejects an explicitly revoked session" time="0.000407" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="rejects an invalid authorization version instead of comparing loosely" time="0.000364" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="rejects R2 self-approval" time="0.000573" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="permits R2 review by a distinct approver" time="0.000374" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="rejects R2 execution when no approver is present" time="0.000404" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="keeps R3 disabled through the approval boundary" time="0.000522" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="TEST-002 prerequisite creates a minimal immutable denial audit record" time="0.003970" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="rejects a raw resource identifier in place of a SHA-256 reference" time="0.000611" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="allows an audit record without an object reference" time="0.000386" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="rejects an unknown authorization decision at runtime" time="0.000392" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+		<testcase name="rejects malformed required, code, timestamp and source fields" time="0.000727" classname="test" file="D:\Harness\YXDEMO\tests\unit\session-authorization-contracts.test.ts"/>
+	</testsuite>
+	<testsuite name="workbench BFF session boundary" time="0.010867" disabled="0" errors="0" tests="3" failures="0" skipped="0" timestamp="2026-08-25T03:30:27.782Z" hostname="aqanvguu50uxko4">
+		<testcase name="TEST-001 derives TenantScope from trusted claims and ignores browser tenant_id" time="0.002034" classname="test" file="D:\Harness\YXDEMO\tests\unit\workbench-session.test.ts"/>
+		<testcase name="TEST-002 masks inaccessible objects and emits a minimal denial audit record" time="0.005183" classname="test" file="D:\Harness\YXDEMO\tests\unit\workbench-session.test.ts"/>
+		<testcase name="TEST-003 rejects a stale authorization snapshot before creating a context" time="0.001101" classname="test" file="D:\Harness\YXDEMO\tests\unit\workbench-session.test.ts"/>
+	</testsuite>
+	<!-- tests 48 -->
+	<!-- suites 6 -->
+	<!-- pass 48 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 789.4238 -->
+</testsuites>

@@ -1,6 +1,6 @@
 # Delivery Workspace Validation
 
-Observed: `2026-08-24T11:03:10Z`. Result: `PASSED` at lifecycle stage `intake`.
+Observed: `2026-08-25T03:49:03Z`. Result: `PASSED` at lifecycle stage `intake`.
 
 Validated commands:
 
@@ -16,8 +16,10 @@ Results:
 - Required asset verification passed 8/8.
 - Generated evidence contains 82 G7 matrix rows and 464 traceability rows with exact stable-ID sets.
 - The credentialless Foundation workspace passed frozen dependency installation, Biome formatting/lint, TypeScript strict checking and 11/11 unit/offline contract tests. Coverage was 100% lines, 93.94% branches and 100% functions for the implemented contract surface.
-- Traceability marks only NFR-003, NFR-005, AD-001, AD-002 and AD-038 as partial Foundation contracts; all business Stories and their acceptance tests remain blocked or not started.
-- The Product/Design evidence validator passed all 10 structure checks and its 15 regression tests. Its strict gate mode returned non-zero with verdict `BLOCKED`, as required while approvals, signed G7 evidence and the final threat model are absent.
+- Traceability now links the approved local BFF/workbench shell to FR-017, NFR-003/005/006, US-001/004 and TEST-001..003/010..012 without marking either Story complete.
+- The combined Foundation/workbench regression passed 48/48 tests. The Product/Design evidence validator passed all 10 structure checks; its strict gate mode returned non-zero with verdict `BLOCKED`, as required while decisions and signed G7 evidence are absent.
+- The Next.js 16.3.2 production build passed. Browser QA passed search, map fallback, server-validated local role switching and browser-local exception acceptance at 1440x900, 1280x720 and 390x844 with no application console errors or page-level horizontal overflow.
+- The local web security baseline passed static risky-sink/credential review and runtime checks for response headers, no-store API responses, browser tenant isolation, cross-site rejection, malformed JSON and the 1024-byte request limit. Strict script CSP, dependency advisories, Harness scans, DAST, SBOM and provenance remain Security Gate blockers.
 - The repository prototype contains one empty AMap key declaration and no embedded key value.
 - GitHub `main` is the default branch at audited commit `21d209fe970fef89dfe3ca8052efe4437796f48b`; the original evidence branch remains available.
 - Harness delivery evidence is published on `codex/harness-scope-evidence` for review in Draft PR #1; the last published head before this validation was `d5260fc7a5fe9ebf4f84c9f7a942f4078f438e77`.
@@ -33,4 +35,4 @@ Results:
 - The 82-row G7 capability matrix now references authenticated workbench inventory and target-application confirmation. The owner confirmed old credentials remain active for dependent systems; they are prohibited for this project. Signed SANDBOX request/response contract tests remain blocked until a coordinated cutover, rotation evidence and Harness Secret binding exist.
 - G7 credential details were not opened or recorded. No API request, SANDBOX reset, scope mutation, credential mutation or production write was attempted.
 
-No live G7 call, gate transition, Secret/RBAC change, firewall change, application database/schema creation, database migration, Harness Service creation or deployment was attempted. PostgreSQL package installation created only its default system cluster. Product and Design gates remain blocked by the decisions in `open-decisions.md`, the unapproved `G7-GAP-*` records and the missing signed G7 contracts.
+No live G7 call, gate transition, Secret/RBAC change, firewall change, application database/schema creation, database migration, Harness Service creation or deployment was attempted. The only new runtime surface is the approved local synthetic-data application shell and BFF route. PostgreSQL package installation created only its default system cluster. G7-GAP-001..010 are approved for local design/test/migration review only; Product and Design gates remain blocked by the decisions in `open-decisions.md`, missing activation reviews and missing signed G7 contracts.

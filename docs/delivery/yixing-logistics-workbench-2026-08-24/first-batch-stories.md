@@ -1,6 +1,6 @@
 # First Independently Acceptable Batch
 
-Status: `CREDENTIALLESS_FOUNDATION_TOOLING_IN_PROGRESS_APPLICATION_GATE_BLOCKED`.
+Status: `LOCAL_FOUNDATION_AND_APPLICATION_SHELL_AUTHORIZED_CONTRACT_ACTIVATION_BLOCKED`.
 
 | Order | Story/work | Existing tests | Entry condition |
 | --- | --- | --- | --- |
@@ -12,4 +12,6 @@ Status: `CREDENTIALLESS_FOUNDATION_TOOLING_IN_PROGRESS_APPLICATION_GATE_BLOCKED`
 | 5 | US-004 从今天的工作流接手一项变化 | TEST-010..012 | US-001..003 contracts and UX states approved |
 | 6 | Foundation 0 delivery/security baseline | NFR-001..008 evidence | Target Harness scope, infrastructure/connectors and approved G7-GAP/ADR set |
 
-No other Epic starts concurrently. The credentialless tooling row does not authorize an application service, migration, local business state or Story completion. `STORY-001` is resolved: `US-069..074` now map to `TEST-146..163`, all previous IDs remain stable, and the Build Ready FR count is corrected to 82.
+Local progress in this batch: US-001 now has a synthetic server-owned session/BFF boundary and US-004 has a responsive synthetic-data workbench shell. TEST-001 and TEST-003 pass at the local BFF boundary; TEST-002 produces a masked audit record but does not persist/read it back. TEST-010..012 have partial browser evidence only. Real authentication, RLS, persistent audit, the prefilled write orchestrator, G7 facts and business acceptance remain blocked.
+
+No other Epic starts concurrently. The 2026-08-25 approval authorizes local interfaces, synthetic tests, draft migration review and application shells under ADR-0004; it does not authorize migration execution, signed G7 claims, live G7 writes, Agent/model/R3 capabilities, production deployment, Secret/RBAC changes or Story completion. `STORY-001` is resolved: `US-069..074` now map to `TEST-146..163`, all previous IDs remain stable, and the Build Ready FR count is corrected to 82.

@@ -24,9 +24,9 @@
   "gates": [
     {"id": "product", "status": "blocked", "evidence": ["asset-verification.csv", "g7-capability-matrix.csv", "g7-gap-decisions.md", "gap-approval-packet.md", "open-decisions.md", "traceability.csv"]},
     {"id": "design", "status": "blocked", "evidence": ["g7-gap-decisions.md", "gap-approval-packet.md", "open-decisions.md", "release-plan.md", "repo:docs/security/YXDEMO-threat-model.md", "repo:docs/architecture/adr-0003-keycloak-identity-application-authorization.md", "repo:docs/architecture/adr-0004-g7-platform-first-local-data-boundaries.md"]},
-    {"id": "build", "status": "pending", "evidence": []},
-    {"id": "security", "status": "pending", "evidence": []},
-    {"id": "acceptance", "status": "pending", "evidence": []},
+    {"id": "build", "status": "pending", "evidence": ["evidence/foundation-workbench-build.json", "evidence/foundation-workbench-tests.junit.xml"]},
+    {"id": "security", "status": "pending", "evidence": ["evidence/foundation-workbench-security.json"]},
+    {"id": "acceptance", "status": "pending", "evidence": ["evidence/foundation-workbench-browser-qa.json"]},
     {"id": "release", "status": "pending", "evidence": []},
     {"id": "production", "status": "pending", "evidence": []}
   ],
@@ -56,9 +56,9 @@
     },
     "product": null,
     "design": {
-      "status": "APPROVED_LOCAL_AUTHORIZATION_CONTRACT_ONLY",
+      "status": "APPROVED_LOCAL_AUTHORIZATION_AND_G7_BOUNDARY_REVIEW_ONLY",
       "approver": "周贺龙",
-      "evidence": "evidence/local-design-approval.json",
+      "evidence": "evidence/g7-gap-local-design-approval.json",
       "productionApproval": false
     },
     "security": null,
@@ -92,6 +92,7 @@
     "evidence/g7-workbench-sandbox-inventory.json",
     "evidence/manifest-amendment.md",
     "evidence/story-acceptance-amendment.json",
+    "evidence/g7-gap-local-design-approval.json",
     "evidence/delivery-artifact-generation.json",
     "evidence/foundation-credentialless-build.json",
     "evidence/foundation-credentialless-tests.junit.xml",
@@ -99,6 +100,13 @@
     "evidence/foundation-authorization-tests.junit.xml",
     "evidence/foundation-session-authorization-policy.json",
     "evidence/foundation-session-authorization-tests.junit.xml",
+    "evidence/foundation-workbench-build.json",
+    "evidence/foundation-workbench-tests.junit.xml",
+    "evidence/foundation-workbench-browser-qa.json",
+    "evidence/foundation-workbench-security.json",
+    "evidence/screenshots/workbench-1440x900.png",
+    "evidence/screenshots/workbench-1280x720.png",
+    "evidence/screenshots/workbench-390x844.png",
     "evidence/product-design-gate-check.json",
     "evidence/product-design-gate-tests.junit.xml",
     "evidence/harness-scope-create.json",
@@ -110,13 +118,15 @@
     "evidence/workspace-validation.md"
   ],
   "residualRisks": [
+    "The approved local Next.js workbench and BFF session boundary use synthetic data and synthetic identity only. Persistent audit, Keycloak, RLS, G7/Amap integration, Agent/model/R3 and every production control remain disabled.",
     "The dedicated Harness project and environment shells are bound, but Service, Pipeline and all three Infrastructure definitions remain absent pending a runtime decision.",
     "The current Windows Server host is approved only for local development and acceptance; WSL 1, PostgreSQL 16 and Redis 7 are validated, but the single host remains unsuitable for production.",
     "Old G7 credentials are confirmed still active for other systems and remain untouched. This project is restricted to credentialless offline contracts until a coordinated cutover, rotation evidence and Harness SANDBOX Secret bindings exist. The prototype AMap key also requires rotation before use.",
-    "ZHLDEMO is confirmed as the dedicated target application and authenticated G7 workbench inventory is complete, but Harness Secret binding plus SANDBOX request/response contract evidence remain missing; ten G7-GAP records remain proposed and unapproved.",
+    "ZHLDEMO is confirmed as the dedicated target application and authenticated G7 workbench inventory is complete. G7-GAP-001..010 are approved only for local design/test/migration review; Harness Secret binding, signed SANDBOX evidence, named activation review and all migration execution remain missing or blocked.",
     "STORY-001 is resolved with TEST-146..163 and a corrected 82-FR Build Ready count; the affected Stories remain unimplemented.",
-    "ADR-0003 and OQ-008 intersection/deny precedence are approved only for local authorization-policy contracts and synthetic tests. 周贺龙 is the local Design approver, but independent review is not demonstrated; no distinct second R3 approver exists, so R3 remains disabled. G7-GAP-001/008, identity persistence, Keycloak runtime and production identity infrastructure remain unresolved.",
+    "ADR-0003, ADR-0004 and OQ-008 are approved only for local development/test contracts, interfaces, application shells and draft migration review. 周贺龙 is the local Design approver, but activation review is unassigned and independent review is not demonstrated; no distinct second R3 approver exists, so R3, migration execution, Keycloak runtime and production identity infrastructure remain disabled or unresolved.",
+    "The local web response and request security baseline passes, but a nonce-based script CSP, authoritative dependency advisories, Harness Secret/container/repository scans, DAST, SBOM and provenance remain unavailable and block Security Gate completion.",
     "Production infrastructure, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-25T02:25:54Z"
+  "updatedAt": "2026-08-25T03:49:03Z"
 }

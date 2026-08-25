@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-25T02:21:36Z",
+  "observedAt": "2026-08-25T03:30:51Z",
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
   "target": "PRODUCT_AND_DESIGN_GATES",
   "implementationCommit": "23f8e0089f2849caf404224fa38098a749b2a290",
@@ -14,10 +14,10 @@
   "counts": {
     "matrixRows": 82,
     "traceabilityRows": 464,
-    "pendingGapRecords": 10,
+    "pendingGapRecords": 0,
     "localDecisionRows": 31,
     "openDecisions": 15,
-    "regressionTestsPassed": 44,
+    "regressionTestsPassed": 48,
     "coverageLinesPercent": 94.79,
     "coverageBranchesPercent": 83.33,
     "coverageFunctionsPercent": 97.06
@@ -25,9 +25,8 @@
   "blockers": [
     "Product Gate is blocked",
     "Design Gate is blocked",
-    "10 G7 gap records remain proposed and unapproved",
     "15 of 16 administrator/product decisions remain open; STORY-001 is resolved and OQ-008 is approved only for local contract scope",
-    "ADR-0003 is accepted only for local policy contracts; G7-GAP-001/008, identity runtime and persistence remain unapproved, and R3 is disabled because no distinct second approver exists",
+    "ADR-0003 and ADR-0004 allow local contracts, application shells and draft migration review only; migration execution, identity runtime and R3 remain disabled pending evidence and independent review",
     "Signed G7 SANDBOX request/response evidence is absent by approved design"
   ],
   "strictCommand": {
@@ -35,8 +34,11 @@
     "nonZeroExitExpected": true,
     "result": "BLOCKED_AS_DESIGNED"
   },
+  "approvedLocalActionsObserved": {
+    "applicationShellPaths": 1,
+    "serverBffRoutes": 1
+  },
   "forbiddenActionsObserved": {
-    "applicationImplementationPaths": 0,
     "databaseMigrationPaths": 0,
     "sqlImplementationPaths": 0,
     "liveG7Calls": 0,
