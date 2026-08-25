@@ -18,7 +18,7 @@
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
     "branch": "codex/harness-scope-evidence",
     "baseBranch": "main",
-    "commit": "f93edf6abebc6b866cde52cbc44381229effc3c7",
+    "commit": "eff50689d7c648a1bdfe42eb7054ada9ead9e6e4",
     "pullRequest": "https://github.com/zhouhl5113-blip/YXDEMO/pull/1"
   },
   "gates": [
@@ -128,5 +128,5 @@
     "The local web response and request security baseline passes, but a nonce-based script CSP, authoritative dependency advisories, Harness Secret/container/repository scans, DAST, SBOM and provenance remain unavailable and block Security Gate completion.",
     "Production infrastructure, retention, model governance, rollout and rollback owners are undecided."
   ],
-  "updatedAt": "2026-08-25T03:49:03Z"
+  "updatedAt": "2026-08-25T03:56:56Z"
 }

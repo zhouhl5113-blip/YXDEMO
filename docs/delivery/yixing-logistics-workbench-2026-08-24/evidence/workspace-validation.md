@@ -22,7 +22,7 @@ Results:
 - The local web security baseline passed static risky-sink/credential review and runtime checks for response headers, no-store API responses, browser tenant isolation, cross-site rejection, malformed JSON and the 1024-byte request limit. Strict script CSP, dependency advisories, Harness scans, DAST, SBOM and provenance remain Security Gate blockers.
 - The repository prototype contains one empty AMap key declaration and no embedded key value.
 - GitHub `main` is the default branch at audited commit `21d209fe970fef89dfe3ca8052efe4437796f48b`; the original evidence branch remains available.
-- Harness delivery evidence is published on `codex/harness-scope-evidence` for review in Draft PR #1; the last published head before this validation was `d5260fc7a5fe9ebf4f84c9f7a942f4078f438e77`.
+- Harness delivery evidence is published on `codex/harness-scope-evidence` for review in Draft PR #1; the implementation checkpoint prepared by this validation is `eff50689d7c648a1bdfe42eb7054ada9ead9e6e4`, while the last remote head before publication was `e31ca3cad4000a726368c29df51f0f68a88ad9a7`.
 - Harness Project `default/yixing_logistics_workbench` and Environment boundaries `yixing_dev`, `yixing_preprod`, `yixing_prod` were created in a one-shot confirmed session and independently read back through the default read-only connection.
 - Service, Pipeline, project Secrets and all three Infrastructure definitions remain absent.
 - Local host discovery identified Windows Server 2025 with no exposed hardware virtualization. The approved restart completed; Microsoft WSL `2.7.12.0` now runs Ubuntu 24.04 as WSL 1 with kernel `4.4.0-26100-Microsoft`.

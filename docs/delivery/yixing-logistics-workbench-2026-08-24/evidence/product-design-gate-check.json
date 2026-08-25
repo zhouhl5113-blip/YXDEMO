@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-25T03:30:51Z",
+  "observedAt": "2026-08-25T03:56:56Z",
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
   "target": "PRODUCT_AND_DESIGN_GATES",
-  "implementationCommit": "23f8e0089f2849caf404224fa38098a749b2a290",
-  "evidenceCommit": "f93edf6abebc6b866cde52cbc44381229effc3c7",
+  "implementationCommit": "eff50689d7c648a1bdfe42eb7054ada9ead9e6e4",
+  "evidenceCommit": "e31ca3cad4000a726368c29df51f0f68a88ad9a7",
   "structureValid": true,
   "verdict": "BLOCKED",
   "automatedChecks": {
