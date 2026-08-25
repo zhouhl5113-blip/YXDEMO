@@ -14,7 +14,7 @@ product:
     functional: 82
     non_functional: 25
     stories: 74
-    test_ids: 145
+    test_ids: 163
     user_voice_problems: 120
 
 precedence:
@@ -57,7 +57,7 @@ artifacts:
     path: _bmad-output/implementation-artifacts/fleet-office-epics-and-stories.md
     required: true
     purpose: EP, US and TEST traceability
-    sha256: 0B96A2D0535C5EB8D787F1D640E4010FDD614CAA59E49E2500375E7A154D3F07
+    sha256: B473E2675D60CAC077682DEB4FD974BEEB2A14F84FF3977068FCEBF27ED12FA1
   - id: prototype
     path: _bmad-output/planning-artifacts/ux-designs/ux-fleet-office-2026-08-20/.working/fleet-tms-workbench.html
     required: true

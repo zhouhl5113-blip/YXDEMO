@@ -52,13 +52,35 @@ describe("delivery evidence gate", () => {
     assert.equal(report.structureValid, true);
     assert.equal(report.verdict, "BLOCKED");
     assert.equal(report.counts.matrixRows, 82);
-    assert.equal(report.counts.traceabilityRows, 446);
+    assert.equal(report.counts.traceabilityRows, 464);
     assert.equal(report.counts.pendingGapRecords, 10);
     assert.equal(report.counts.localDecisionRows, 31);
+    assert.equal(report.counts.openDecisions, 15);
     assert.deepEqual(report.failedChecks, []);
     assert.ok(report.blockers.some((blocker) => blocker.includes("Product Gate")));
     assert.ok(report.blockers.some((blocker) => blocker.includes("Design Gate")));
+    assert.ok(report.blockers.some((blocker) => blocker.includes("15 administrator/product")));
     assert.ok(report.blockers.some((blocker) => blocker.includes("threat model")));
+  });
+
+  it("keeps TEST-001..163 stable and closes the US-069..074 acceptance-ID gap", async () => {
+    const input = await actualInput();
+    const rows = parseCsv(input.traceabilityCsv);
+    const testIds = rows
+      .map((row) => row.requirement_id ?? "")
+      .filter((requirementId) => requirementId.startsWith("TEST-"));
+    const expectedTestIds = Array.from(
+      { length: 163 },
+      (_, index) => `TEST-${String(index + 1).padStart(3, "0")}`,
+    );
+
+    assert.deepEqual(testIds, expectedTestIds);
+    for (const storyId of ["US-069", "US-070", "US-071", "US-072", "US-073", "US-074"]) {
+      const story = rows.find((row) => row.requirement_id === storyId);
+      assert.ok(story, `${storyId} traceability row is required`);
+      assert.match(story.test_ref ?? "", /^TEST-\d{3}(;TEST-\d{3}){2}$/);
+      assert.notEqual(story.status, "BLOCKED_TEST_CONTRACT_MISSING");
+    }
   });
 
   it("fails structural validation if implementation appears before gap approval", async () => {
@@ -86,5 +108,16 @@ describe("delivery evidence gate", () => {
 
     assert.equal(report.structureValid, false);
     assert.ok(report.failedChecks.includes("G7 capability matrix IDs"));
+  });
+
+  it("rejects a duplicate stable TEST ID even when the row count is unchanged", async () => {
+    const input = await actualInput();
+    const report = evaluateDeliveryEvidence({
+      ...input,
+      traceabilityCsv: input.traceabilityCsv.replace('"TEST-162"', '"TEST-163"'),
+    });
+
+    assert.equal(report.structureValid, false);
+    assert.ok(report.failedChecks.includes("traceability stable ID counts"));
   });
 });

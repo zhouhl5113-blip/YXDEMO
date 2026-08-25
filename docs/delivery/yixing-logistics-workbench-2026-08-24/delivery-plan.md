@@ -4,7 +4,7 @@ Current stage: `product-design-gate-review`. Product Gate and Design Gate are `B
 
 | Batch | Dependencies | Independently reviewable outcome | Immutable candidate | Gate and accountable role |
 | --- | --- | --- | --- | --- |
-| Product evidence | Verified assets, full requirement extraction, public G7 evidence | 82-row matrix, 446-row traceability, gaps and open decisions | Evidence bundle only | Product Gate / Product owner |
+| Product evidence | Verified assets, full requirement extraction, public G7 evidence | 82-row matrix, 464-row traceability, gaps and open decisions | Evidence bundle only | Product Gate / Product owner |
 | Credentialless Foundation tooling | Confirmed target app, sanitized inventory, official public contracts, ADR-0002 | Reproducible Node/TypeScript workspace, shared contracts, fail-closed `integrations/g7` boundary and synthetic tests | Review source only; not a release candidate | Product + Design evidence / Engineering |
 | G7 SANDBOX discovery | Rotated SANDBOX credentials in Harness, tenant app permissions, named G7 owner | Authenticated app inventory and read/controlled-write contract evidence | Evidence bundle only | Product + Design / G7 integration owner |
 | Foundation 0 + US-001..004 | Product/Design approval, target Harness scope, approved gaps/ADRs | Monorepo, tenancy/session/RLS/audit/outbox/telemetry, G7 ports/contracts, CI/container baseline | `yixing-logistics-workbench:<git-sha>-foundation0.<build-id>` plus OCI digest | Build + Security / Engineering and security |

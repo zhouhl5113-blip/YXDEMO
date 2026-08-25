@@ -1,6 +1,6 @@
 # G7 Gap Decisions
 
-Status: `PROPOSED_NOT_APPROVED`. These records are review candidates, not authorization to create tables, queues, state machines or services.
+Status: `PROPOSED_NOT_APPROVED`. ADR-0004 now defines the shared minimum data boundary and schema gate, but these records remain review candidates, not authorization to create or execute tables, queues, state machines or services.
 
 Public documentation evidence is stored in `evidence/g7-public-api-catalog.json`: 107 catalog entries and 30 selected OpenAPI documents were fetched and hashed. The project owner confirmed `ZHLDEMO` as the dedicated target application in `evidence/g7-target-application-confirmation.json`. Authenticated, redacted workbench evidence is stored in `evidence/g7-workbench-sandbox-inventory.json`: the confirmed target has 41 active production scopes covering 107 endpoints; SANDBOX is ready with 82 supported and 25 unsupported REST endpoints plus 18 message-subscription scopes. No credential was inspected or used, so signed request/response contract tests have not run. `deprecated=false` and an active scope do not by themselves prove released maturity. Architecture independently marks `/trips/_search` as `developing`; it must remain behind a feature flag.
 

@@ -2,7 +2,7 @@
 
 Status: `TARGET_SCOPE_PARTIALLY_BOUND`
 
-Observed at `2026-08-24T07:30:29Z`. Initial discovery called `harness_describe` for Organization, Project, Service, Environment, Infrastructure, Connector, Secret and Pipeline before any list or create operation. After the user authorized setup, a one-shot write session created only the dedicated Project and three empty Environment boundaries. The normal Harness MCP connection remained read-only. A second independent read-only pass produced the results below.
+Latest readback observed at `2026-08-24T16:02:54Z`. Initial discovery called `harness_describe` for Organization, Project, Service, Environment, Infrastructure, Connector, Secret and Pipeline before any list or create operation. After the user authorized setup, a one-shot write session created only the dedicated Project and three empty Environment boundaries. The latest Harness MCP pass was read-only and reconfirmed the results below; machine evidence is in `evidence/harness-readback-2026-08-25.json`.
 
 | Scope/resource | Read-only result | Delivery decision |
 | --- | --- | --- |

@@ -12,4 +12,4 @@ Status: `CREDENTIALLESS_FOUNDATION_TOOLING_IN_PROGRESS_APPLICATION_GATE_BLOCKED`
 | 5 | US-004 从今天的工作流接手一项变化 | TEST-010..012 | US-001..003 contracts and UX states approved |
 | 6 | Foundation 0 delivery/security baseline | NFR-001..008 evidence | Target Harness scope, infrastructure/connectors and approved G7-GAP/ADR set |
 
-No other Epic starts concurrently. The credentialless tooling row does not authorize an application service, migration, local business state or Story completion. `US-069..074` are separately blocked because their Story definitions contain no `TEST-*` IDs; the source's Build Ready statement also still says 68 FR although the PRD contains 82.
+No other Epic starts concurrently. The credentialless tooling row does not authorize an application service, migration, local business state or Story completion. `STORY-001` is resolved: `US-069..074` now map to `TEST-146..163`, all previous IDs remain stable, and the Build Ready FR count is corrected to 82.

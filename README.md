@@ -6,7 +6,7 @@
 
 - `artifact-manifest.yaml` 中 8 个 required 资产均存在且 SHA-256 一致。
 - 静态 HTML 仅作为只读 `product-reference`；其中原有高德 Key 已从仓库版本移除。
-- 需求证据覆盖 44 RQ、15 UJ、82 FR、25 NFR、45 AD、12 EP、74 US 和 145 个既有 TEST ID。
+- 需求证据覆盖 44 RQ、15 UJ、82 FR、25 NFR、45 AD、12 EP、74 US 和 163 个稳定 TEST ID；原 `TEST-001..145` 未重新编号。
 - Harness Account/Org/Project 与 dev/preprod/prod Environment 边界已绑定；Service、Pipeline、Infrastructure 和 Secrets 仍为空。
 - `ZHLDEMO` 已确认，但现有 G7 凭据仍被其他系统使用。本项目只允许脱敏清单、官方公开合同和合成夹具，live G7 调用会失败关闭。
 - Product Gate 与 Design Gate 均处于阻断状态，因此尚未创建生产应用服务、数据库迁移或部署资源。
@@ -32,7 +32,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\Invoke-Workspace.ps1 -Task ga
 
 `check` 会依次执行格式检查、lint、TypeScript strict 和全部单元/离线合同测试。测试不会读取 `.env`、G7 凭据或生产数据。
 
-`verify:evidence` 检查 82 行 G7 能力矩阵、446 行追踪和门禁边界是否自洽；`gate:product-design` 只在 Product/Design Gate 真正可放行时成功。当前它应返回 `BLOCKED` 和非零退出码。
+`verify:evidence` 检查 82 行 G7 能力矩阵、464 行追踪和门禁边界是否自洽；`gate:product-design` 只在 Product/Design Gate 真正可放行时成功。当前它应返回 `BLOCKED` 和非零退出码。
 
 ## 当前代码边界
 

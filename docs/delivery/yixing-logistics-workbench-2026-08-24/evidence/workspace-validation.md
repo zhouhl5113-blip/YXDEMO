@@ -14,7 +14,7 @@ Results:
 - Harness/Codex workspace setup passed; hosted Harness OAuth remains optional/pending because the authenticated read-only local MCP fallback is active.
 - Delivery record JSON, identifier, stage, gate ordering, evidence directory, Secret hygiene and traceability schema passed.
 - Required asset verification passed 8/8.
-- Generated evidence contains 82 G7 matrix rows and 446 traceability rows with exact stable-ID counts.
+- Generated evidence contains 82 G7 matrix rows and 464 traceability rows with exact stable-ID sets.
 - The credentialless Foundation workspace passed frozen dependency installation, Biome formatting/lint, TypeScript strict checking and 11/11 unit/offline contract tests. Coverage was 100% lines, 93.94% branches and 100% functions for the implemented contract surface.
 - Traceability marks only NFR-003, NFR-005, AD-001, AD-002 and AD-038 as partial Foundation contracts; all business Stories and their acceptance tests remain blocked or not started.
 - The Product/Design evidence validator passed all 10 structure checks and its 15 regression tests. Its strict gate mode returned non-zero with verdict `BLOCKED`, as required while approvals, signed G7 evidence and the final threat model are absent.

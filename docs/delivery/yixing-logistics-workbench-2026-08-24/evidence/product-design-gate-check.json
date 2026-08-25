@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-08-24T13:52:13Z",
+  "observedAt": "2026-08-25T02:21:36Z",
   "deliveryId": "yixing-logistics-workbench-2026-08-24",
   "target": "PRODUCT_AND_DESIGN_GATES",
   "implementationCommit": "23f8e0089f2849caf404224fa38098a749b2a290",
@@ -12,11 +12,11 @@
   },
   "counts": {
     "matrixRows": 82,
-    "traceabilityRows": 446,
+    "traceabilityRows": 464,
     "pendingGapRecords": 10,
     "localDecisionRows": 31,
-    "openDecisions": 16,
-    "regressionTestsPassed": 42,
+    "openDecisions": 15,
+    "regressionTestsPassed": 44,
     "coverageLinesPercent": 94.79,
     "coverageBranchesPercent": 83.33,
     "coverageFunctionsPercent": 97.06
@@ -25,10 +25,9 @@
     "Product Gate is blocked",
     "Design Gate is blocked",
     "10 G7 gap records remain proposed and unapproved",
-    "The 16-item administrator/product decision registry is not fully resolved; OQ-008 is approved only for local contract scope",
+    "15 of 16 administrator/product decisions remain open; STORY-001 is resolved and OQ-008 is approved only for local contract scope",
     "ADR-0003 is accepted only for local policy contracts; G7-GAP-001/008, identity runtime and persistence remain unapproved, and R3 is disabled because no distinct second approver exists",
-    "Signed G7 SANDBOX request/response evidence is absent by approved design",
-    "US-069..US-074 have no stable TEST identifiers"
+    "Signed G7 SANDBOX request/response evidence is absent by approved design"
   ],
   "strictCommand": {
     "command": "node scripts/verify-delivery-evidence.ts --require-pass",

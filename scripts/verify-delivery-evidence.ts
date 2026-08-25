@@ -20,7 +20,7 @@ const EXPECTED_TRACE_COUNTS = Object.freeze({
   AD: 45,
   EP: 12,
   US: 74,
-  TEST: 145,
+  TEST: 163,
 });
 const REQUIRED_OPEN_DECISIONS = Object.freeze([
   "GIT-001",
@@ -155,18 +155,29 @@ function expectedIds(prefix: string, count: number): Set<string> {
   );
 }
 
-function matchesExpectedIds(rows: readonly CsvRow[], prefix: string, count: number): boolean {
+function matchesIdSet(rows: readonly CsvRow[], expected: ReadonlySet<string>): boolean {
   const actual = rows.map((row) => row.requirement_id ?? "");
-  const expected = expectedIds(prefix, count);
   return (
-    actual.length === count &&
-    new Set(actual).size === count &&
+    actual.length === expected.size &&
+    new Set(actual).size === expected.size &&
     actual.every((id) => expected.has(id))
   );
 }
 
+function matchesExpectedIds(rows: readonly CsvRow[], prefix: string, count: number): boolean {
+  return matchesIdSet(rows, expectedIds(prefix, count));
+}
+
 function markdownTableIds(markdown: string, pattern: RegExp): Set<string> {
   return new Set(Array.from(markdown.matchAll(pattern), (match) => match[1] ?? ""));
+}
+
+function fullyResolvedDecisionIds(markdown: string): Set<string> {
+  return new Set(
+    Array.from(markdown.matchAll(/^\|\s*([A-Z0-9]+-\d{3})\s*\|\s*([^|\r\n]*)\|/gm), (match) =>
+      (match[2] ?? "").includes("`RESOLVED`") ? (match[1] ?? "") : "",
+    ).filter(Boolean),
+  );
 }
 
 export function evaluateDeliveryEvidence(input: DeliveryEvidenceInput): DeliveryEvidenceReport {
@@ -213,13 +224,20 @@ export function evaluateDeliveryEvidence(input: DeliveryEvidenceInput): Delivery
     const prefix = (row.requirement_id ?? "").split("-")[0] ?? "";
     traceCounts.set(prefix, (traceCounts.get(prefix) ?? 0) + 1);
   }
-  const traceIdsValid = Object.entries(EXPECTED_TRACE_COUNTS).every(
-    ([prefix, count]) => traceCounts.get(prefix) === count,
-  );
+  const traceIdsValid = Object.entries(EXPECTED_TRACE_COUNTS).every(([prefix, count]) => {
+    const prefixRows = traceRows.filter((row) =>
+      (row.requirement_id ?? "").startsWith(`${prefix}-`),
+    );
+    const expected =
+      prefix === "OQ"
+        ? new Set(["OQ-006", "OQ-007", "OQ-008", "OQ-009"])
+        : expectedIds(prefix, count);
+    return traceCounts.get(prefix) === count && matchesIdSet(prefixRows, expected);
+  });
   addCheck(
     "traceability stable ID counts",
-    traceIdsValid && traceRows.length === 446,
-    "requires 44 RQ, 15 UJ, 82 FR, 25 NFR, 4 OQ, 45 AD, 12 EP, 74 US and 145 TEST rows",
+    traceIdsValid && traceRows.length === 464,
+    "requires 44 RQ, 15 UJ, 82 FR, 25 NFR, 4 OQ, 45 AD, 12 EP, 74 US and 163 TEST rows",
   );
 
   const gapIds = markdownTableIds(input.gapDecisionsMarkdown, /^\|\s*(G7-GAP-\d{3})\s*\|/gm);
@@ -249,11 +267,15 @@ export function evaluateDeliveryEvidence(input: DeliveryEvidenceInput): Delivery
     input.openDecisionsMarkdown,
     /^\|\s*([A-Z0-9]+-\d{3})\s*\|/gm,
   );
+  const resolvedDecisionIds = fullyResolvedDecisionIds(input.openDecisionsMarkdown);
+  const unresolvedDecisionIds = REQUIRED_OPEN_DECISIONS.filter(
+    (id) => !resolvedDecisionIds.has(id),
+  );
   const openDecisionsPresent = REQUIRED_OPEN_DECISIONS.every((id) => openDecisionIds.has(id));
   addCheck(
     "required open decisions",
     openDecisionsPresent,
-    `${openDecisionIds.size} decision records found`,
+    `${openDecisionIds.size} decision records found; ${unresolvedDecisionIds.length} remain open`,
   );
 
   const preGateBoundaryValid = input.prohibitedImplementationPaths.length === 0;
@@ -271,8 +293,8 @@ export function evaluateDeliveryEvidence(input: DeliveryEvidenceInput): Delivery
   if (productGate !== "passed") blockers.push(`Product Gate is ${productGate}`);
   if (designGate !== "passed") blockers.push(`Design Gate is ${designGate}`);
   if (gapsProposed) blockers.push(`${gapIds.size} G7 gap records remain proposed and unapproved`);
-  if (!input.openDecisionsResolved)
-    blockers.push(`${openDecisionIds.size} administrator/product decisions remain open`);
+  if (!input.openDecisionsResolved && unresolvedDecisionIds.length > 0)
+    blockers.push(`${unresolvedDecisionIds.length} administrator/product decisions remain open`);
   if (!input.threatModelPresent)
     blockers.push("Final repository threat model is pending context confirmation");
   if (!input.signedSandboxEvidencePresent)
@@ -291,7 +313,7 @@ export function evaluateDeliveryEvidence(input: DeliveryEvidenceInput): Delivery
       traceabilityRows: traceRows.length,
       pendingGapRecords: gapsProposed ? gapIds.size : 0,
       localDecisionRows: localRows.length,
-      openDecisions: openDecisionIds.size,
+      openDecisions: input.openDecisionsResolved ? 0 : unresolvedDecisionIds.length,
     },
     checks,
     failedChecks,

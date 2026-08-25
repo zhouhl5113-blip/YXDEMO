@@ -4,7 +4,8 @@
 | --- | --- | --- |
 | `asset-verification.csv` | Required asset presence and SHA-256 | 8/8 match |
 | `evidence/manifest-amendment.md` | Missing-hash amendment and prototype key sanitization | Recorded; AMap rotation still required |
-| `evidence/delivery-artifact-generation.json` | Stable-ID extraction counts | 446 trace rows; 82 matrix rows |
+| `evidence/delivery-artifact-generation.json` | Stable-ID extraction counts | 464 trace rows; 82 matrix rows |
+| `evidence/story-acceptance-amendment.json` | Product-owner correction for missing Story acceptance IDs | `TEST-146..163` added; original IDs preserved; `STORY-001` resolved |
 | `evidence/foundation-credentialless-build.json` | Pre-gate toolchain, TDD, coverage and boundary assertions | 11/11 tests pass; TypeScript/Biome pass; no live G7 call, migration, Service or deployment |
 | `evidence/foundation-credentialless-tests.junit.xml` | Machine-readable Foundation unit/contract result | 11 tests, 0 failures, 0 skipped |
 | `evidence/foundation-authorization-policy.json` | Local authorization policy TDD, trace links and negative assertions | 12/12 focused tests pass; runtime, persistence and production limitations retained |
@@ -13,7 +14,7 @@
 | `evidence/foundation-session-authorization-tests.junit.xml` | Machine-readable session authorization contract result | 15 tests, 0 failures, 0 skipped |
 | `product-design-gate-check.md` | Human-readable Product/Design readiness verdict | `FAIL (BLOCKED)`; structure valid, mandatory approvals/evidence absent |
 | `evidence/product-design-gate-check.json` | Machine-readable gate structure and blocker result | 10/10 structure checks pass; verdict `BLOCKED` |
-| `evidence/product-design-gate-tests.junit.xml` | Prior gate-validator regression evidence | 15 tests at the previous checkpoint; current combined regression is 42/42 in `product-design-gate-check.md` |
+| `evidence/product-design-gate-tests.junit.xml` | Prior gate-validator regression evidence | 15 tests at the previous checkpoint; current combined regression is 44/44 in `product-design-gate-check.md` |
 | `g7-capability-matrix.csv` | One row per FR with ownership/reuse/gap decision | 82 rows updated with authenticated inventory; contract tests blocked |
 | `evidence/g7-public-api-catalog.json` | Hashed public G7 catalog/OpenAPI evidence | 107 catalog, 30 selected schemas |
 | `evidence/g7-target-application-confirmation.json` | Product-owner target application and credential-status confirmation | `ZHLDEMO` confirmed dedicated; old credentials remain active for dependent systems and are prohibited for this project |
@@ -22,6 +23,7 @@
 | `g7-gap-decisions.md` | Proposed local-gap review records | 10 proposed, 0 approved |
 | `harness-discovery.md` | Live Harness scope and independent readback | Project + 3 environments bound; Service/Pipeline/Infrastructure/Secrets absent |
 | `evidence/harness-scope-create.json` | Controlled Harness scope mutation/readback | Project + dev/preprod/prod created; no deployment, Secret or RBAC mutation |
+| `evidence/harness-readback-2026-08-25.json` | Latest live Harness read-only inventory | Project + 3 environments; 0 Service/Pipeline/Infrastructure/Secret; managed Secret Manager connector healthy |
 | `evidence/local-runtime-discovery.json` | Local host capability and setup decision | WSL 1 selected; production unsuitable |
 | `evidence/local-runtime-setup.json` | Installed local data services and repeatable health checks | PostgreSQL 16 and Redis 7 healthy; Redis Streams passed; loopback-only |
 | `evidence/identity-governance-assignment.json` | Named identity-governance responsibilities and separation-of-duties status | 周贺龙 assigned Product/Security/Data; independent R3 approver absent and R3 disabled |
@@ -29,7 +31,9 @@
 | `repo:docs/security/YXDEMO-threat-model.md` | Repository-grounded assets, boundaries, abuse paths and prioritized mitigations | Context confirmed for local/intranet/VPN; 10 threats recorded; security review required |
 | `repo:docs/security/identity-access-decision-brief.md` | Account, role, session and authorization proposal | Option A confirmed; implementation remains blocked pending approval |
 | `repo:docs/architecture/adr-0003-keycloak-identity-application-authorization.md` | Identity provider and application authorization boundary | Accepted only for local policy contracts/tests; runtime, persistence and production remain blocked |
-| `traceability.csv` | RQ/UJ/FR/NFR/AD/EP/US/TEST/OQ linkage | 446 rows; selected Foundation contracts partially implemented; all business Stories remain blocked/not started |
+| `repo:docs/architecture/adr-0004-g7-platform-first-local-data-boundaries.md` | Minimum local ownership, schema gate and rollback rules for G7 gaps | Proposed; requires signed SANDBOX evidence and named approval before migrations execute |
+| `gap-approval-packet.md` | One-page G7 gap and local Design approval request | Ready for project-owner decision; no approval inferred |
+| `traceability.csv` | RQ/UJ/FR/NFR/AD/EP/US/TEST/OQ linkage | 464 rows; 163 stable TEST IDs; selected Foundation contracts partially implemented; all business Stories remain blocked/not started |
 | `open-decisions.md` | Blocking administrator/product decisions | OQ-008 resolved locally; credential, gaps, runtime, Acceptance and production governance remain open |
 | `release-plan.md` | Immutable promotion and rollback | Draft, target/owners unresolved |
 | `evidence/workspace-validation.md` | Control-record validation | Passed at `intake`; local runtime, Foundation checks and gate structure passed |

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T11:04:39.630Z",
+  "generatedAt": "2026-08-24T15:33:55Z",
   "repositoryRoot": "D:\\Harness\\YXDEMO",
   "deliveryRoot": "D:\\Harness\\deliveries\\yixing-logistics-workbench-2026-08-24",
   "assetVerification": {
@@ -15,11 +15,12 @@
     "ad": 45,
     "ep": 12,
     "us": 74,
-    "tests": 145
+    "tests": 163
   },
-  "traceabilityRows": 446,
+  "traceabilityRows": 464,
   "matrixRows": 82,
-  "storyContractDefect": {
+  "storyContractAmendment": {
+    "status": "RESOLVED",
     "affectedStories": [
       "US-069",
       "US-070",
@@ -28,6 +29,7 @@
       "US-073",
       "US-074"
     ],
-    "detail": "US-069..US-074 have no TEST identifiers; Build Ready also incorrectly says 68 FR after FR-069..082 were added."
+    "detail": "TEST-146..TEST-163 added without renumbering existing IDs; Build Ready corrected to 82 FR.",
+    "evidence": "evidence/story-acceptance-amendment.json"
   }
 }

@@ -19,6 +19,6 @@ These are the exact remaining inputs. Do not place credential values in chat, Gi
 | MAP-001 | AMap production integration | Rotate the key found in the prototype; create `AMAP_WEB_KEY` and `AMAP_SECURITY_JS_CODE` secrets; configure domain whitelist/proxy/quota and approve degraded behavior | Design / Platform + Security |
 | MODEL-001 | Agent provider | After OQ-009, create `MODEL_PROVIDER_API_KEY` only if V1-C is enabled; repair or replace the currently failing model connector | Design / AI governance |
 | RELEASE-001 | Rollout and rollback | Approve canary or rolling percentages, observation windows, SLO thresholds, freeze windows, rollback authority and last-known-good ownership | Release / Release manager + SRE |
-| STORY-001 | Missing acceptance IDs | Add stable TEST IDs and Given/When/Then clauses for US-069..074; correct the obsolete “68 FR” Build Ready assertion without renumbering existing TEST-001..145 | Product / Product owner + QA |
+| STORY-001 | Acceptance IDs (`RESOLVED`) | 周贺龙 authorized blocker resolution. `TEST-146..163` were added to US-069..074, existing TEST-001..145 were preserved, and Build Ready now states 82 FR. Evidence: `evidence/story-acceptance-amendment.json` | Resolved 2026-08-24 / Product owner + QA |
 
 The current GitHub URL is sufficient and the source assets are no longer missing. Remaining items above are genuinely absent or undecided; broad authorization does not replace the action-specific approval required for provider-side credential invalidation or Secret mutation.

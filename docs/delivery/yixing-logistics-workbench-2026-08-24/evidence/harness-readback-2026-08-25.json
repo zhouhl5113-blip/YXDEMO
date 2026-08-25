@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-24T16:02:54Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "operation": "READ_ONLY_DISCOVERY",
+  "scope": {
+    "accountId": "VR3gJDjcRkq7ocR7ywpT-Q",
+    "organizationId": "default",
+    "projectId": "yixing_logistics_workbench",
+    "projectName": "Yixing Logistics Workbench"
+  },
+  "resources": {
+    "services": 0,
+    "environments": [
+      "yixing_dev",
+      "yixing_preprod",
+      "yixing_prod"
+    ],
+    "infrastructureByEnvironment": {
+      "yixing_dev": 0,
+      "yixing_preprod": 0,
+      "yixing_prod": 0
+    },
+    "connectors": [
+      {
+        "identifier": "harnessSecretManager",
+        "status": "SUCCESS"
+      }
+    ],
+    "projectSecrets": 0,
+    "pipelines": 0
+  },
+  "mutations": 0,
+  "conclusion": "Harness project and environment shells exist. No deployable Service, Infrastructure or Pipeline exists, and no project Secret is bound."
+}
