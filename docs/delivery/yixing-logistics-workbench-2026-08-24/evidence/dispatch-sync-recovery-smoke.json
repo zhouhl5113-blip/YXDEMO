@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T08:31:04Z",
+  "url": "http://127.0.0.1:3000",
+  "result": "PASS",
+  "assertions": {
+    "confirmation": { "businessStatus": "CONFIRMED", "syncStatus": "PENDING" },
+    "failure": { "businessStatus": "CONFIRMED", "syncStatus": "FAILED" },
+    "retry": { "businessStatus": "CONFIRMED", "syncStatus": "RETRYING" },
+    "readback": { "syncStatus": "SYNCED", "result": "ALREADY_EXISTS" },
+    "readOnlyRecoveryRoleStatus": 403,
+    "mismatchedDispatchPathStatus": 404,
+    "sameCommandAcrossRecovery": true,
+    "duplicateBindingCommands": 0
+  },
+  "adapter": "LOCAL_CONTROLLED_STUB",
+  "externalWrites": 0
+}

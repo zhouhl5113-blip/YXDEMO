@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T08:31:04Z",
+  "url": "http://127.0.0.1:3000/",
+  "title": "易行物流智能工作台",
+  "result": "PASS_WITH_LOCAL_CONTROLLED_ADAPTER_ONLY",
+  "flow": "dispatch confirmation -> controlled retryable failure -> show impact/last attempt/retry/revoke -> retry original command -> controlled ALREADY_EXISTS readback -> SYNCED",
+  "assertions": [
+    {
+      "id": "TEST-021",
+      "result": "PASS_LOCAL",
+      "detail": "CONFIRMED remains visible with FAILED, last attempt, impact, upstream reference, retry and revoke actions"
+    },
+    {
+      "id": "TEST-022",
+      "result": "PASS_LOCAL",
+      "detail": "Retry keeps the original command and ALREADY_EXISTS readback converges to SYNCED"
+    },
+    {
+      "id": "QA-DISPATCH-SYNC-001",
+      "result": "PASS",
+      "detail": "Application console warnings/errors: 0"
+    },
+    {
+      "id": "QA-DISPATCH-SYNC-002",
+      "result": "PASS",
+      "detail": "All recovery actions retain accessible names and Chinese status/error copy"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "pageHorizontalOverflow": false,
+      "screenshot": "screenshots/dispatch-sync-failed-1440x900.png",
+      "sha256": "bcf4a251b42edf54b98ba4c05b6a9a7182d4821b8bf5e39c3b8cc63e266e5f49"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "pageHorizontalOverflow": false,
+      "controlTextOverflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "pageHorizontalOverflow": false,
+      "controlTextOverflow": false,
+      "screenshot": "screenshots/dispatch-sync-synced-390x844.png",
+      "sha256": "61c2bd46c6e6516d5853d661c9d6855f24ae81c0a2d335eb1958fa60738608a9"
+    }
+  ],
+  "notValidated": [
+    "signed G7 SANDBOX request/response",
+    "real G7 write/readback or duplicate-binding behavior",
+    "durable worker retry, monitor scheduling or administrator queue",
+    "production identity, telemetry or deployment"
+  ]
+}

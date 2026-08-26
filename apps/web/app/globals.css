@@ -1481,6 +1481,113 @@ textarea:focus-visible {
   font-size: 12px;
 }
 
+.syncRecoveryPanel {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--amber);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.syncRecoveryPanel.failed {
+  border-left-color: var(--coral);
+}
+
+.syncRecoveryPanel.synced {
+  border-left-color: var(--teal);
+}
+
+.syncRecoveryHeading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.syncRecoveryHeading > div {
+  min-width: 0;
+}
+
+.syncRecoveryHeading > div > span {
+  color: var(--teal-dark);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.syncRecoveryHeading h2 {
+  margin: 2px 0 0;
+  font-size: 16px;
+}
+
+.syncRecoveryHeading p {
+  margin: 3px 0 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+
+.syncRecoveryFacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 14px 0 0;
+  gap: 0 18px;
+}
+
+.syncRecoveryFacts > div {
+  display: grid;
+  min-width: 0;
+  padding: 8px 0;
+  gap: 3px;
+  border-bottom: 1px solid var(--line);
+}
+
+.syncRecoveryFacts dt {
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.syncRecoveryFacts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.syncRecoveryActions {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  gap: 10px;
+}
+
+.revokeField {
+  display: grid;
+  min-width: min(100%, 280px);
+  flex: 1 1 240px;
+  gap: 4px;
+}
+
+.revokeField span {
+  color: var(--ink-muted);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.revokeField input {
+  width: 100%;
+  height: 38px;
+  min-width: 0;
+  padding: 0 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+}
+
+.dangerButton {
+  border-color: #d9a9a4;
+  color: var(--coral);
+}
+
 @media (max-width: 1365px) {
   :root {
     --rail-width: 68px;
@@ -1686,17 +1793,13 @@ textarea:focus-visible {
   }
 
   .workspaceHeading .secondaryButton {
-    position: relative;
     width: 38px;
     min-width: 38px;
     padding: 0;
-    overflow: hidden;
-    color: transparent;
   }
 
-  .workspaceHeading .secondaryButton svg {
-    position: absolute;
-    color: var(--ink);
+  .workspaceHeading .secondaryButton > span {
+    display: none;
   }
 
   .workToolbar {
@@ -1791,6 +1894,21 @@ textarea:focus-visible {
   }
 
   .confirmBand .primaryButton {
+    width: 100%;
+  }
+
+  .syncRecoveryHeading,
+  .syncRecoveryActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .syncRecoveryFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .syncRecoveryActions .primaryButton,
+  .syncRecoveryActions .secondaryButton {
     width: 100%;
   }
 }

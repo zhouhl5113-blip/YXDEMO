@@ -7,20 +7,44 @@ import {
   Clock3,
   MapPin,
   RefreshCcw,
+  RotateCcw,
   Save,
   Send,
   ShieldCheck,
   Truck,
+  Undo2,
   UserRound,
 } from "lucide-react";
 import { useRef, useState } from "react";
 
 interface DispatchRecord {
   readonly id: string;
-  readonly status: "DRAFT" | "CONFIRMED";
-  readonly syncStatus: "NOT_QUEUED" | "PENDING";
+  readonly status: "DRAFT" | "CONFIRMED" | "CANCELLED";
+  readonly syncStatus:
+    | "NOT_QUEUED"
+    | "PENDING"
+    | "SYNCING"
+    | "RETRYING"
+    | "SYNCED"
+    | "FAILED"
+    | "REVOKED";
   readonly version: number;
   readonly selection?: { readonly candidateId: string; readonly overrideReason?: string };
+}
+
+interface SyncCommandRecord {
+  readonly id: string;
+  readonly status: "PENDING" | "RETRYING" | "FAILED" | "SYNCED" | "REVOKED";
+  readonly attemptCount: number;
+  readonly createdAt: string;
+  readonly lastAttemptAt?: string;
+  readonly upstreamReference?: string;
+  readonly result?: "CREATED" | "ALREADY_EXISTS";
+  readonly lastError?: {
+    readonly code: string;
+    readonly message: string;
+    readonly retryable: boolean;
+  };
 }
 
 interface CandidateEvaluation {
@@ -43,6 +67,7 @@ interface CandidateEvaluation {
 interface DispatchPayload {
   readonly dispatch: DispatchRecord;
   readonly candidates: readonly CandidateEvaluation[];
+  readonly syncCommand?: SyncCommandRecord;
 }
 
 const INITIAL_FORM = {
@@ -55,11 +80,22 @@ const INITIAL_FORM = {
 };
 
 function businessStatus(status: DispatchRecord["status"]): string {
-  return status === "CONFIRMED" ? "已确认" : "草稿";
+  if (status === "CONFIRMED") return "已确认";
+  if (status === "CANCELLED") return "已撤销";
+  return "草稿";
 }
 
 function syncStatus(status: DispatchRecord["syncStatus"]): string {
-  return status === "PENDING" ? "待同步（未发送）" : "未排队";
+  const labels: Record<DispatchRecord["syncStatus"], string> = {
+    NOT_QUEUED: "未排队",
+    PENDING: "待同步（未发送）",
+    SYNCING: "同步中",
+    RETRYING: "正在重试",
+    SYNCED: "已同步",
+    FAILED: "同步失败",
+    REVOKED: "已撤销",
+  };
+  return labels[status];
 }
 
 function decisionLabel(decision: CandidateEvaluation["decision"]): string {
@@ -88,9 +124,12 @@ export function DispatchPlanner({
   const [form, setForm] = useState(INITIAL_FORM);
   const [payload, setPayload] = useState<DispatchPayload>();
   const [overrideReasons, setOverrideReasons] = useState<Record<string, string>>({});
-  const [busyAction, setBusyAction] = useState<"save" | "select" | "confirm" | "">("");
+  const [busyAction, setBusyAction] = useState<
+    "save" | "select" | "confirm" | "fail" | "retry" | "complete" | "revoke" | ""
+  >("");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [revokeReason, setRevokeReason] = useState("本地验收撤销，不执行外部写入");
   const idempotencyKey = useRef("");
 
   async function saveDraft() {
@@ -167,10 +206,12 @@ export function DispatchPlanner({
       );
       const result = await readResponse<{
         readonly dispatch: DispatchRecord;
-        readonly syncCommand: { readonly id: string };
+        readonly syncCommand: SyncCommandRecord;
       }>(response);
       setPayload((current) =>
-        current === undefined ? current : { ...current, dispatch: result.dispatch },
+        current === undefined
+          ? current
+          : { ...current, dispatch: result.dispatch, syncCommand: result.syncCommand },
       );
       setNotice(
         `派车已在本地确认；命令 ${result.syncCommand.id} 仅处于待同步状态，真实 G7 写入保持关闭。`,
@@ -182,11 +223,58 @@ export function DispatchPlanner({
     }
   }
 
+  async function updateSync(
+    action: "SIMULATE_RETRYABLE_FAILURE" | "RETRY" | "SIMULATE_ALREADY_EXISTS" | "REVOKE",
+  ) {
+    if (payload?.syncCommand === undefined) return;
+    const actionName =
+      action === "SIMULATE_RETRYABLE_FAILURE"
+        ? "fail"
+        : action === "SIMULATE_ALREADY_EXISTS"
+          ? "complete"
+          : action.toLowerCase();
+    setBusyAction(actionName as "fail" | "retry" | "complete" | "revoke");
+    setError("");
+    setNotice("");
+    try {
+      const response = await fetch(
+        `/api/v1/dispatches/${encodeURIComponent(payload.dispatch.id)}/sync`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            roleId: selectedRoleId,
+            commandId: payload.syncCommand.id,
+            action,
+            ...(action === "REVOKE" ? { reason: revokeReason } : {}),
+          }),
+        },
+      );
+      const result = await readResponse<{
+        readonly dispatch: DispatchRecord;
+        readonly syncCommand: SyncCommandRecord;
+      }>(response);
+      setPayload({ ...payload, dispatch: result.dispatch, syncCommand: result.syncCommand });
+      const messages = {
+        SIMULATE_RETRYABLE_FAILURE: "已记录暂时同步失败；本地业务仍为已确认，可重试或撤销。",
+        RETRY: "原同步命令正在重试；没有创建重复命令。",
+        SIMULATE_ALREADY_EXISTS: "受控回读确认绑定已存在；同步状态已收敛为已同步。",
+        REVOKE: "待同步命令和本地派车已撤销；没有调用 G7。",
+      } as const;
+      setNotice(messages[action]);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "同步恢复动作未完成");
+    } finally {
+      setBusyAction("");
+    }
+  }
+
   function resetPlanner() {
     setPayload(undefined);
     setOverrideReasons({});
     setError("");
     setNotice("");
+    setRevokeReason("本地验收撤销，不执行外部写入");
     idempotencyKey.current = "";
   }
 
@@ -199,7 +287,7 @@ export function DispatchPlanner({
           <span>草稿 → 候选审查 → 本地确认 → 待同步；真实 G7 写入关闭</span>
         </div>
         <button className="secondaryButton" type="button" onClick={resetPlanner}>
-          <RefreshCcw size={16} aria-hidden="true" /> 新建草稿
+          <RefreshCcw size={16} aria-hidden="true" /> <span>新建草稿</span>
         </button>
       </div>
 
@@ -451,6 +539,94 @@ export function DispatchPlanner({
                 ? "正在确认"
                 : "确认本地派车"}
           </button>
+        </section>
+      ) : null}
+
+      {payload?.syncCommand ? (
+        <section className={`syncRecoveryPanel ${payload.syncCommand.status.toLowerCase()}`}>
+          <div className="syncRecoveryHeading">
+            <div>
+              <span>同步恢复</span>
+              <h2>{syncStatus(payload.dispatch.syncStatus)}</h2>
+              <p>本地业务保持“{businessStatus(payload.dispatch.status)}”，同步状态独立推进。</p>
+            </div>
+            <strong className="statusTag">尝试 {payload.syncCommand.attemptCount} 次</strong>
+          </div>
+          <dl className="syncRecoveryFacts">
+            <div>
+              <dt>命令</dt>
+              <dd className="mono">{payload.syncCommand.id}</dd>
+            </div>
+            <div>
+              <dt>最后尝试</dt>
+              <dd>{payload.syncCommand.lastAttemptAt ?? "尚未发送"}</dd>
+            </div>
+            <div>
+              <dt>影响</dt>
+              <dd>G7 人车绑定尚未确认；本地派车不回滚</dd>
+            </div>
+            {payload.syncCommand.lastError ? (
+              <div>
+                <dt>失败原因</dt>
+                <dd>{payload.syncCommand.lastError.message}</dd>
+              </div>
+            ) : null}
+            {payload.syncCommand.upstreamReference ? (
+              <div>
+                <dt>上游引用</dt>
+                <dd className="mono">{payload.syncCommand.upstreamReference}</dd>
+              </div>
+            ) : null}
+          </dl>
+          <div className="syncRecoveryActions">
+            {payload.syncCommand.status === "PENDING" ? (
+              <button
+                className="secondaryButton"
+                type="button"
+                disabled={busyAction !== ""}
+                onClick={() => void updateSync("SIMULATE_RETRYABLE_FAILURE")}
+              >
+                <CircleAlert size={17} aria-hidden="true" /> 演练暂时失败
+              </button>
+            ) : null}
+            {payload.syncCommand.status === "FAILED" ? (
+              <>
+                <button
+                  className="primaryButton"
+                  type="button"
+                  disabled={busyAction !== "" || !payload.syncCommand.lastError?.retryable}
+                  onClick={() => void updateSync("RETRY")}
+                >
+                  <RotateCcw size={17} aria-hidden="true" /> 重试原命令
+                </button>
+                <label className="revokeField">
+                  <span>撤销原因</span>
+                  <input
+                    value={revokeReason}
+                    onChange={(event) => setRevokeReason(event.target.value)}
+                  />
+                </label>
+                <button
+                  className="secondaryButton dangerButton"
+                  type="button"
+                  disabled={busyAction !== "" || revokeReason.trim().length === 0}
+                  onClick={() => void updateSync("REVOKE")}
+                >
+                  <Undo2 size={17} aria-hidden="true" /> 撤销本地派车
+                </button>
+              </>
+            ) : null}
+            {payload.syncCommand.status === "RETRYING" ? (
+              <button
+                className="primaryButton"
+                type="button"
+                disabled={busyAction !== ""}
+                onClick={() => void updateSync("SIMULATE_ALREADY_EXISTS")}
+              >
+                <CheckCircle2 size={17} aria-hidden="true" /> 完成受控回读
+              </button>
+            ) : null}
+          </div>
         </section>
       ) : null}
     </section>

@@ -360,7 +360,7 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
                   title={"\u5237\u65B0\u672C\u5730\u6570\u636E"}
                 >
                   <RefreshCcw size={16} aria-hidden="true" />
-                  刷新本地数据
+                  <span>刷新本地数据</span>
                 </button>
               </div>
 

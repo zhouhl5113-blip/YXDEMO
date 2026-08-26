@@ -88,6 +88,37 @@ const roleOptions = list(session.body.roleOptions, "role options");
 const confirmedDispatch = record(confirmed.body.dispatch, "confirmed dispatch");
 const confirmedCommand = record(confirmed.body.syncCommand, "confirmed command");
 const replayedCommand = record(replayed.body.syncCommand, "replayed command");
+const deniedSync = await post(`/api/v1/dispatches/${dispatchId}/sync`, {
+  roleId: "operations_manager",
+  commandId: String(confirmedCommand.id),
+  action: "SIMULATE_RETRYABLE_FAILURE",
+});
+const mismatchedDispatchSync = await post("/api/v1/dispatches/dispatch-other/sync", {
+  roleId: "dispatcher",
+  commandId: String(confirmedCommand.id),
+  action: "SIMULATE_RETRYABLE_FAILURE",
+});
+const failed = await post(`/api/v1/dispatches/${dispatchId}/sync`, {
+  roleId: "dispatcher",
+  commandId: String(confirmedCommand.id),
+  action: "SIMULATE_RETRYABLE_FAILURE",
+});
+const failedDispatch = record(failed.body.dispatch, "failed-sync dispatch");
+const failedCommand = record(failed.body.syncCommand, "failed-sync command");
+const retrying = await post(`/api/v1/dispatches/${dispatchId}/sync`, {
+  roleId: "dispatcher",
+  commandId: String(confirmedCommand.id),
+  action: "RETRY",
+});
+const retryingDispatch = record(retrying.body.dispatch, "retrying dispatch");
+const retryingCommand = record(retrying.body.syncCommand, "retrying command");
+const synced = await post(`/api/v1/dispatches/${dispatchId}/sync`, {
+  roleId: "dispatcher",
+  commandId: String(confirmedCommand.id),
+  action: "SIMULATE_ALREADY_EXISTS",
+});
+const syncedDispatch = record(synced.body.dispatch, "synced dispatch");
+const syncedCommand = record(synced.body.syncCommand, "synced command");
 
 expect(roleOptions.length === 6, "expected six role options");
 expect(
@@ -104,6 +135,36 @@ expect(missingKey.body.code === "IDEMPOTENCY_KEY_REQUIRED", "idempotency header 
 expect(confirmedDispatch.status === "CONFIRMED", "dispatch was not confirmed");
 expect(confirmedDispatch.syncStatus === "PENDING", "sync command was not left pending");
 expect(confirmedCommand.id === replayedCommand.id, "idempotent replay created another command");
+expect(
+  deniedSync.status === 403 && deniedSync.body.code === "DISPATCH_PERMISSION_DENIED",
+  "read-only role was allowed to recover a sync command",
+);
+expect(
+  mismatchedDispatchSync.status === 404 &&
+    mismatchedDispatchSync.body.code === "SYNC_COMMAND_NOT_FOUND",
+  "a sync command was accepted under another dispatch path",
+);
+expect(
+  failedDispatch.status === "CONFIRMED" && failedDispatch.syncStatus === "FAILED",
+  "retryable failure rolled back or hid the confirmed dispatch",
+);
+expect(
+  failedCommand.id === confirmedCommand.id && failedCommand.status === "FAILED",
+  "retryable failure replaced the original command",
+);
+expect(
+  retryingDispatch.status === "CONFIRMED" && retryingDispatch.syncStatus === "RETRYING",
+  "retry did not preserve the business state",
+);
+expect(
+  retryingCommand.id === confirmedCommand.id && retryingCommand.status === "RETRYING",
+  "retry created another command",
+);
+expect(
+  syncedDispatch.syncStatus === "SYNCED" && syncedCommand.result === "ALREADY_EXISTS",
+  "existing upstream binding did not converge to SYNCED",
+);
+expect(syncedCommand.id === confirmedCommand.id, "sync completion replaced the original command");
 
 console.log(
   JSON.stringify(
@@ -127,6 +188,19 @@ console.log(
         syncStatus: confirmedDispatch.syncStatus,
       },
       idempotentReplay: confirmedCommand.id === replayedCommand.id,
+      syncAuthorization: {
+        readOnlyStatus: deniedSync.status,
+        mismatchedDispatchStatus: mismatchedDispatchSync.status,
+      },
+      recovery: {
+        failedBusinessStatus: failedDispatch.status,
+        failedSyncStatus: failedDispatch.syncStatus,
+        retryingSyncStatus: retryingDispatch.syncStatus,
+        syncedStatus: syncedDispatch.syncStatus,
+        result: syncedCommand.result,
+        sameCommand:
+          failedCommand.id === retryingCommand.id && retryingCommand.id === syncedCommand.id,
+      },
     },
     null,
     2,

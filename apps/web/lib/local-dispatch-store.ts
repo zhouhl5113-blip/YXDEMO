@@ -7,6 +7,7 @@ import {
   type CreateDispatchDraftInput,
   type Dispatch,
   type DispatchCandidate,
+  type DispatchSyncCommand,
 } from "../../../packages/dispatch-domain/src/index.ts";
 import { assertLocalApiRuntime } from "./local-api.ts";
 import { canRoleDispatch, createLocalWorkbenchContext } from "./local-session.ts";
@@ -142,5 +143,68 @@ export function confirmLocalDispatch(
     expectedVersion,
     idempotencyKey,
     existingAssignments: [],
+    requestId: context.requestId,
+    traceId: context.traceId,
+  });
+}
+
+export type LocalDispatchSyncAction =
+  | "SIMULATE_RETRYABLE_FAILURE"
+  | "RETRY"
+  | "SIMULATE_ALREADY_EXISTS"
+  | "REVOKE";
+
+export function updateLocalDispatchSync(
+  roleId: string,
+  dispatchId: string,
+  commandId: string,
+  action: LocalDispatchSyncAction,
+  reason?: string,
+): { readonly dispatch: Dispatch; readonly syncCommand: DispatchSyncCommand } {
+  assertLocalApiRuntime();
+  assertDispatchRole(roleId);
+  const context = createLocalWorkbenchContext(roleId);
+  const command = service.getSyncCommand(context.tenantScope.tenantId, commandId);
+  if (command.dispatchId !== dispatchId) {
+    throw new AppError({
+      code: "SYNC_COMMAND_NOT_FOUND",
+      category: "NOT_FOUND",
+      message: "未找到该派车的同步命令",
+      retryable: false,
+    });
+  }
+  const now = new Date().toISOString();
+  if (action === "SIMULATE_RETRYABLE_FAILURE") {
+    return service.recordSyncFailure({
+      tenantId: context.tenantScope.tenantId,
+      commandId,
+      attemptedAt: now,
+      errorCode: "G7_LOCAL_STUB_TIMEOUT",
+      message: "受控本地适配器返回暂时超时；本地派车已保留",
+      retryable: true,
+      upstreamReference: `local-g7-stub:${commandId}`,
+    });
+  }
+  if (action === "RETRY") {
+    return service.retrySyncCommand({
+      tenantId: context.tenantScope.tenantId,
+      commandId,
+      requestedAt: now,
+    });
+  }
+  if (action === "SIMULATE_ALREADY_EXISTS") {
+    return service.completeSyncCommand({
+      tenantId: context.tenantScope.tenantId,
+      commandId,
+      completedAt: now,
+      outcome: "ALREADY_EXISTS",
+      upstreamReference: `local-g7-stub:${commandId}:existing`,
+    });
+  }
+  return service.revokeSyncCommand({
+    tenantId: context.tenantScope.tenantId,
+    commandId,
+    revokedAt: now,
+    reason: reason ?? "",
   });
 }

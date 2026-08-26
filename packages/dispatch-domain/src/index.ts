@@ -14,6 +14,7 @@ export type DispatchSyncStatus =
   | "NOT_QUEUED"
   | "PENDING"
   | "SYNCING"
+  | "RETRYING"
   | "SYNCED"
   | "FAILED"
   | "REVOKED";
@@ -109,6 +110,14 @@ export interface ConfirmDispatchInput {
   readonly expectedVersion: number;
   readonly idempotencyKey: string;
   readonly existingAssignments: readonly ExistingAssignment[];
+  readonly requestId?: string;
+  readonly traceId?: string;
+}
+
+export interface DispatchSyncError {
+  readonly code: string;
+  readonly message: string;
+  readonly retryable: boolean;
 }
 
 export interface DispatchSyncCommand {
@@ -116,9 +125,18 @@ export interface DispatchSyncCommand {
   readonly tenantId: string;
   readonly dispatchId: string;
   readonly type: "G7_DRIVER_VEHICLE_ASSIGNMENT_UPSERT";
-  readonly status: "PENDING";
+  readonly status: "PENDING" | "RETRYING" | "FAILED" | "SYNCED" | "REVOKED";
   readonly idempotencyKey: string;
   readonly createdAt: string;
+  readonly attemptCount: number;
+  readonly requestId?: string;
+  readonly traceId?: string;
+  readonly lastAttemptAt?: string;
+  readonly completedAt?: string;
+  readonly upstreamReference?: string;
+  readonly lastError?: DispatchSyncError;
+  readonly result?: "CREATED" | "ALREADY_EXISTS";
+  readonly revokedReason?: string;
   readonly payload: {
     readonly vehicleId: string;
     readonly driverId: string;
@@ -126,6 +144,53 @@ export interface DispatchSyncCommand {
     readonly startsAt: string;
     readonly endsAt: string;
   };
+}
+
+export interface AdministratorOperationsWork {
+  readonly id: string;
+  readonly tenantId: string;
+  readonly dispatchId: string;
+  readonly syncCommandId: string;
+  readonly type: "G7_SYNC_BACKLOG";
+  readonly status: "OPEN";
+  readonly title: string;
+  readonly impact: string;
+  readonly generatedAt: string;
+  readonly oldestAgeMinutes: number;
+  readonly requestId?: string;
+  readonly traceId?: string;
+  readonly upstreamReference?: string;
+}
+
+export interface RecordSyncFailureInput {
+  readonly tenantId: string;
+  readonly commandId: string;
+  readonly attemptedAt: string;
+  readonly errorCode: string;
+  readonly message: string;
+  readonly retryable: boolean;
+  readonly upstreamReference?: string;
+}
+
+export interface RetrySyncCommandInput {
+  readonly tenantId: string;
+  readonly commandId: string;
+  readonly requestedAt: string;
+}
+
+export interface CompleteSyncCommandInput {
+  readonly tenantId: string;
+  readonly commandId: string;
+  readonly completedAt: string;
+  readonly outcome: "CREATED" | "ALREADY_EXISTS";
+  readonly upstreamReference?: string;
+}
+
+export interface RevokeSyncCommandInput {
+  readonly tenantId: string;
+  readonly commandId: string;
+  readonly revokedAt: string;
+  readonly reason: string;
 }
 
 export interface DispatchTimelineFact {
@@ -163,8 +228,30 @@ export interface DispatchService {
     readonly dispatch: Dispatch;
     readonly syncCommand: DispatchSyncCommand;
   };
+  recordSyncFailure(input: RecordSyncFailureInput): {
+    readonly dispatch: Dispatch;
+    readonly syncCommand: DispatchSyncCommand;
+  };
+  retrySyncCommand(input: RetrySyncCommandInput): {
+    readonly dispatch: Dispatch;
+    readonly syncCommand: DispatchSyncCommand;
+  };
+  completeSyncCommand(input: CompleteSyncCommandInput): {
+    readonly dispatch: Dispatch;
+    readonly syncCommand: DispatchSyncCommand;
+  };
+  revokeSyncCommand(input: RevokeSyncCommandInput): {
+    readonly dispatch: Dispatch;
+    readonly syncCommand: DispatchSyncCommand;
+  };
+  inspectSyncBacklog(input: {
+    readonly tenantId: string;
+    readonly now: string;
+    readonly thresholdMinutes: number;
+  }): readonly AdministratorOperationsWork[];
   appendTimelineFact(dispatchId: string, fact: DispatchTimelineFact): DispatchTimelineFact;
   getDispatch(dispatchId: string): Dispatch;
+  getSyncCommand(tenantId: string, commandId: string): DispatchSyncCommand;
   getCandidateEvaluations(dispatchId: string): readonly CandidateEvaluation[];
   getPendingSyncCommands(): readonly DispatchSyncCommand[];
   getTimeline(dispatchId: string): DispatchTimelineProjection;
@@ -234,6 +321,7 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
     { readonly dispatch: Dispatch; readonly syncCommand: DispatchSyncCommand }
   >();
   const timelineFacts = new Map<string, Map<string, DispatchTimelineFact>>();
+  const operationsWork = new Map<string, AdministratorOperationsWork>();
 
   function getDispatch(dispatchId: string): Dispatch {
     const dispatch = dispatches.get(dispatchId);
@@ -250,6 +338,32 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
       throw appError("CANDIDATE_NOT_FOUND", "未找到派车候选", "NOT_FOUND");
     }
     return evaluation;
+  }
+
+  function getSyncCommand(tenantId: string, commandId: string): DispatchSyncCommand {
+    const command = commands.get(commandId);
+    if (command === undefined || command.tenantId !== tenantId) {
+      throw appError("SYNC_COMMAND_NOT_FOUND", "未找到同步命令", "NOT_FOUND");
+    }
+    return command;
+  }
+
+  function updateSyncState(
+    dispatchId: string,
+    status: DispatchSyncStatus,
+    updatedAt: string,
+    businessStatus?: DispatchStatus,
+  ): Dispatch {
+    const dispatch = getDispatch(dispatchId);
+    const updated: Dispatch = Object.freeze({
+      ...dispatch,
+      status: businessStatus ?? dispatch.status,
+      syncStatus: status,
+      version: dispatch.version + 1,
+      updatedAt,
+    });
+    dispatches.set(dispatchId, updated);
+    return updated;
   }
 
   return {
@@ -445,6 +559,9 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
         status: "PENDING",
         idempotencyKey: normalizedKey,
         createdAt: now,
+        attemptCount: 0,
+        ...(input.requestId === undefined ? {} : { requestId: input.requestId }),
+        ...(input.traceId === undefined ? {} : { traceId: input.traceId }),
         payload: Object.freeze({
           vehicleId: candidate.vehicleId,
           driverId: candidate.driverId,
@@ -458,6 +575,153 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
       commands.set(syncCommand.id, syncCommand);
       idempotencyResults.set(replayKey, result);
       return result;
+    },
+
+    recordSyncFailure(input) {
+      const command = getSyncCommand(input.tenantId, input.commandId);
+      if (command.status === "SYNCED" || command.status === "REVOKED") {
+        throw appError("SYNC_COMMAND_TERMINAL", "已同步或已撤销的命令不能记录失败", "CONFLICT");
+      }
+      timestamp(input.attemptedAt);
+      const lastError: DispatchSyncError = Object.freeze({
+        code: requireText(input.errorCode, "SYNC_ERROR_CODE_REQUIRED", "同步错误代码"),
+        message: requireText(input.message, "SYNC_ERROR_MESSAGE_REQUIRED", "同步错误说明"),
+        retryable: input.retryable,
+      });
+      const failedCommand: DispatchSyncCommand = Object.freeze({
+        ...command,
+        status: "FAILED",
+        attemptCount: command.attemptCount + 1,
+        lastAttemptAt: input.attemptedAt,
+        lastError,
+        ...(input.upstreamReference === undefined
+          ? {}
+          : { upstreamReference: input.upstreamReference }),
+      });
+      commands.set(command.id, failedCommand);
+      const dispatch = updateSyncState(command.dispatchId, "FAILED", input.attemptedAt);
+      return Object.freeze({ dispatch, syncCommand: failedCommand });
+    },
+
+    retrySyncCommand(input) {
+      const command = getSyncCommand(input.tenantId, input.commandId);
+      if (command.status === "RETRYING") {
+        return Object.freeze({
+          dispatch: getDispatch(command.dispatchId),
+          syncCommand: command,
+        });
+      }
+      if (command.status !== "FAILED") {
+        throw appError("SYNC_COMMAND_NOT_RETRYABLE", "只有失败的同步命令可以重试", "CONFLICT");
+      }
+      if (command.lastError?.retryable !== true) {
+        throw appError(
+          "SYNC_ERROR_NOT_RETRYABLE",
+          "该同步失败需要人工处理，不能自动重试",
+          "CONFLICT",
+        );
+      }
+      timestamp(input.requestedAt);
+      const retryingCommand: DispatchSyncCommand = Object.freeze({
+        ...command,
+        status: "RETRYING",
+        attemptCount: command.attemptCount + 1,
+        lastAttemptAt: input.requestedAt,
+      });
+      commands.set(command.id, retryingCommand);
+      const dispatch = updateSyncState(command.dispatchId, "RETRYING", input.requestedAt);
+      return Object.freeze({ dispatch, syncCommand: retryingCommand });
+    },
+
+    completeSyncCommand(input) {
+      const command = getSyncCommand(input.tenantId, input.commandId);
+      if (command.status === "SYNCED") {
+        return Object.freeze({
+          dispatch: getDispatch(command.dispatchId),
+          syncCommand: command,
+        });
+      }
+      if (command.status === "REVOKED") {
+        throw appError("SYNC_COMMAND_REVOKED", "已撤销的同步命令不能标记为成功", "CONFLICT");
+      }
+      timestamp(input.completedAt);
+      const syncedCommand: DispatchSyncCommand = Object.freeze({
+        ...command,
+        status: "SYNCED",
+        completedAt: input.completedAt,
+        lastAttemptAt: input.completedAt,
+        attemptCount:
+          command.status === "PENDING" ? command.attemptCount + 1 : command.attemptCount,
+        result: input.outcome,
+        ...(input.upstreamReference === undefined
+          ? {}
+          : { upstreamReference: input.upstreamReference }),
+      });
+      commands.set(command.id, syncedCommand);
+      const dispatch = updateSyncState(command.dispatchId, "SYNCED", input.completedAt);
+      return Object.freeze({ dispatch, syncCommand: syncedCommand });
+    },
+
+    revokeSyncCommand(input) {
+      const command = getSyncCommand(input.tenantId, input.commandId);
+      if (command.status === "REVOKED") {
+        return Object.freeze({
+          dispatch: getDispatch(command.dispatchId),
+          syncCommand: command,
+        });
+      }
+      if (command.status === "SYNCED") {
+        throw appError(
+          "SYNCED_BINDING_REQUIRES_COMPENSATION",
+          "已生效的 G7 绑定需要单独补偿流程，不能直接撤销本地命令",
+          "CONFLICT",
+        );
+      }
+      timestamp(input.revokedAt);
+      const revokedCommand: DispatchSyncCommand = Object.freeze({
+        ...command,
+        status: "REVOKED",
+        revokedReason: requireText(input.reason, "REVOKE_REASON_REQUIRED", "撤销原因"),
+      });
+      commands.set(command.id, revokedCommand);
+      const dispatch = updateSyncState(command.dispatchId, "REVOKED", input.revokedAt, "CANCELLED");
+      return Object.freeze({ dispatch, syncCommand: revokedCommand });
+    },
+
+    inspectSyncBacklog(input) {
+      const now = timestamp(input.now);
+      if (!Number.isFinite(input.thresholdMinutes) || input.thresholdMinutes <= 0) {
+        throw appError("INVALID_BACKLOG_THRESHOLD", "积压阈值必须大于零", "VALIDATION");
+      }
+      for (const command of commands.values()) {
+        if (command.tenantId !== input.tenantId) continue;
+        if (command.status === "SYNCED" || command.status === "REVOKED") continue;
+        const ageMinutes = Math.floor((now - timestamp(command.createdAt)) / 60_000);
+        if (ageMinutes < input.thresholdMinutes) continue;
+        const existing = operationsWork.get(command.id);
+        if (existing !== undefined) continue;
+        const work: AdministratorOperationsWork = Object.freeze({
+          id: idFactory("operations-work"),
+          tenantId: command.tenantId,
+          dispatchId: command.dispatchId,
+          syncCommandId: command.id,
+          type: "G7_SYNC_BACKLOG",
+          status: "OPEN",
+          title: "处理超时的 G7 人车绑定同步",
+          impact: "本地派车已确认，但 G7 人车绑定尚未确认生效",
+          generatedAt: input.now,
+          oldestAgeMinutes: ageMinutes,
+          ...(command.requestId === undefined ? {} : { requestId: command.requestId }),
+          ...(command.traceId === undefined ? {} : { traceId: command.traceId }),
+          ...(command.upstreamReference === undefined
+            ? {}
+            : { upstreamReference: command.upstreamReference }),
+        });
+        operationsWork.set(command.id, work);
+      }
+      return Object.freeze(
+        [...operationsWork.values()].filter((work) => work.tenantId === input.tenantId),
+      );
     },
 
     appendTimelineFact(dispatchId, inputFact) {
@@ -477,6 +741,8 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
 
     getDispatch,
 
+    getSyncCommand,
+
     getCandidateEvaluations(dispatchId) {
       getDispatch(dispatchId);
       return Object.freeze([...(evaluations.get(dispatchId)?.values() ?? [])]);
@@ -484,7 +750,9 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
 
     getPendingSyncCommands() {
       return Object.freeze(
-        [...commands.values()].filter((command) => command.status === "PENDING"),
+        [...commands.values()].filter(
+          (command) => command.status !== "SYNCED" && command.status !== "REVOKED",
+        ),
       );
     },
 
