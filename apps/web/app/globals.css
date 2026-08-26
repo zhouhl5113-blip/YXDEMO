@@ -1588,6 +1588,112 @@ textarea:focus-visible {
   color: var(--coral);
 }
 
+.dispatchTimelineSection {
+  margin-top: 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.dispatchTimelineList {
+  display: grid;
+  margin: 14px 0 0;
+  padding: 0;
+  gap: 8px;
+  list-style: none;
+}
+
+.dispatchTimelineList > li {
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.dispatchTimelineList > li.exception {
+  border-left-color: var(--coral);
+}
+
+.timelineFactHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.timelineFactHeading > span {
+  color: var(--teal-dark);
+  font-weight: 750;
+}
+
+.dispatchTimelineList > li > strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+.dispatchTimelineList > li > p,
+.dispatchTimelineList > li > small {
+  display: block;
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.timelineWorkComposer {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(180px, 0.8fr) minmax(240px, 1.4fr) auto;
+  align-items: end;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  gap: 10px;
+}
+
+.timelineWorkComposer label,
+.linkedWorkFacts > div {
+  min-width: 0;
+}
+
+.timelineWorkComposer label > span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--ink-muted);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.timelineWorkComposer input {
+  width: 100%;
+  min-width: 0;
+}
+
+.linkedWorkFacts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  gap: 10px;
+}
+
+.linkedWorkFacts dt {
+  color: var(--ink-muted);
+  font-size: 10px;
+}
+
+.linkedWorkFacts dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  font-weight: 650;
+}
+
 @media (max-width: 1365px) {
   :root {
     --rail-width: 68px;
@@ -1757,6 +1863,19 @@ textarea:focus-visible {
   .candidateItem {
     min-height: 0;
   }
+
+  .timelineWorkComposer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .timelineWorkComposer .closureField,
+  .timelineWorkComposer .primaryButton {
+    width: 100%;
+  }
+
+  .linkedWorkFacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -1904,6 +2023,11 @@ textarea:focus-visible {
   }
 
   .syncRecoveryFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .timelineWorkComposer,
+  .linkedWorkFacts {
     grid-template-columns: 1fr;
   }
 

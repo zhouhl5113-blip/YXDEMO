@@ -7,7 +7,10 @@ import {
   type CreateDispatchDraftInput,
   type Dispatch,
   type DispatchCandidate,
+  type DispatchFollowUpWork,
   type DispatchSyncCommand,
+  type DispatchTimelineFact,
+  type InTransitTimelineProjection,
 } from "../../../packages/dispatch-domain/src/index.ts";
 import { assertLocalApiRuntime } from "./local-api.ts";
 import { canRoleDispatch, createLocalWorkbenchContext } from "./local-session.ts";
@@ -137,7 +140,7 @@ export function confirmLocalDispatch(
   assertLocalApiRuntime();
   assertDispatchRole(roleId);
   const context = createLocalWorkbenchContext(roleId);
-  return service.confirmDispatch({
+  const result = service.confirmDispatch({
     tenantId: context.tenantScope.tenantId,
     dispatchId,
     expectedVersion,
@@ -146,6 +149,168 @@ export function confirmLocalDispatch(
     requestId: context.requestId,
     traceId: context.traceId,
   });
+  const timelineFacts: readonly DispatchTimelineFact[] = [
+    {
+      sourceEventId: `${dispatchId}:plan-departure`,
+      type: "PLAN",
+      source: "LOCAL_DISPATCH_PLAN",
+      happenedAt: result.dispatch.plannedStart,
+      receivedAt: result.dispatch.updatedAt,
+      summary: `计划从${result.dispatch.origin}发车`,
+      location: result.dispatch.origin,
+    },
+    {
+      sourceEventId: `${dispatchId}:location-kunshan`,
+      type: "LOCATION",
+      source: "G7_SANDBOX_SYNTHETIC_FIXTURE",
+      happenedAt: new Date(Date.parse(result.dispatch.plannedStart) + 30 * 60_000).toISOString(),
+      receivedAt: new Date(
+        Date.parse(result.dispatch.plannedStart) + 30 * 60_000 + 4_000,
+      ).toISOString(),
+      summary: "车辆进入昆山花桥路段",
+      location: "G2 京沪高速 · 昆山花桥附近",
+    },
+    {
+      sourceEventId: `${dispatchId}:geofence-kunshan`,
+      type: "GEOFENCE",
+      source: "G7_SANDBOX_SYNTHETIC_FIXTURE",
+      happenedAt: new Date(Date.parse(result.dispatch.plannedStart) + 42 * 60_000).toISOString(),
+      receivedAt: new Date(
+        Date.parse(result.dispatch.plannedStart) + 42 * 60_000 + 5_000,
+      ).toISOString(),
+      summary: "进入昆山中转围栏",
+      location: "昆山中转围栏",
+    },
+    {
+      sourceEventId: `${dispatchId}:exception-delay`,
+      type: "EXCEPTION",
+      source: "LOCAL_SANDBOX_RULE",
+      happenedAt: new Date(Date.parse(result.dispatch.plannedStart) + 55 * 60_000).toISOString(),
+      receivedAt: new Date(
+        Date.parse(result.dispatch.plannedStart) + 55 * 60_000 + 8_000,
+      ).toISOString(),
+      summary: "预计晚到 42 分钟，客户时窗存在风险",
+      location: "G2 京沪高速 · 昆山花桥附近",
+    },
+  ];
+  for (const fact of timelineFacts) service.appendTimelineFact(dispatchId, fact);
+  return result;
+}
+
+export function getLocalDispatchTimeline(
+  roleId: string,
+  dispatchId: string,
+): InTransitTimelineProjection {
+  assertLocalApiRuntime();
+  const context = createLocalWorkbenchContext(roleId);
+  return service.getInTransitTimeline({
+    tenantId: context.tenantScope.tenantId,
+    dispatchId,
+    tripSegmentSearchEnabled: false,
+  });
+}
+
+export function createLocalTimelineWork(
+  roleId: string,
+  dispatchId: string,
+  sourceEventId: string,
+  dueAt: string,
+  closureCriteria: string,
+): {
+  readonly work: DispatchFollowUpWork;
+  readonly dispatch: Dispatch;
+  readonly sourceFact: DispatchTimelineFact;
+} {
+  assertLocalApiRuntime();
+  assertDispatchRole(roleId);
+  const context = createLocalWorkbenchContext(roleId);
+  const work = service.createWorkFromTimelineFact({
+    tenantId: context.tenantScope.tenantId,
+    dispatchId,
+    sourceEventId,
+    ownerId: context.tenantScope.userId,
+    dueAt,
+    closureCriteria,
+  });
+  const sourceFact = service
+    .getInTransitTimeline({
+      tenantId: context.tenantScope.tenantId,
+      dispatchId,
+      tripSegmentSearchEnabled: false,
+    })
+    .events.find((fact) => fact.sourceEventId === sourceEventId);
+  if (sourceFact === undefined) {
+    throw new AppError({
+      code: "EXCEPTION_FACT_NOT_FOUND",
+      category: "NOT_FOUND",
+      message: "未找到处置工作的来源事实",
+      retryable: false,
+    });
+  }
+  return Object.freeze({ work, dispatch: service.getDispatch(dispatchId), sourceFact });
+}
+
+export interface LocalTodayWorkProjection {
+  readonly id: string;
+  readonly category: "异常";
+  readonly urgency: "warning";
+  readonly dueAt: string;
+  readonly objectId: string;
+  readonly route: string;
+  readonly summary: string;
+  readonly source: string;
+  readonly happenedAt: string;
+  readonly location: string;
+  readonly owner: string;
+  readonly nextAction: "查看处置工作";
+}
+
+export function listLocalTodayWork(
+  roleId: string,
+  windowStart: string,
+  windowEnd: string,
+): readonly LocalTodayWorkProjection[] {
+  assertLocalApiRuntime();
+  const context = createLocalWorkbenchContext(roleId);
+  const workItems = service.listTodayWork({
+    tenantId: context.tenantScope.tenantId,
+    windowStart,
+    windowEnd,
+  });
+  return Object.freeze(
+    workItems.map((work) => {
+      const dispatch = service.getDispatch(work.dispatchId);
+      const sourceFact = service
+        .getInTransitTimeline({
+          tenantId: context.tenantScope.tenantId,
+          dispatchId: dispatch.id,
+          tripSegmentSearchEnabled: false,
+        })
+        .events.find((fact) => fact.sourceEventId === work.sourceEventId);
+      if (sourceFact === undefined) {
+        throw new AppError({
+          code: "WORK_SOURCE_FACT_NOT_FOUND",
+          category: "NOT_FOUND",
+          message: "今日工作缺少来源事实",
+          retryable: false,
+        });
+      }
+      return Object.freeze({
+        id: work.id,
+        category: "异常" as const,
+        urgency: "warning" as const,
+        dueAt: work.dueAt,
+        objectId: dispatch.businessNo,
+        route: `${dispatch.origin} → ${dispatch.destination}`,
+        summary: work.title,
+        source: sourceFact.source,
+        happenedAt: sourceFact.happenedAt,
+        location: sourceFact.location ?? "未提供文字位置",
+        owner: "周贺龙",
+        nextAction: "查看处置工作" as const,
+      });
+    }),
+  );
 }
 
 export type LocalDispatchSyncAction =

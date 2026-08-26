@@ -29,7 +29,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { DispatchPlanner } from "./dispatch-planner.tsx";
+import { DispatchPlanner, type DispatchTodayWork } from "./dispatch-planner.tsx";
 
 type WorkView = "list" | "timeline" | "map";
 type ContextTab = "now" | "timeline" | "record" | "audit";
@@ -52,19 +52,21 @@ interface WorkbenchSession {
   readonly traceId: string;
 }
 
-interface WorkItem {
+type WorkItem = DispatchTodayWork;
+
+interface LocalTodayWorkProjection {
   readonly id: string;
-  readonly category: "派车" | "在途" | "异常" | "回单";
-  readonly urgency: "critical" | "warning" | "normal";
-  readonly due: string;
+  readonly category: "异常";
+  readonly urgency: "warning";
+  readonly dueAt: string;
   readonly objectId: string;
   readonly route: string;
   readonly summary: string;
   readonly source: string;
-  readonly freshness: string;
+  readonly happenedAt: string;
   readonly location: string;
   readonly owner: string;
-  readonly nextAction: string;
+  readonly nextAction: "查看处置工作";
 }
 
 const WORK_ITEMS: readonly WorkItem[] = Object.freeze([
@@ -163,6 +165,16 @@ function urgencyLabel(urgency: WorkItem["urgency"]): string {
   return "状态正常";
 }
 
+function localDateTime(value: string): string {
+  return new Intl.DateTimeFormat("zh-CN", {
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date(value));
+}
+
 export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) {
   const [selectedId, setSelectedId] = useState(WORK_ITEMS[0]?.id ?? "");
   const [query, setQuery] = useState("");
@@ -174,6 +186,7 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
   const [acceptedIds, setAcceptedIds] = useState<ReadonlySet<string>>(new Set());
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [activeModule, setActiveModule] = useState<WorkModule>("today");
+  const [createdWorkItems, setCreatedWorkItems] = useState<readonly WorkItem[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -187,18 +200,62 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
     return () => window.removeEventListener("keydown", focusSearch);
   }, []);
 
+  useEffect(() => {
+    const controller = new AbortController();
+    const query = new URLSearchParams({
+      roleId: selectedRoleId,
+      windowStart: "2026-08-25T00:00:00.000Z",
+      windowEnd: "2026-08-26T00:00:00.000Z",
+    });
+    void fetch(`/api/v1/work-items?${query.toString()}`, {
+      cache: "no-store",
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        const body = (await response.json()) as {
+          readonly items?: readonly LocalTodayWorkProjection[];
+        };
+        if (!response.ok || body.items === undefined) return;
+        setCreatedWorkItems(
+          body.items.map((item) => ({
+            id: item.id,
+            category: item.category,
+            urgency: item.urgency,
+            due: `${localDateTime(item.dueAt)} 前`,
+            objectId: item.objectId,
+            route: item.route,
+            summary: item.summary,
+            source: item.source,
+            freshness: `发生于 ${localDateTime(item.happenedAt)}`,
+            location: item.location,
+            owner: item.owner,
+            nextAction: item.nextAction,
+          })),
+        );
+      })
+      .catch((error: unknown) => {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          setRoleError("今日工作投影读取失败，请刷新重试");
+        }
+      });
+    return () => controller.abort();
+  }, [selectedRoleId]);
+
   const filteredItems = useMemo(() => {
+    const allItems = [...createdWorkItems, ...WORK_ITEMS];
     const normalized = query.trim().toLocaleLowerCase("zh-CN");
-    if (normalized.length === 0) return WORK_ITEMS;
-    return WORK_ITEMS.filter((item) =>
+    if (normalized.length === 0) return allItems;
+    return allItems.filter((item) =>
       [item.objectId, item.route, item.summary, item.category, item.location].some((value) =>
         value.toLocaleLowerCase("zh-CN").includes(normalized),
       ),
     );
-  }, [query]);
+  }, [createdWorkItems, query]);
 
   const selectedItem =
-    WORK_ITEMS.find((item) => item.id === selectedId) ?? filteredItems[0] ?? WORK_ITEMS[0];
+    [...createdWorkItems, ...WORK_ITEMS].find((item) => item.id === selectedId) ??
+    filteredItems[0] ??
+    WORK_ITEMS[0];
   const selectedRole = session.roleOptions.find((role) => role.id === selectedRoleId);
 
   async function changeRole(nextRoleId: string) {
@@ -243,13 +300,15 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const active = item.id === activeModule;
+            const itemCount =
+              item.id === "today" ? item.count + createdWorkItems.length : item.count;
             return (
               <button
                 className={`navItem${active ? " active" : ""}`}
                 type="button"
                 key={item.label}
                 aria-current={active ? "page" : undefined}
-                aria-label={`${item.label}\uFF0C${item.count} \u9879\u5F85\u5904\u7406`}
+                aria-label={`${item.label}\uFF0C${itemCount} \u9879\u5F85\u5904\u7406`}
                 title={item.enabled ? item.label : `${item.label}将在后续批次启用`}
                 disabled={!item.enabled}
                 onClick={() => {
@@ -258,8 +317,8 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
               >
                 <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
                 <span className="navLabel">{item.label}</span>
-                <span className="navCount" title={`${item.count} 项待处理`}>
-                  {item.count}
+                <span className="navCount" title={`${itemCount} 项待处理`}>
+                  {itemCount}
                 </span>
               </button>
             );
@@ -342,6 +401,12 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
             <DispatchPlanner
               selectedRoleId={selectedRoleId}
               canDispatch={selectedRole?.canDispatch ?? false}
+              onTodayWorkCreated={(work) => {
+                setCreatedWorkItems((current) =>
+                  current.some((item) => item.id === work.id) ? current : [work, ...current],
+                );
+                setSelectedId(work.id);
+              }}
             />
           </div>
         ) : (
@@ -351,7 +416,9 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
                 <div>
                   <p>{selectedRole?.workspace ?? "运输工作台"}</p>
                   <h1>今天需要完成的运输工作</h1>
-                  <span>8 月 25 日 · 华东组织 · 共 12 项，3 项需要立即处理</span>
+                  <span>
+                    8 月 25 日 · 华东组织 · 共 {12 + createdWorkItems.length} 项，3 项需要立即处理
+                  </span>
                 </div>
                 <button
                   className="secondaryButton"
@@ -376,7 +443,7 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
                 <fieldset className="filters">
                   <legend className="srOnly">工作筛选</legend>
                   <button className="filterButton active" type="button">
-                    全部 <span>12</span>
+                    全部 <span>{12 + createdWorkItems.length}</span>
                   </button>
                   <button className="filterButton" type="button">
                     已超时 <span>2</span>

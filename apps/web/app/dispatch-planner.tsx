@@ -2,6 +2,7 @@
 
 import {
   AlertOctagon,
+  BriefcaseBusiness,
   CheckCircle2,
   CircleAlert,
   Clock3,
@@ -19,6 +20,9 @@ import { useRef, useState } from "react";
 
 interface DispatchRecord {
   readonly id: string;
+  readonly businessNo: string;
+  readonly origin: string;
+  readonly destination: string;
   readonly status: "DRAFT" | "CONFIRMED" | "CANCELLED";
   readonly syncStatus:
     | "NOT_QUEUED"
@@ -70,6 +74,50 @@ interface DispatchPayload {
   readonly syncCommand?: SyncCommandRecord;
 }
 
+interface TimelineFactRecord {
+  readonly sourceEventId: string;
+  readonly type: "PLAN" | "GEOFENCE" | "LOCATION" | "STATUS" | "EXCEPTION" | "RECEIPT";
+  readonly source: string;
+  readonly happenedAt: string;
+  readonly receivedAt: string;
+  readonly summary: string;
+  readonly location?: string;
+}
+
+interface TimelineProjectionRecord {
+  readonly events: readonly TimelineFactRecord[];
+  readonly latestLocation?: TimelineFactRecord;
+  readonly tripSegmentSearchUsed: boolean;
+}
+
+interface FollowUpWorkRecord {
+  readonly id: string;
+  readonly dispatchId: string;
+  readonly vehicleId: string;
+  readonly driverId: string;
+  readonly sourceEventId: string;
+  readonly ownerId: string;
+  readonly dueAt: string;
+  readonly closureCriteria: string;
+  readonly title: string;
+  readonly status: "OPEN";
+}
+
+export interface DispatchTodayWork {
+  readonly id: string;
+  readonly category: "派车" | "在途" | "异常" | "回单";
+  readonly urgency: "critical" | "warning" | "normal";
+  readonly due: string;
+  readonly objectId: string;
+  readonly route: string;
+  readonly summary: string;
+  readonly source: string;
+  readonly freshness: string;
+  readonly location: string;
+  readonly owner: string;
+  readonly nextAction: string;
+}
+
 const INITIAL_FORM = {
   businessNo: "YD-260825-1001",
   origin: "上海闵行集散中心",
@@ -104,6 +152,28 @@ function decisionLabel(decision: CandidateEvaluation["decision"]): string {
   return "可用";
 }
 
+function timelineTypeLabel(type: TimelineFactRecord["type"]): string {
+  const labels: Record<TimelineFactRecord["type"], string> = {
+    PLAN: "计划",
+    GEOFENCE: "围栏",
+    LOCATION: "位置",
+    STATUS: "状态",
+    EXCEPTION: "异常",
+    RECEIPT: "回单",
+  };
+  return labels[type];
+}
+
+function localDateTime(value: string): string {
+  return new Intl.DateTimeFormat("zh-CN", {
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date(value));
+}
+
 function toUtcIso(value: string): string {
   const parsed = new Date(value);
   return Number.isFinite(parsed.getTime()) ? parsed.toISOString() : value;
@@ -120,13 +190,31 @@ async function readResponse<T>(response: Response): Promise<T> {
 export function DispatchPlanner({
   selectedRoleId,
   canDispatch,
-}: Readonly<{ selectedRoleId: string; canDispatch: boolean }>) {
+  onTodayWorkCreated,
+}: Readonly<{
+  selectedRoleId: string;
+  canDispatch: boolean;
+  onTodayWorkCreated?: (work: DispatchTodayWork) => void;
+}>) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [payload, setPayload] = useState<DispatchPayload>();
   const [overrideReasons, setOverrideReasons] = useState<Record<string, string>>({});
   const [busyAction, setBusyAction] = useState<
-    "save" | "select" | "confirm" | "fail" | "retry" | "complete" | "revoke" | ""
+    | "save"
+    | "select"
+    | "confirm"
+    | "fail"
+    | "retry"
+    | "complete"
+    | "revoke"
+    | "timeline"
+    | "work"
+    | ""
   >("");
+  const [timeline, setTimeline] = useState<TimelineProjectionRecord>();
+  const [createdWork, setCreatedWork] = useState<FollowUpWorkRecord>();
+  const [workDueAt, setWorkDueAt] = useState("2026-08-25T13:00");
+  const [closureCriteria, setClosureCriteria] = useState("确认新 ETA 并通知客户");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [revokeReason, setRevokeReason] = useState("本地验收撤销，不执行外部写入");
@@ -216,8 +304,68 @@ export function DispatchPlanner({
       setNotice(
         `派车已在本地确认；命令 ${result.syncCommand.id} 仅处于待同步状态，真实 G7 写入保持关闭。`,
       );
+      try {
+        const timelineResponse = await fetch(
+          `/api/v1/dispatches/${encodeURIComponent(result.dispatch.id)}/timeline?roleId=${encodeURIComponent(selectedRoleId)}`,
+          { cache: "no-store" },
+        );
+        setTimeline(await readResponse<TimelineProjectionRecord>(timelineResponse));
+      } catch (caught) {
+        setError(
+          caught instanceof Error
+            ? `派车已确认，但时间线读取失败：${caught.message}`
+            : "时间线读取失败",
+        );
+      }
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "派车确认失败");
+    } finally {
+      setBusyAction("");
+    }
+  }
+
+  async function createTimelineWork(fact: TimelineFactRecord) {
+    if (payload === undefined) return;
+    setBusyAction("work");
+    setError("");
+    setNotice("");
+    try {
+      const response = await fetch(
+        `/api/v1/dispatches/${encodeURIComponent(payload.dispatch.id)}/timeline/work`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            roleId: selectedRoleId,
+            sourceEventId: fact.sourceEventId,
+            dueAt: toUtcIso(workDueAt),
+            closureCriteria,
+          }),
+        },
+      );
+      const result = await readResponse<{
+        readonly work: FollowUpWorkRecord;
+        readonly dispatch: DispatchRecord;
+        readonly sourceFact: TimelineFactRecord;
+      }>(response);
+      setCreatedWork(result.work);
+      onTodayWorkCreated?.({
+        id: result.work.id,
+        category: "异常",
+        urgency: "warning",
+        due: `${localDateTime(result.work.dueAt)} 前`,
+        objectId: result.dispatch.businessNo,
+        route: `${result.dispatch.origin} → ${result.dispatch.destination}`,
+        summary: result.work.title,
+        source: result.sourceFact.source,
+        freshness: `发生于 ${localDateTime(result.sourceFact.happenedAt)}`,
+        location: result.sourceFact.location ?? "未提供文字位置",
+        owner: "周贺龙",
+        nextAction: "查看处置工作",
+      });
+      setNotice(`处置工作 ${result.work.id} 已创建并加入“今日运输”。`);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "处置工作创建失败");
     } finally {
       setBusyAction("");
     }
@@ -271,6 +419,8 @@ export function DispatchPlanner({
 
   function resetPlanner() {
     setPayload(undefined);
+    setTimeline(undefined);
+    setCreatedWork(undefined);
     setOverrideReasons({});
     setError("");
     setNotice("");
@@ -542,6 +692,97 @@ export function DispatchPlanner({
         </section>
       ) : null}
 
+      {timeline ? (
+        <section className="dispatchTimelineSection" aria-label="在途时间线">
+          <div className="syncRecoveryHeading">
+            <div>
+              <span>步骤 4</span>
+              <h2>在途事实与处置工作</h2>
+              <p>按发生时间排序；来源和接收时间独立保留。</p>
+            </div>
+            <strong className="statusTag">
+              trip-segment-search {timeline.tripSegmentSearchUsed ? "已启用" : "已关闭"}
+            </strong>
+          </div>
+          <ol className="dispatchTimelineList">
+            {timeline.events.map((fact) => {
+              const linkedWork = createdWork?.sourceEventId === fact.sourceEventId;
+              return (
+                <li
+                  className={fact.type === "EXCEPTION" ? "exception" : ""}
+                  key={fact.sourceEventId}
+                >
+                  <div className="timelineFactHeading">
+                    <span>{timelineTypeLabel(fact.type)}</span>
+                    <time dateTime={fact.happenedAt}>{localDateTime(fact.happenedAt)}</time>
+                  </div>
+                  <strong>{fact.summary}</strong>
+                  <p>{fact.location ?? "无位置字段"}</p>
+                  <small>
+                    {fact.source} · 接收于 {localDateTime(fact.receivedAt)}
+                  </small>
+                  {fact.type === "EXCEPTION" ? (
+                    linkedWork ? (
+                      <dl className="linkedWorkFacts">
+                        <div>
+                          <dt>今日工作</dt>
+                          <dd className="mono">{createdWork.id}</dd>
+                        </div>
+                        <div>
+                          <dt>责任</dt>
+                          <dd>周贺龙</dd>
+                        </div>
+                        <div>
+                          <dt>时限</dt>
+                          <dd>{localDateTime(createdWork.dueAt)}</dd>
+                        </div>
+                        <div>
+                          <dt>关闭条件</dt>
+                          <dd>{createdWork.closureCriteria}</dd>
+                        </div>
+                      </dl>
+                    ) : (
+                      <div className="timelineWorkComposer">
+                        <label>
+                          <span>责任人</span>
+                          <input value="周贺龙（当前登录人）" disabled />
+                        </label>
+                        <label>
+                          <span>完成时限</span>
+                          <input
+                            type="datetime-local"
+                            value={workDueAt}
+                            onChange={(event) => setWorkDueAt(event.target.value)}
+                          />
+                        </label>
+                        <label className="closureField">
+                          <span>关闭条件</span>
+                          <input
+                            value={closureCriteria}
+                            onChange={(event) => setClosureCriteria(event.target.value)}
+                          />
+                        </label>
+                        <button
+                          className="primaryButton"
+                          type="button"
+                          disabled={
+                            !canDispatch || busyAction !== "" || closureCriteria.trim().length === 0
+                          }
+                          onClick={() => void createTimelineWork(fact)}
+                        >
+                          <BriefcaseBusiness size={17} aria-hidden="true" />
+                          {busyAction === "work" ? "正在创建" : "创建处置工作"}
+                        </button>
+                      </div>
+                    )
+                  ) : null}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ) : null}
+
       {payload?.syncCommand ? (
         <section className={`syncRecoveryPanel ${payload.syncCommand.status.toLowerCase()}`}>
           <div className="syncRecoveryHeading">
@@ -562,12 +803,16 @@ export function DispatchPlanner({
               <dd>{payload.syncCommand.lastAttemptAt ?? "尚未发送"}</dd>
             </div>
             <div>
-              <dt>影响</dt>
-              <dd>G7 人车绑定尚未确认；本地派车不回滚</dd>
+              <dt>{payload.syncCommand.status === "SYNCED" ? "回读结果" : "当前影响"}</dt>
+              <dd>
+                {payload.syncCommand.status === "SYNCED"
+                  ? "绑定已受控回读确认；本地派车保持已确认"
+                  : "G7 人车绑定尚未确认；本地派车不回滚"}
+              </dd>
             </div>
             {payload.syncCommand.lastError ? (
               <div>
-                <dt>失败原因</dt>
+                <dt>{payload.syncCommand.status === "SYNCED" ? "上次失败" : "失败原因"}</dt>
                 <dd>{payload.syncCommand.lastError.message}</dd>
               </div>
             ) : null}

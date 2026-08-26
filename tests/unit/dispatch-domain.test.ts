@@ -195,6 +195,109 @@ describe("dispatch domain", () => {
     assert.equal(projection.latestLocation?.location, "昆山花桥附近");
   });
 
+  it("TEST-019 creates a today work item linked to the dispatch resources and source fact", () => {
+    let idSequence = 0;
+    const service = createDispatchService({ idFactory: (prefix) => `${prefix}-${++idSequence}` });
+    const draft = service.createDraft(baseDraft).dispatch;
+    service.evaluateCandidate(draft.id, availableCandidate);
+    service.selectCandidate(draft.id, availableCandidate.candidateId);
+    service.confirmDispatch({
+      tenantId: baseDraft.tenantId,
+      dispatchId: draft.id,
+      expectedVersion: 2,
+      idempotencyKey: "confirm-timeline-work",
+      existingAssignments: [],
+    });
+    service.appendTimelineFact(draft.id, {
+      sourceEventId: "exception-delay-001",
+      type: "EXCEPTION",
+      source: "LOCAL_SANDBOX_FIXTURE",
+      happenedAt: "2026-08-25T03:20:00.000Z",
+      receivedAt: "2026-08-25T03:20:04.000Z",
+      summary: "预计晚到 42 分钟",
+      location: "昆山花桥附近",
+    });
+
+    const work = service.createWorkFromTimelineFact({
+      tenantId: baseDraft.tenantId,
+      dispatchId: draft.id,
+      sourceEventId: "exception-delay-001",
+      ownerId: "user-zhou-helong",
+      dueAt: "2026-08-25T04:00:00.000Z",
+      closureCriteria: "确认新 ETA 并通知客户",
+    });
+
+    assert.equal(work.dispatchId, draft.id);
+    assert.equal(work.vehicleId, availableCandidate.vehicleId);
+    assert.equal(work.driverId, availableCandidate.driverId);
+    assert.equal(work.sourceEventId, "exception-delay-001");
+    assert.equal(work.ownerId, "user-zhou-helong");
+    assert.equal(work.status, "OPEN");
+    assert.equal(
+      service.listTodayWork({
+        tenantId: baseDraft.tenantId,
+        windowStart: "2026-08-25T00:00:00.000Z",
+        windowEnd: "2026-08-26T00:00:00.000Z",
+      })[0]?.id,
+      work.id,
+    );
+  });
+
+  it("TEST-020 composes the timeline without calling the developing trip search when disabled", () => {
+    let developingCallCount = 0;
+    const service = createDispatchService({
+      tripSegmentSearch: {
+        search() {
+          developingCallCount += 1;
+          return [];
+        },
+      },
+    });
+    const dispatch = service.createDraft(baseDraft).dispatch;
+    for (const fact of [
+      {
+        sourceEventId: "plan-departure",
+        type: "PLAN" as const,
+        source: "LOCAL_DISPATCH_PLAN",
+        happenedAt: "2026-08-25T02:30:00.000Z",
+        receivedAt: "2026-08-25T02:00:00.000Z",
+        summary: "计划从上海闵行集散中心发车",
+      },
+      {
+        sourceEventId: "location-001",
+        type: "LOCATION" as const,
+        source: "G7_SANDBOX_SYNTHETIC_FIXTURE",
+        happenedAt: "2026-08-25T03:00:00.000Z",
+        receivedAt: "2026-08-25T03:00:03.000Z",
+        summary: "车辆进入昆山花桥路段",
+        location: "昆山花桥附近",
+      },
+      {
+        sourceEventId: "geofence-entry-001",
+        type: "GEOFENCE" as const,
+        source: "G7_SANDBOX_SYNTHETIC_FIXTURE",
+        happenedAt: "2026-08-25T03:10:00.000Z",
+        receivedAt: "2026-08-25T03:10:05.000Z",
+        summary: "进入昆山中转围栏",
+      },
+    ]) {
+      service.appendTimelineFact(dispatch.id, fact);
+    }
+
+    const projection = service.getInTransitTimeline({
+      tenantId: baseDraft.tenantId,
+      dispatchId: dispatch.id,
+      tripSegmentSearchEnabled: false,
+    });
+
+    assert.equal(developingCallCount, 0);
+    assert.deepEqual(
+      projection.events.map((event) => event.type),
+      ["PLAN", "LOCATION", "GEOFENCE"],
+    );
+    assert.equal(projection.tripSegmentSearchUsed, false);
+  });
+
   it("TEST-021 keeps the confirmed business state while retryable G7 sync fails and retries", () => {
     const service = createDispatchService({
       idFactory: (prefix) => `${prefix}-sync-recovery`,

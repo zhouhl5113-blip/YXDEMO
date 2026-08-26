@@ -18,6 +18,11 @@ async function post(
   return { status: response.status, body: (await response.json()) as Record<string, unknown> };
 }
 
+async function get(path: string): Promise<JsonResponse> {
+  const response = await fetch(`${baseUrl}${path}`, { cache: "no-store" });
+  return { status: response.status, body: (await response.json()) as Record<string, unknown> };
+}
+
 function record(value: unknown, label: string): Record<string, unknown> {
   if (value === null || typeof value !== "object" || Array.isArray(value)) {
     throw new Error(`${label} was not an object`);
@@ -88,6 +93,36 @@ const roleOptions = list(session.body.roleOptions, "role options");
 const confirmedDispatch = record(confirmed.body.dispatch, "confirmed dispatch");
 const confirmedCommand = record(confirmed.body.syncCommand, "confirmed command");
 const replayedCommand = record(replayed.body.syncCommand, "replayed command");
+const timeline = await get(`/api/v1/dispatches/${dispatchId}/timeline?roleId=operations_manager`);
+const timelineEvents = list(timeline.body.events, "timeline events");
+const exceptionFact = record(
+  timelineEvents.find((event) => record(event, "timeline event").type === "EXCEPTION"),
+  "exception fact",
+);
+const timelineWorkBody = {
+  roleId: "dispatcher",
+  sourceEventId: String(exceptionFact.sourceEventId),
+  dueAt: "2026-08-25T05:00:00.000Z",
+  closureCriteria: "确认新 ETA 并通知客户",
+};
+const deniedTimelineWork = await post(`/api/v1/dispatches/${dispatchId}/timeline/work`, {
+  ...timelineWorkBody,
+  roleId: "operations_manager",
+});
+const createdTimelineWork = await post(
+  `/api/v1/dispatches/${dispatchId}/timeline/work`,
+  timelineWorkBody,
+);
+const replayedTimelineWork = await post(
+  `/api/v1/dispatches/${dispatchId}/timeline/work`,
+  timelineWorkBody,
+);
+const timelineWork = record(createdTimelineWork.body.work, "timeline work");
+const replayedWork = record(replayedTimelineWork.body.work, "replayed timeline work");
+const todayWork = await get(
+  "/api/v1/work-items?roleId=operations_manager&windowStart=2026-08-25T00%3A00%3A00.000Z&windowEnd=2026-08-26T00%3A00%3A00.000Z",
+);
+const todayItems = list(todayWork.body.items, "today work items");
 const deniedSync = await post(`/api/v1/dispatches/${dispatchId}/sync`, {
   roleId: "operations_manager",
   commandId: String(confirmedCommand.id),
@@ -135,6 +170,35 @@ expect(missingKey.body.code === "IDEMPOTENCY_KEY_REQUIRED", "idempotency header 
 expect(confirmedDispatch.status === "CONFIRMED", "dispatch was not confirmed");
 expect(confirmedDispatch.syncStatus === "PENDING", "sync command was not left pending");
 expect(confirmedCommand.id === replayedCommand.id, "idempotent replay created another command");
+expect(timeline.status === 200, "read-only role could not read the in-transit timeline");
+expect(
+  timelineEvents.length === 4,
+  "plan, location, geofence and exception facts were not composed",
+);
+expect(
+  timeline.body.tripSegmentSearchUsed === false,
+  "disabled trip-segment-search was reported as used",
+);
+expect(
+  deniedTimelineWork.status === 403 &&
+    deniedTimelineWork.body.code === "DISPATCH_PERMISSION_DENIED",
+  "read-only role was allowed to create timeline work",
+);
+expect(
+  createdTimelineWork.status === 201 &&
+    timelineWork.dispatchId === dispatchId &&
+    timelineWork.sourceEventId === exceptionFact.sourceEventId,
+  "timeline work was not linked to the dispatch and source fact",
+);
+expect(
+  typeof timelineWork.vehicleId === "string" && typeof timelineWork.driverId === "string",
+  "timeline work did not retain the selected vehicle and driver",
+);
+expect(timelineWork.id === replayedWork.id, "source-fact replay created duplicate work");
+expect(
+  todayItems.some((item) => record(item, "today work item").id === timelineWork.id),
+  "timeline work did not appear in today's server projection",
+);
 expect(
   deniedSync.status === 403 && deniedSync.body.code === "DISPATCH_PERMISSION_DENIED",
   "read-only role was allowed to recover a sync command",
@@ -188,6 +252,24 @@ console.log(
         syncStatus: confirmedDispatch.syncStatus,
       },
       idempotentReplay: confirmedCommand.id === replayedCommand.id,
+      timeline: {
+        status: timeline.status,
+        eventTypes: timelineEvents.map((event) => record(event, "timeline event").type),
+        tripSegmentSearchUsed: timeline.body.tripSegmentSearchUsed,
+        readOnlyAccess: true,
+      },
+      timelineWork: {
+        status: createdTimelineWork.status,
+        readOnlyCreateStatus: deniedTimelineWork.status,
+        dispatchLinked: timelineWork.dispatchId === dispatchId,
+        resourceLinked:
+          typeof timelineWork.vehicleId === "string" && typeof timelineWork.driverId === "string",
+        sourceLinked: timelineWork.sourceEventId === exceptionFact.sourceEventId,
+        idempotentReplay: timelineWork.id === replayedWork.id,
+        appearsToday: todayItems.some(
+          (item) => record(item, "today work item").id === timelineWork.id,
+        ),
+      },
       syncAuthorization: {
         readOnlyStatus: deniedSync.status,
         mismatchedDispatchStatus: mismatchedDispatchSync.status,

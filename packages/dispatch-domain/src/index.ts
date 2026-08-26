@@ -195,7 +195,7 @@ export interface RevokeSyncCommandInput {
 
 export interface DispatchTimelineFact {
   readonly sourceEventId: string;
-  readonly type: "LOCATION" | "STATUS" | "EXCEPTION" | "RECEIPT";
+  readonly type: "PLAN" | "GEOFENCE" | "LOCATION" | "STATUS" | "EXCEPTION" | "RECEIPT";
   readonly source: string;
   readonly happenedAt: string;
   readonly receivedAt: string;
@@ -208,9 +208,45 @@ export interface DispatchTimelineProjection {
   readonly latestLocation?: DispatchTimelineFact;
 }
 
+export interface InTransitTimelineProjection extends DispatchTimelineProjection {
+  readonly tripSegmentSearchUsed: boolean;
+}
+
+export interface TripSegmentSearchPort {
+  search(input: {
+    readonly tenantId: string;
+    readonly dispatchId: string;
+  }): readonly DispatchTimelineFact[];
+}
+
+export interface DispatchFollowUpWork {
+  readonly id: string;
+  readonly tenantId: string;
+  readonly dispatchId: string;
+  readonly vehicleId: string;
+  readonly driverId: string;
+  readonly sourceEventId: string;
+  readonly ownerId: string;
+  readonly dueAt: string;
+  readonly closureCriteria: string;
+  readonly title: string;
+  readonly status: "OPEN";
+  readonly createdAt: string;
+}
+
+export interface CreateTimelineWorkInput {
+  readonly tenantId: string;
+  readonly dispatchId: string;
+  readonly sourceEventId: string;
+  readonly ownerId: string;
+  readonly dueAt: string;
+  readonly closureCriteria: string;
+}
+
 export interface DispatchServiceOptions {
   readonly idFactory?: (prefix: string) => string;
   readonly clock?: () => string;
+  readonly tripSegmentSearch?: TripSegmentSearchPort;
 }
 
 export interface DispatchService {
@@ -250,6 +286,17 @@ export interface DispatchService {
     readonly thresholdMinutes: number;
   }): readonly AdministratorOperationsWork[];
   appendTimelineFact(dispatchId: string, fact: DispatchTimelineFact): DispatchTimelineFact;
+  createWorkFromTimelineFact(input: CreateTimelineWorkInput): DispatchFollowUpWork;
+  listTodayWork(input: {
+    readonly tenantId: string;
+    readonly windowStart: string;
+    readonly windowEnd: string;
+  }): readonly DispatchFollowUpWork[];
+  getInTransitTimeline(input: {
+    readonly tenantId: string;
+    readonly dispatchId: string;
+    readonly tripSegmentSearchEnabled: boolean;
+  }): InTransitTimelineProjection;
   getDispatch(dispatchId: string): Dispatch;
   getSyncCommand(tenantId: string, commandId: string): DispatchSyncCommand;
   getCandidateEvaluations(dispatchId: string): readonly CandidateEvaluation[];
@@ -322,6 +369,8 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
   >();
   const timelineFacts = new Map<string, Map<string, DispatchTimelineFact>>();
   const operationsWork = new Map<string, AdministratorOperationsWork>();
+  const followUpWork = new Map<string, DispatchFollowUpWork>();
+  const followUpWorkBySource = new Map<string, string>();
 
   function getDispatch(dispatchId: string): Dispatch {
     const dispatch = dispatches.get(dispatchId);
@@ -338,6 +387,32 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
       throw appError("CANDIDATE_NOT_FOUND", "未找到派车候选", "NOT_FOUND");
     }
     return evaluation;
+  }
+
+  function getTenantDispatch(tenantId: string, dispatchId: string): Dispatch {
+    const dispatch = getDispatch(dispatchId);
+    if (dispatch.tenantId !== tenantId) {
+      throw appError("DISPATCH_NOT_FOUND", "未找到派车记录", "NOT_FOUND");
+    }
+    return dispatch;
+  }
+
+  function timelineProjection(events: readonly DispatchTimelineFact[]): DispatchTimelineProjection {
+    const orderedEvents = [...events].sort(
+      (left, right) => timestamp(left.happenedAt) - timestamp(right.happenedAt),
+    );
+    const latestLocation = orderedEvents
+      .filter((event) => event.type === "LOCATION" && event.location !== undefined)
+      .reduce<DispatchTimelineFact | undefined>((latest, event) => {
+        if (latest === undefined || timestamp(event.happenedAt) > timestamp(latest.happenedAt)) {
+          return event;
+        }
+        return latest;
+      }, undefined);
+    return Object.freeze({
+      events: Object.freeze(orderedEvents),
+      ...(latestLocation === undefined ? {} : { latestLocation }),
+    });
   }
 
   function getSyncCommand(tenantId: string, commandId: string): DispatchSyncCommand {
@@ -739,6 +814,108 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
       return fact;
     },
 
+    createWorkFromTimelineFact(input) {
+      const dispatch = getTenantDispatch(input.tenantId, input.dispatchId);
+      if (
+        dispatch.selection === undefined ||
+        (dispatch.status !== "CONFIRMED" && dispatch.status !== "IN_TRANSIT")
+      ) {
+        throw appError(
+          "DISPATCH_NOT_ACTIVE",
+          "只有已确认或在途派车可以从时间线创建工作",
+          "CONFLICT",
+        );
+      }
+      const sourceFact = timelineFacts.get(dispatch.id)?.get(input.sourceEventId);
+      if (sourceFact === undefined || sourceFact.type !== "EXCEPTION") {
+        throw appError("EXCEPTION_FACT_NOT_FOUND", "未找到可创建工作的异常来源事实", "NOT_FOUND");
+      }
+      const sourceKey = `${input.tenantId}:${input.dispatchId}:${input.sourceEventId}`;
+      const existingId = followUpWorkBySource.get(sourceKey);
+      if (existingId !== undefined) {
+        const existing = followUpWork.get(existingId);
+        if (existing !== undefined) return existing;
+      }
+      const dueAt = timestamp(input.dueAt, "INVALID_WORK_DUE_AT");
+      if (dueAt <= timestamp(sourceFact.happenedAt)) {
+        throw appError("INVALID_WORK_DUE_AT", "工作截止时间必须晚于异常发生时间", "VALIDATION");
+      }
+      const candidate = getEvaluation(dispatch.id, dispatch.selection.candidateId).candidate;
+      const createdAt = clock();
+      timestamp(createdAt);
+      const work: DispatchFollowUpWork = Object.freeze({
+        id: idFactory("dispatch-work"),
+        tenantId: dispatch.tenantId,
+        dispatchId: dispatch.id,
+        vehicleId: candidate.vehicleId,
+        driverId: candidate.driverId,
+        sourceEventId: sourceFact.sourceEventId,
+        ownerId: requireText(input.ownerId, "WORK_OWNER_REQUIRED", "工作责任人"),
+        dueAt: input.dueAt,
+        closureCriteria: requireText(
+          input.closureCriteria,
+          "WORK_CLOSURE_CRITERIA_REQUIRED",
+          "关闭条件",
+        ),
+        title: `处置：${sourceFact.summary}`,
+        status: "OPEN",
+        createdAt,
+      });
+      followUpWork.set(work.id, work);
+      followUpWorkBySource.set(sourceKey, work.id);
+      return work;
+    },
+
+    listTodayWork(input) {
+      const start = timestamp(input.windowStart, "INVALID_TODAY_WINDOW");
+      const end = timestamp(input.windowEnd, "INVALID_TODAY_WINDOW");
+      if (end <= start) {
+        throw appError("INVALID_TODAY_WINDOW", "今日工作时间窗无效", "VALIDATION");
+      }
+      return Object.freeze(
+        [...followUpWork.values()]
+          .filter(
+            (work) =>
+              work.tenantId === input.tenantId &&
+              timestamp(work.dueAt) >= start &&
+              timestamp(work.dueAt) < end,
+          )
+          .sort((left, right) => timestamp(left.dueAt) - timestamp(right.dueAt)),
+      );
+    },
+
+    getInTransitTimeline(input) {
+      getTenantDispatch(input.tenantId, input.dispatchId);
+      const localFacts = [...(timelineFacts.get(input.dispatchId)?.values() ?? [])];
+      if (!input.tripSegmentSearchEnabled) {
+        return Object.freeze({
+          ...timelineProjection(localFacts),
+          tripSegmentSearchUsed: false,
+        });
+      }
+      if (options.tripSegmentSearch === undefined) {
+        throw appError(
+          "TRIP_SEGMENT_SEARCH_UNAVAILABLE",
+          "trip-segment-search 已开启但 developing 端口未配置",
+          "CONFLICT",
+        );
+      }
+      const combined = new Map(localFacts.map((fact) => [fact.sourceEventId, fact]));
+      for (const fact of options.tripSegmentSearch.search({
+        tenantId: input.tenantId,
+        dispatchId: input.dispatchId,
+      })) {
+        timestamp(fact.happenedAt);
+        timestamp(fact.receivedAt);
+        if (!combined.has(fact.sourceEventId))
+          combined.set(fact.sourceEventId, Object.freeze(fact));
+      }
+      return Object.freeze({
+        ...timelineProjection([...combined.values()]),
+        tripSegmentSearchUsed: true,
+      });
+    },
+
     getDispatch,
 
     getSyncCommand,
@@ -758,21 +935,7 @@ export function createDispatchService(options: DispatchServiceOptions = {}): Dis
 
     getTimeline(dispatchId) {
       getDispatch(dispatchId);
-      const events = [...(timelineFacts.get(dispatchId)?.values() ?? [])].sort(
-        (left, right) => timestamp(left.happenedAt) - timestamp(right.happenedAt),
-      );
-      const latestLocation = events
-        .filter((event) => event.type === "LOCATION" && event.location !== undefined)
-        .reduce<DispatchTimelineFact | undefined>((latest, event) => {
-          if (latest === undefined || timestamp(event.happenedAt) > timestamp(latest.happenedAt)) {
-            return event;
-          }
-          return latest;
-        }, undefined);
-      return Object.freeze({
-        events: Object.freeze(events),
-        ...(latestLocation === undefined ? {} : { latestLocation }),
-      });
+      return timelineProjection([...(timelineFacts.get(dispatchId)?.values() ?? [])]);
     },
   };
 }
