@@ -29,6 +29,10 @@
 | `evidence/dispatch-timeline-work-tests.junit.xml` | Machine-readable TEST-018..020 domain regression | 3 tests, 0 failures, 0 skipped |
 | `evidence/dispatch-timeline-work-smoke.json` | Local timeline/work BFF smoke | Four fact types, flag-off fallback, role denial, source idempotency and Today readback pass |
 | `evidence/dispatch-timeline-work-browser-qa.json` | Timeline-to-work flow and responsive QA | Full flow passes at 1440/1280/390 with coherent counts and no console/overflow errors |
+| `evidence/safety-feed-build.json` | US-009 local safety-feed reliability implementation record | Check/build pass; 62/62 tests; signed G7 contracts and durable worker remain disabled |
+| `evidence/safety-feed-tests.junit.xml` | Machine-readable TEST-024..026 domain regression | 3 tests, 0 failures, 0 skipped |
+| `evidence/safety-feed-smoke.json` | Local read-only safety-feed BFF smoke | Role denial, duplicate suppression, revision preservation and cursor-gap recovery pass with no external read/write |
+| `evidence/safety-feed-browser-qa.json` | Risk inbox, source/version and feed-integrity responsive QA | Local flow passes at 1440/1280/390 with no console or overflow errors |
 | `evidence/screenshots/workbench-1440x900.png` | 1440x900 desktop visual evidence | SHA-256 recorded in browser QA JSON |
 | `evidence/screenshots/workbench-1280x720.png` | 1280x720 compact desktop visual evidence | No clipped work rows; SHA-256 recorded in browser QA JSON |
 | `evidence/screenshots/workbench-390x844.png` | 390x844 mobile work-surface evidence | No page or toolbar horizontal overflow; SHA-256 recorded in browser QA JSON |
@@ -40,6 +44,8 @@
 | `evidence/screenshots/dispatch-timeline-work-1440x900.png` | Desktop timeline and linked-work evidence | Four fact types, source/freshness, disabled developing endpoint and linked work are visible |
 | `evidence/screenshots/dispatch-today-work-1440x900.png` | Desktop Today projection evidence | Created exception work and coherent navigation/filter counts are visible |
 | `evidence/screenshots/dispatch-today-work-390x844.png` | Mobile Today projection evidence | Created work remains readable with no page/control horizontal overflow |
+| `evidence/screenshots/safety-risk-inbox-1440x900.png` | Desktop safety risk inbox evidence | Four event types, selected source revisions, metrics and cursor recovery are visible |
+| `evidence/screenshots/safety-risk-inbox-390x844.png` | Mobile safety risk inbox evidence | Feed integrity remains readable above bottom navigation with no page/control horizontal overflow |
 | `product-design-gate-check.md` | Human-readable Product/Design readiness verdict | `FAIL (BLOCKED)`; structure valid, mandatory approvals/evidence absent |
 | `evidence/product-design-gate-check.json` | Machine-readable gate structure and blocker result | 10/10 structure checks pass; verdict `BLOCKED` |
 | `evidence/product-design-gate-tests.junit.xml` | Prior gate-validator regression evidence | 15 tests at the previous checkpoint; current combined regression is 48/48 in `foundation-workbench-tests.junit.xml` |
@@ -61,7 +67,7 @@
 | `repo:docs/architecture/adr-0003-keycloak-identity-application-authorization.md` | Identity provider and application authorization boundary | Accepted only for local policy contracts/tests; runtime, persistence and production remain blocked |
 | `repo:docs/architecture/adr-0004-g7-platform-first-local-data-boundaries.md` | Minimum local ownership, schema gate and rollback rules for G7 gaps | Accepted for local design/test/migration review; requires signed SANDBOX evidence and named activation review before migrations execute |
 | `gap-approval-packet.md` | One-page G7 gap and local Design approval record | Exact project-owner decision recorded; no production or execution approval inferred |
-| `traceability.csv` | RQ/UJ/FR/NFR/AD/EP/US/TEST/OQ linkage | 464 rows; 163 stable TEST IDs; US-001 and US-004..008 have partial local evidence; TEST-018..020 pass locally while external/persistence acceptance remains open |
+| `traceability.csv` | RQ/UJ/FR/NFR/AD/EP/US/TEST/OQ linkage | 464 rows; 163 stable TEST IDs; US-001 and US-004..009 have partial local evidence; TEST-024..026 pass locally while signed G7 and durable-worker acceptance remain open |
 | `open-decisions.md` | Blocking administrator/product decisions | OQ-008 resolved locally; credential, gaps, runtime, Acceptance and production governance remain open |
 | `release-plan.md` | Immutable promotion and rollback | Draft, target/owners unresolved |
-| `evidence/workspace-validation.md` | Control-record validation | Passed at `intake`; local runtime, 59-test combined regression, browser QA and gate structure passed |
+| `evidence/workspace-validation.md` | Control-record validation | Passed at `intake`; local runtime, 62-test combined regression, browser QA and gate structure passed |

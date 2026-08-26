@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T14:54:30Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "implementationCommit": "682808f5e49b11c112eda87d15af30a982f4d02a",
+  "scope": "LOCAL_DEVELOPMENT_AND_TEST_ONLY",
+  "result": "PASS_LOCAL_WITH_SIGNED_G7_AND_DURABILITY_DISABLED",
+  "story": "US-009",
+  "requirements": ["FR-010", "FR-015", "NFR-004", "NFR-005"],
+  "tests": ["TEST-024", "TEST-025", "TEST-026"],
+  "checks": [
+    {
+      "command": "pnpm run check",
+      "result": "PASS",
+      "details": "Biome format/lint, TypeScript strict, 62/62 tests and non-strict delivery evidence validation passed"
+    },
+    {
+      "command": "pnpm run build:web",
+      "result": "PASS",
+      "details": "Next.js production build includes the read-only /api/v1/safety/events route and risk inbox"
+    },
+    {
+      "command": "pnpm run smoke:local-dispatch",
+      "result": "PASS",
+      "details": "Tenant role denial, duplicate suppression, revision preservation, cursor-gap recovery and read-only risk projection passed"
+    }
+  ],
+  "implemented": [
+    "tenant, source-event ID and payload-hash idempotency with revision preservation",
+    "out-of-order event projection ordered by business occurrence time",
+    "cursor advancement only after validation and staged page acceptance",
+    "tenant-partition pause, gap audit and historical backfill recovery",
+    "per-tenant exponential retry isolation so one throttled tenant does not block another",
+    "feed acceptance, duplicate, gap and rate-limit metrics",
+    "server-owned read-only risk inbox with source, version, freshness and cursor evidence"
+  ],
+  "notImplemented": [
+    "signed G7 SANDBOX safety-feed and history contracts",
+    "durable PostgreSQL/Redis worker, cursor transaction and projection replay",
+    "verified G7 tenant rate-limit and retry semantics",
+    "persistent audit, metrics and OpenTelemetry export",
+    "risk scoring and disposition workflow from US-010",
+    "any G7 or local disposition write"
+  ],
+  "forbiddenActionsObserved": {
+    "liveG7Calls": 0,
+    "externalWrites": 0,
+    "productionCredentials": 0,
+    "databaseMigrations": 0,
+    "agentOrModelCalls": 0,
+    "deployments": 0,
+    "secretChanges": 0,
+    "rbacChanges": 0
+  }
+}

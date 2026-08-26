@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="3" failures="0" errors="0" skipped="0" time="0.005">
+  <testsuite name="safety event feed reliability domain" tests="3" failures="0" errors="0" skipped="0" time="0.005">
+    <testcase name="TEST-024 deduplicates revisions and advances a cursor only after page acceptance" time="0.002" />
+    <testcase name="TEST-025 audits a cursor gap and resumes after historical recovery" time="0.002" />
+    <testcase name="TEST-026 isolates a rate-limited tenant partition" time="0.001" />
+  </testsuite>
+</testsuites>

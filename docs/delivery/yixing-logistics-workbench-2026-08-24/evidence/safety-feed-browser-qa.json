@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T14:54:30Z",
+  "url": "http://127.0.0.1:3000/",
+  "result": "PASS_WITH_LOCAL_SYNTHETIC_EVENTS_ONLY",
+  "flow": "Exceptions -> inspect risk event -> verify source/version -> verify cursor gap audit",
+  "assertions": [
+    {
+      "id": "TEST-024",
+      "result": "PASS_LOCAL_VISIBLE",
+      "detail": "Four projected events are shown from five accepted revisions while one exact duplicate is ignored; the selected event exposes source ID and two versions"
+    },
+    {
+      "id": "TEST-025",
+      "result": "PASS_LOCAL_VISIBLE",
+      "detail": "The feed integrity panel shows active cursor local-feed-cursor-008 and one recovered historical cursor gap"
+    },
+    {
+      "id": "TEST-026",
+      "result": "PASS_DOMAIN_AND_SMOKE_ONLY",
+      "detail": "Tenant partition retry isolation is covered by domain and smoke tests; the browser only confirms the current partition is active"
+    },
+    {
+      "id": "QA-SAFETY-FEED-001",
+      "result": "PASS",
+      "detail": "Application console warnings/errors: 0"
+    },
+    {
+      "id": "QA-SAFETY-FEED-002",
+      "result": "PASS",
+      "detail": "No page or interactive-control horizontal overflow was detected"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "pageHorizontalOverflow": false,
+      "controlTextOverflow": false,
+      "screenshot": "screenshots/safety-risk-inbox-1440x900.png",
+      "sha256": "3f790d1521295a5addf51c8b62aa520b9eb36ac79a65abc33dae2a96ca61a04e"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "pageHorizontalOverflow": false,
+      "controlTextOverflow": false,
+      "eventRows": 4
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "pageHorizontalOverflow": false,
+      "controlTextOverflow": false,
+      "screenshot": "screenshots/safety-risk-inbox-390x844.png",
+      "sha256": "d5d33416f6ccda5754911e5d54b10c1b4f74005bc5bf7484fd4878d498c0e301"
+    }
+  ],
+  "notValidated": [
+    "signed G7 SANDBOX event and history contracts",
+    "durable worker, cursor transaction, persistent projection or RLS",
+    "live multi-tenant G7 rate-limit behavior",
+    "production identity, telemetry or deployment"
+  ]
+}
