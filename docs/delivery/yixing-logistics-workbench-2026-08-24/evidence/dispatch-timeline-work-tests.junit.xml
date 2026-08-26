@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="3" failures="0" errors="0" skipped="0" time="0.004">
+  <testsuite name="dispatch in-transit timeline domain" tests="3" failures="0" errors="0" skipped="0" time="0.004">
+    <testcase name="TEST-018 preserves the newest location when facts arrive out of order" time="0.001" />
+    <testcase name="TEST-019 creates one linked Today work item from an exception fact" time="0.002" />
+    <testcase name="TEST-020 composes locally without invoking the developing trip search" time="0.001" />
+  </testsuite>
+</testsuites>

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T10:02:33Z",
+  "url": "http://127.0.0.1:3000",
+  "result": "PASS",
+  "assertions": {
+    "timelineStatus": 200,
+    "eventTypes": ["PLAN", "LOCATION", "GEOFENCE", "EXCEPTION"],
+    "tripSegmentSearchUsed": false,
+    "readOnlyTimelineAccess": true,
+    "workCreateStatus": 201,
+    "readOnlyWorkCreateStatus": 403,
+    "dispatchLinked": true,
+    "vehicleAndDriverLinked": true,
+    "sourceFactLinked": true,
+    "sourceFactIdempotentReplay": true,
+    "appearsInTodayProjection": true,
+    "syncRecoveryRegression": "PASS"
+  },
+  "factSource": "LOCAL_SYNTHETIC_IN_MEMORY",
+  "developingG7TripSegmentCalls": 0,
+  "externalWrites": 0
+}
