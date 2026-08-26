@@ -29,14 +29,17 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { DispatchPlanner } from "./dispatch-planner.tsx";
 
 type WorkView = "list" | "timeline" | "map";
 type ContextTab = "now" | "timeline" | "record" | "audit";
+type WorkModule = "today" | "dispatch";
 
 interface RoleOption {
   readonly id: string;
   readonly label: string;
   readonly workspace: string;
+  readonly canDispatch: boolean;
 }
 
 interface WorkbenchSession {
@@ -138,13 +141,13 @@ const WORK_ITEMS: readonly WorkItem[] = Object.freeze([
 ]);
 
 const NAV_ITEMS = [
-  { label: "今日运输", icon: PackageCheck, count: 12, active: true },
-  { label: "订单", icon: Boxes, count: 7, active: false },
-  { label: "派车", icon: Truck, count: 4, active: false },
-  { label: "在途", icon: MapPinned, count: 23, active: false },
-  { label: "异常", icon: TriangleAlert, count: 3, active: false },
-  { label: "回单", icon: FileCheck2, count: 5, active: false },
-  { label: "结算", icon: ReceiptText, count: 2, active: false },
+  { id: "today", label: "今日运输", icon: PackageCheck, count: 12, enabled: true },
+  { id: "orders", label: "订单", icon: Boxes, count: 7, enabled: false },
+  { id: "dispatch", label: "派车", icon: Truck, count: 4, enabled: true },
+  { id: "transit", label: "在途", icon: MapPinned, count: 23, enabled: false },
+  { id: "exceptions", label: "异常", icon: TriangleAlert, count: 3, enabled: false },
+  { id: "receipts", label: "回单", icon: FileCheck2, count: 5, enabled: false },
+  { id: "settlement", label: "结算", icon: ReceiptText, count: 2, enabled: false },
 ] as const;
 
 const CONTEXT_TABS: readonly { id: ContextTab; label: string }[] = [
@@ -170,6 +173,7 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
   const [roleError, setRoleError] = useState("");
   const [acceptedIds, setAcceptedIds] = useState<ReadonlySet<string>>(new Set());
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const [activeModule, setActiveModule] = useState<WorkModule>("today");
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -238,14 +242,19 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
         <nav className="lifecycleNav">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
+            const active = item.id === activeModule;
             return (
               <button
-                className={`navItem${item.active ? " active" : ""}`}
+                className={`navItem${active ? " active" : ""}`}
                 type="button"
                 key={item.label}
-                aria-current={item.active ? "page" : undefined}
+                aria-current={active ? "page" : undefined}
                 aria-label={`${item.label}\uFF0C${item.count} \u9879\u5F85\u5904\u7406`}
-                title={item.label}
+                title={item.enabled ? item.label : `${item.label}将在后续批次启用`}
+                disabled={!item.enabled}
+                onClick={() => {
+                  if (item.id === "today" || item.id === "dispatch") setActiveModule(item.id);
+                }}
               >
                 <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
                 <span className="navLabel">{item.label}</span>
@@ -328,129 +337,143 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
           </div>
         ) : null}
 
-        <div className={`workspaceBody${drawerOpen ? "" : " drawerClosed"}`}>
-          <section className="commandSurface" aria-label="今日运输工作流">
-            <div className="workspaceHeading">
-              <div>
-                <p>{selectedRole?.workspace ?? "运输工作台"}</p>
-                <h1>今天需要完成的运输工作</h1>
-                <span>8 月 25 日 · 华东组织 · 共 12 项，3 项需要立即处理</span>
+        {activeModule === "dispatch" ? (
+          <div className="workspaceBody dispatchWorkspace">
+            <DispatchPlanner
+              selectedRoleId={selectedRoleId}
+              canDispatch={selectedRole?.canDispatch ?? false}
+            />
+          </div>
+        ) : (
+          <div className={`workspaceBody${drawerOpen ? "" : " drawerClosed"}`}>
+            <section className="commandSurface" aria-label="今日运输工作流">
+              <div className="workspaceHeading">
+                <div>
+                  <p>{selectedRole?.workspace ?? "运输工作台"}</p>
+                  <h1>今天需要完成的运输工作</h1>
+                  <span>8 月 25 日 · 华东组织 · 共 12 项，3 项需要立即处理</span>
+                </div>
+                <button
+                  className="secondaryButton"
+                  type="button"
+                  aria-label={"\u5237\u65B0\u672C\u5730\u6570\u636E"}
+                  title={"\u5237\u65B0\u672C\u5730\u6570\u636E"}
+                >
+                  <RefreshCcw size={16} aria-hidden="true" />
+                  刷新本地数据
+                </button>
               </div>
-              <button
-                className="secondaryButton"
-                type="button"
-                aria-label={"\u5237\u65B0\u672C\u5730\u6570\u636E"}
-                title={"\u5237\u65B0\u672C\u5730\u6570\u636E"}
-              >
-                <RefreshCcw size={16} aria-hidden="true" />
-                刷新本地数据
-              </button>
-            </div>
 
-            <div className="stateNotice warning" role="status">
-              <WifiOff size={17} aria-hidden="true" />
-              <div>
-                <strong>G7 与高德尚未连接</strong>
-                <span>当前仅显示本地合成数据；不会读取生产事实或执行真实写入。</span>
+              <div className="stateNotice warning" role="status">
+                <WifiOff size={17} aria-hidden="true" />
+                <div>
+                  <strong>G7 与高德尚未连接</strong>
+                  <span>当前仅显示本地合成数据；不会读取生产事实或执行真实写入。</span>
+                </div>
               </div>
-            </div>
 
-            <div className="workToolbar">
-              <fieldset className="filters">
-                <legend className="srOnly">工作筛选</legend>
-                <button className="filterButton active" type="button">
-                  全部 <span>12</span>
-                </button>
-                <button className="filterButton" type="button">
-                  已超时 <span>2</span>
-                </button>
-                <button className="filterButton" type="button">
-                  待审批 <span>1</span>
-                </button>
-                <button className="iconButton" type="button" aria-label="更多筛选" title="更多筛选">
-                  <ListFilter size={18} aria-hidden="true" />
-                </button>
-              </fieldset>
-              <fieldset className="viewSwitch">
-                <legend className="srOnly">工作视图</legend>
-                <button
-                  className={view === "list" ? "active" : ""}
-                  type="button"
-                  onClick={() => setView("list")}
-                  aria-pressed={view === "list"}
-                  title="列表"
-                >
-                  <List size={17} aria-hidden="true" />
-                  <span className="srOnly">列表</span>
-                </button>
-                <button
-                  className={view === "timeline" ? "active" : ""}
-                  type="button"
-                  onClick={() => setView("timeline")}
-                  aria-pressed={view === "timeline"}
-                  title="时间线"
-                >
-                  <Clock3 size={17} aria-hidden="true" />
-                  <span className="srOnly">时间线</span>
-                </button>
-                <button
-                  className={view === "map" ? "active" : ""}
-                  type="button"
-                  onClick={() => setView("map")}
-                  aria-pressed={view === "map"}
-                  title="地图证据"
-                >
-                  <MapIcon size={17} aria-hidden="true" />
-                  <span className="srOnly">地图证据</span>
-                </button>
-              </fieldset>
-            </div>
+              <div className="workToolbar">
+                <fieldset className="filters">
+                  <legend className="srOnly">工作筛选</legend>
+                  <button className="filterButton active" type="button">
+                    全部 <span>12</span>
+                  </button>
+                  <button className="filterButton" type="button">
+                    已超时 <span>2</span>
+                  </button>
+                  <button className="filterButton" type="button">
+                    待审批 <span>1</span>
+                  </button>
+                  <button
+                    className="iconButton"
+                    type="button"
+                    aria-label="更多筛选"
+                    title="更多筛选"
+                  >
+                    <ListFilter size={18} aria-hidden="true" />
+                  </button>
+                </fieldset>
+                <fieldset className="viewSwitch">
+                  <legend className="srOnly">工作视图</legend>
+                  <button
+                    className={view === "list" ? "active" : ""}
+                    type="button"
+                    onClick={() => setView("list")}
+                    aria-pressed={view === "list"}
+                    title="列表"
+                  >
+                    <List size={17} aria-hidden="true" />
+                    <span className="srOnly">列表</span>
+                  </button>
+                  <button
+                    className={view === "timeline" ? "active" : ""}
+                    type="button"
+                    onClick={() => setView("timeline")}
+                    aria-pressed={view === "timeline"}
+                    title="时间线"
+                  >
+                    <Clock3 size={17} aria-hidden="true" />
+                    <span className="srOnly">时间线</span>
+                  </button>
+                  <button
+                    className={view === "map" ? "active" : ""}
+                    type="button"
+                    onClick={() => setView("map")}
+                    aria-pressed={view === "map"}
+                    title="地图证据"
+                  >
+                    <MapIcon size={17} aria-hidden="true" />
+                    <span className="srOnly">地图证据</span>
+                  </button>
+                </fieldset>
+              </div>
 
-            {view === "map" ? (
-              <MapFallback
-                items={filteredItems}
-                selectedId={selectedItem?.id ?? ""}
-                onSelect={(id) => {
-                  setSelectedId(id);
-                  setDrawerOpen(true);
-                }}
+              {view === "map" ? (
+                <MapFallback
+                  items={filteredItems}
+                  selectedId={selectedItem?.id ?? ""}
+                  onSelect={(id) => {
+                    setSelectedId(id);
+                    setDrawerOpen(true);
+                  }}
+                />
+              ) : (
+                <WorkList
+                  items={filteredItems}
+                  selectedId={selectedItem?.id ?? ""}
+                  acceptedIds={acceptedIds}
+                  view={view}
+                  onSelect={(id) => {
+                    setSelectedId(id);
+                    setDrawerOpen(true);
+                  }}
+                />
+              )}
+            </section>
+
+            {drawerOpen && selectedItem !== undefined ? (
+              <ContextDrawer
+                item={selectedItem}
+                accepted={acceptedIds.has(selectedItem.id)}
+                contextTab={contextTab}
+                requestId={session.requestId}
+                onTabChange={setContextTab}
+                onAccept={acceptSelectedWork}
+                onClose={() => setDrawerOpen(false)}
               />
             ) : (
-              <WorkList
-                items={filteredItems}
-                selectedId={selectedItem?.id ?? ""}
-                acceptedIds={acceptedIds}
-                view={view}
-                onSelect={(id) => {
-                  setSelectedId(id);
-                  setDrawerOpen(true);
-                }}
-              />
+              <button
+                className="drawerRestore"
+                type="button"
+                onClick={() => setDrawerOpen(true)}
+                aria-label="恢复对象上下文"
+                title="恢复对象上下文"
+              >
+                <ChevronRight size={18} aria-hidden="true" />
+              </button>
             )}
-          </section>
-
-          {drawerOpen && selectedItem !== undefined ? (
-            <ContextDrawer
-              item={selectedItem}
-              accepted={acceptedIds.has(selectedItem.id)}
-              contextTab={contextTab}
-              requestId={session.requestId}
-              onTabChange={setContextTab}
-              onAccept={acceptSelectedWork}
-              onClose={() => setDrawerOpen(false)}
-            />
-          ) : (
-            <button
-              className="drawerRestore"
-              type="button"
-              onClick={() => setDrawerOpen(true)}
-              aria-label="恢复对象上下文"
-              title="恢复对象上下文"
-            >
-              <ChevronRight size={18} aria-hidden="true" />
-            </button>
-          )}
-        </div>
+          </div>
+        )}
       </section>
     </main>
   );

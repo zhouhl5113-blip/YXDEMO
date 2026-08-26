@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T03:47:16Z",
+  "url": "http://127.0.0.1:3000/",
+  "title": "易行物流智能工作台",
+  "result": "PASS_WITH_LIVE_INTEGRATIONS_DISABLED",
+  "flow": "workbench -> dispatch -> save draft -> reject missing override -> select warned candidate with reason -> confirm -> show CONFIRMED and PENDING",
+  "assertions": [
+    { "id": "TEST-013", "result": "PASS", "detail": "Draft shows DRAFT/NOT_QUEUED and explicitly reports no G7 command" },
+    { "id": "TEST-014", "result": "PASS", "detail": "Blockers and advice are separate; missing override reason is rejected in Chinese" },
+    { "id": "TEST-015", "result": "PASS", "detail": "Blocked candidate shows qualification and overlapping assignment reasons and cannot be selected" },
+    { "id": "TEST-017", "result": "PASS", "detail": "Confirmation shows CONFIRMED/PENDING and real G7 write remains closed" },
+    { "id": "QA-DISPATCH-001", "result": "PASS", "detail": "No application console warning or error after the complete interaction" },
+    { "id": "QA-DISPATCH-002", "result": "PASS", "detail": "All user-visible validation and candidate findings are Chinese" }
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "pageHorizontalOverflow": false,
+      "screenshot": "screenshots/dispatch-candidates-1440x900.png",
+      "sha256": "93bab3a0259b36fff0c3a7babaa77514370d5b04b7db2ce6bf902e14039f23ab"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "pageHorizontalOverflow": false,
+      "screenshot": "screenshots/dispatch-confirmed-1280x720.png",
+      "sha256": "8a814a7b44245e1ee5a8346ee57bbd9cabef2e27b271aac55ece90196736961"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "pageHorizontalOverflow": false,
+      "applicationConsoleErrors": 0,
+      "screenshot": "screenshots/dispatch-confirmed-390x844.png",
+      "sha256": "17fef3a7a1cd44ee64bfe5cae1d3b66a17ab79d97b7baf208ce1c470cb16edc3"
+    }
+  ],
+  "notValidated": [
+    "database constraint and persistence",
+    "signed G7 SANDBOX request/response",
+    "real G7 write/readback, retry or reconciliation",
+    "production identity or deployment"
+  ]
+}

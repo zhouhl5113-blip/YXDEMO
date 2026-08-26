@@ -51,6 +51,8 @@ importers:
 
   packages/contracts: {}
 
+  packages/dispatch-domain: {}
+
   packages/identity-policy: {}
 
   packages/integrations/g7: {}

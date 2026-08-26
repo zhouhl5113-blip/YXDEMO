@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-  [ValidateSet('install', 'format', 'format:check', 'lint', 'typecheck', 'verify:evidence', 'gate:product-design', 'test', 'test:unit', 'test:contract', 'dev:web', 'build:web', 'check')]
+  [ValidateSet('install', 'format', 'format:check', 'lint', 'typecheck', 'verify:evidence', 'gate:product-design', 'test', 'test:unit', 'test:contract', 'smoke:local-dispatch', 'dev:web', 'build:web', 'check')]
   [string]$Task = 'check'
 )
 

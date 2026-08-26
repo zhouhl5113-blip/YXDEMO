@@ -9,9 +9,29 @@ import {
 } from "../../../packages/workbench-session/src/index.ts";
 
 export const LOCAL_ROLE_OPTIONS = Object.freeze([
-  { id: "dispatcher", label: "调度员", workspace: "调度工作台" },
-  { id: "fleet_lead", label: "车队长", workspace: "班次控制台" },
+  { id: "owner", label: "物流老板", workspace: "经营总览", canDispatch: false },
+  { id: "fleet_lead", label: "车队长", workspace: "班次控制台", canDispatch: true },
+  {
+    id: "operations_manager",
+    label: "运营管理者",
+    workspace: "履约管理台",
+    canDispatch: false,
+  },
+  {
+    id: "logistics_specialist",
+    label: "物流专员",
+    workspace: "订单协同台",
+    canDispatch: false,
+  },
+  { id: "dispatcher", label: "调度员", workspace: "调度工作台", canDispatch: true },
+  { id: "driver", label: "司机", workspace: "司机任务台", canDispatch: false },
 ] as const);
+
+export type LocalRoleId = (typeof LOCAL_ROLE_OPTIONS)[number]["id"];
+
+export function canRoleDispatch(roleId: string): boolean {
+  return LOCAL_ROLE_OPTIONS.some((role) => role.id === roleId && role.canDispatch);
+}
 
 function assertLocalDevelopmentRuntime(): void {
   if (process.env.NODE_ENV === "production") {

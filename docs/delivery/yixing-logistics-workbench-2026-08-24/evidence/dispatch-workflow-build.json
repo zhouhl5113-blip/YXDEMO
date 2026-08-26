@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T03:47:16Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "scope": "LOCAL_DEVELOPMENT_AND_TEST_ONLY",
+  "result": "PASS_WITH_EXTERNAL_AND_PERSISTENCE_CONTROLS_DISABLED",
+  "stories": ["US-005", "US-006", "US-007"],
+  "tests": ["TEST-013", "TEST-014", "TEST-015", "TEST-016", "TEST-017", "TEST-018"],
+  "checks": [
+    {
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Invoke-Workspace.ps1 -Task check",
+      "result": "PASS",
+      "details": "format, lint, TypeScript strict, 54/54 tests and non-strict delivery evidence validation passed"
+    },
+    {
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Invoke-Workspace.ps1 -Task build:web",
+      "result": "PASS",
+      "details": "Next.js production build generated the workbench, session route and three local dispatch BFF routes"
+    },
+    {
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Invoke-Workspace.ps1 -Task smoke:local-dispatch",
+      "result": "PASS",
+      "details": "six roles, read-only denial, draft, candidates, override reason, Idempotency-Key and replay assertions passed"
+    }
+  ],
+  "implemented": [
+    "dispatch draft with orthogonal business and sync state",
+    "candidate blockers and overridable advice",
+    "driver and vehicle identity time-conflict validation",
+    "atomic local confirmation and idempotent pending sync command",
+    "out-of-order timeline fact projection",
+    "server-enforced dispatcher and fleet-lead write permissions"
+  ],
+  "notImplemented": [
+    "database persistence or exclusion constraints",
+    "executable migrations or RLS",
+    "signed G7 SANDBOX contract or live G7 write/readback",
+    "sync worker retry, revoke or reconciliation",
+    "complete TEST-019 and TEST-020 timeline workflow"
+  ],
+  "forbiddenActionsObserved": {
+    "liveG7Calls": 0,
+    "productionCredentials": 0,
+    "databaseMigrations": 0,
+    "agentOrModelCalls": 0,
+    "deployments": 0,
+    "secretChanges": 0,
+    "rbacChanges": 0
+  }
+}

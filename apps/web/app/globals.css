@@ -45,7 +45,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
   letter-spacing: 0;
 }
@@ -63,7 +64,8 @@ select:disabled {
 
 button:focus-visible,
 input:focus-visible,
-select:focus-visible {
+select:focus-visible,
+textarea:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
@@ -1166,6 +1168,319 @@ select:focus-visible {
   color: var(--ink);
 }
 
+.dispatchWorkspace {
+  display: block;
+}
+
+.dispatchSurface {
+  width: min(100%, 1320px);
+  margin-inline: auto;
+}
+
+.dispatchSurface > .stateNotice {
+  margin-bottom: 12px;
+}
+
+.dispatchLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.7fr);
+  align-items: start;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.dispatchForm,
+.dispatchProgress,
+.candidateSection {
+  min-width: 0;
+}
+
+.dispatchForm {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 18px;
+  gap: 13px;
+}
+
+.dispatchProgress {
+  min-height: 100%;
+  padding: 18px;
+  border-left: 1px solid var(--line);
+  background: var(--surface-subtle);
+}
+
+.sectionHeading,
+.candidateTitle,
+.confirmBand {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sectionHeading > div,
+.candidateTitle > div,
+.confirmBand > div {
+  min-width: 0;
+}
+
+.sectionHeading span,
+.confirmBand > div > span {
+  color: var(--teal-dark);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sectionHeading h2,
+.confirmBand h2 {
+  margin: 2px 0 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.statusTag,
+.decisionTag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 8px;
+  border: 1px solid #acd2ce;
+  border-radius: 4px;
+  background: var(--teal-soft);
+  color: var(--teal-dark);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.dispatchForm > label,
+.fieldPair label,
+.overrideField {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.dispatchForm label > span,
+.overrideField > span {
+  color: #46525e;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.dispatchForm input,
+.overrideField textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.dispatchForm input {
+  height: 38px;
+  padding: 0 10px;
+}
+
+.dispatchForm input:disabled {
+  background: #f1f3f4;
+  color: #52606c;
+}
+
+.fieldPair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dispatchForm > .primaryButton {
+  justify-self: start;
+  margin-top: 2px;
+}
+
+.formFootnote {
+  margin: -7px 0 0;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.dispatchFacts,
+.candidateFacts {
+  display: grid;
+  margin: 12px 0 0;
+}
+
+.dispatchFacts > div,
+.candidateFacts > div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 9px 0;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dispatchFacts dt,
+.candidateFacts dt {
+  display: flex;
+  align-items: center;
+  color: var(--ink-muted);
+  font-size: 11px;
+  gap: 4px;
+}
+
+.dispatchFacts dd,
+.candidateFacts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.boundaryNote {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 14px;
+  padding-top: 13px;
+  gap: 8px;
+  color: var(--teal-dark);
+}
+
+.boundaryNote p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.candidateSection {
+  margin-top: 22px;
+}
+
+.candidateGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.candidateItem {
+  display: flex;
+  min-width: 0;
+  min-height: 340px;
+  padding: 14px;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.candidateItem.selected {
+  border-color: var(--teal);
+  box-shadow: inset 0 3px 0 var(--teal);
+}
+
+.candidateItem.blocked {
+  border-color: #e3bbb7;
+}
+
+.candidateTitle > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.candidateTitle > div > span {
+  display: grid;
+}
+
+.candidateTitle small {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+  color: var(--ink-muted);
+  font-size: 11px;
+  gap: 4px;
+}
+
+.candidateItem.blocked .decisionTag {
+  border-color: #e9b9b4;
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.candidateItem.available_with_warning .decisionTag {
+  border-color: #e8ca8d;
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.candidateFacts > div {
+  padding: 7px 0;
+}
+
+.findingList {
+  display: grid;
+  margin: 10px 0 0;
+  padding: 9px 10px;
+  gap: 6px;
+  border-radius: 4px;
+  list-style: none;
+  font-size: 11px;
+}
+
+.findingList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.findingList svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.blockerList {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.adviceList {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.overrideField {
+  margin-top: 10px;
+}
+
+.overrideField textarea {
+  min-height: 62px;
+  padding: 8px 9px;
+  resize: vertical;
+}
+
+.candidateItem > button {
+  width: 100%;
+  margin-top: auto;
+}
+
+.confirmBand {
+  align-items: center;
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-top: 3px solid var(--teal);
+  background: var(--surface);
+}
+
+.confirmBand p {
+  margin: 3px 0 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+
 @media (max-width: 1365px) {
   :root {
     --rail-width: 68px;
@@ -1327,6 +1642,14 @@ select:focus-visible {
     bottom: 76px;
     z-index: 12;
   }
+
+  .candidateGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .candidateItem {
+    min-height: 0;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1447,6 +1770,28 @@ select:focus-visible {
 
   .drawerActions p {
     grid-column: 1;
+  }
+
+  .dispatchLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .dispatchProgress {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .fieldPair {
+    grid-template-columns: 1fr;
+  }
+
+  .confirmBand {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .confirmBand .primaryButton {
+    width: 100%;
   }
 }
 

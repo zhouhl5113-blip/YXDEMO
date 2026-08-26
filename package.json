@@ -14,6 +14,7 @@
     "typecheck": "tsc --project tsconfig.json && pnpm --filter @yixing/web typecheck",
     "dev:web": "pnpm --filter @yixing/web dev",
     "build:web": "pnpm --filter @yixing/web build",
+    "smoke:local-dispatch": "node scripts/smoke-local-dispatch.ts",
     "verify:evidence": "node scripts/verify-delivery-evidence.ts",
     "gate:product-design": "node scripts/verify-delivery-evidence.ts --require-pass",
     "test": "node --test",
