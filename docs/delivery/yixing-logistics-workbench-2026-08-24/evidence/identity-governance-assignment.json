@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-24T12:49:15Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "source": "PROJECT_INITIATOR_DECLARATION",
+  "person": {
+    "displayName": "周贺龙"
+  },
+  "assignedRoles": [
+    "PRODUCT_APPROVER",
+    "SECURITY_RESPONSIBLE_PERSON",
+    "DATA_OWNER",
+    "LOCAL_DESIGN_GATE_APPROVER"
+  ],
+  "unassignedRoles": [
+    "INDEPENDENT_R3_SECOND_APPROVER",
+    "ACCEPTANCE_GATE_APPROVER",
+    "PRODUCTION_APPROVER"
+  ],
+  "separationOfDuties": {
+    "distinctR3ApproversAvailable": false,
+    "r3ActionsEnabled": false,
+    "policy": "R3 actions remain unavailable until a second distinct natural person is assigned and the approval policy is tested."
+  },
+  "authorizationBoundary": {
+    "localDevelopmentAndTestPlanning": true,
+    "localAuthorizationPolicyContractsApproved": true,
+    "identityRuntimeImplementationApproved": false,
+    "productionDeploymentApproved": false,
+    "g7CredentialOrWriteApproval": false,
+    "secretChangesApproved": false,
+    "rawLocationHistoryEnabled": false,
+    "agentEnabled": false
+  }
+}

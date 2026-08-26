@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="foundation-authorization-policy" tests="12" failures="0" errors="0" skipped="0">
+  <testsuite name="local authorization policy" tests="12" failures="0" errors="0" skipped="0" timestamp="2026-08-24T12:53:29Z">
+    <testcase name="TEST-001 policy prerequisite rejects a tenant outside trusted server claims" />
+    <testcase name="TEST-002 policy prerequisite gives explicit deny precedence over a role grant" />
+    <testcase name="OQ-008 intersects every applicable scope layer and applies deny last" />
+    <testcase name="missing layer constraint behaves as ALL" />
+    <testcase name="zero trusted scope layers fail closed" />
+    <testcase name="TEST-003 policy prerequisite permits a narrowing role switch" />
+    <testcase name="TEST-003 policy prerequisite rejects an expanding role switch" />
+    <testcase name="role switch cannot remove an existing explicit deny" />
+    <testcase name="role switch cannot replace an explicit scope with ALL" />
+    <testcase name="ungranted action is rejected" />
+    <testcase name="R3 remains unavailable without a distinct second approver" />
+    <testcase name="approval boundary keeps runtime features disabled" />
+  </testsuite>
+</testsuites>

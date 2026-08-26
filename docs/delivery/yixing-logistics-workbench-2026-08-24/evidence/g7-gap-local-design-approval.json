@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-25T02:34:21Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "decision": "APPROVED_LOCAL_DESIGN_TEST_AND_MIGRATION_REVIEW_ONLY",
+  "approver": "周贺龙",
+  "roles": ["Product", "Security", "Data", "Local Design"],
+  "acceptedAdr": "ADR-0004",
+  "acceptedGaps": [
+    "G7-GAP-001",
+    "G7-GAP-002",
+    "G7-GAP-003",
+    "G7-GAP-004",
+    "G7-GAP-005",
+    "G7-GAP-006",
+    "G7-GAP-007",
+    "G7-GAP-008",
+    "G7-GAP-009",
+    "G7-GAP-010"
+  ],
+  "approvalText": "批准仅限本地开发测试：接受 ADR-0004；批准 G7-GAP-001..010 的数据所有权和最小本地候选进入设计、接口、测试与迁移评审。任何迁移执行仍须对应缺口的签名 SANDBOX 证据和具名复核；G7/高德生产凭据、真实 G7 写入、Agent、模型调用、R3、生产部署、Secret 和 RBAC 变更保持关闭。周贺龙担任 Product、Security、Data 和本地 Design 批准人。",
+  "permitted": [
+    "local interfaces and domain contracts",
+    "synthetic automated tests",
+    "draft migrations and migration review",
+    "local application shells"
+  ],
+  "prohibited": [
+    "migration execution without signed SANDBOX evidence and a named activation reviewer",
+    "G7 or AMap production credential binding",
+    "live G7 writes",
+    "Agent or model calls",
+    "R3 execution",
+    "production deployment",
+    "Secret changes",
+    "RBAC changes"
+  ],
+  "productionApproval": false,
+  "secretChangeApproval": false,
+  "migrationExecutionApproval": false
+}

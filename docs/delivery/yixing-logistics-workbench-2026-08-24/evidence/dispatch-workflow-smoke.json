@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T03:47:16Z",
+  "url": "http://127.0.0.1:3000",
+  "result": "PASS",
+  "assertions": {
+    "roleCount": 6,
+    "readOnlyRole": { "status": 403, "code": "DISPATCH_PERMISSION_DENIED" },
+    "draft": { "status": 201, "businessStatus": "DRAFT", "candidateCount": 3 },
+    "warningWithoutReason": { "status": 400, "code": "OVERRIDE_REASON_REQUIRED" },
+    "missingIdempotencyKey": { "status": 400, "code": "IDEMPOTENCY_KEY_REQUIRED" },
+    "confirmation": { "status": 200, "businessStatus": "CONFIRMED", "syncStatus": "PENDING" },
+    "idempotentReplayReturnedOriginalCommand": true
+  },
+  "externalWrites": 0
+}

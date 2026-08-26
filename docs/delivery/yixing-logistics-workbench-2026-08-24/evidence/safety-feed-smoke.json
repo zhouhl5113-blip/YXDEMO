@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T14:54:30Z",
+  "url": "http://127.0.0.1:3000",
+  "result": "PASS_LOCAL_SYNTHETIC_READ_ONLY",
+  "assertions": {
+    "status": 200,
+    "deniedUnassignedRoleStatus": 403,
+    "projectedEvents": 4,
+    "acceptedRecords": 5,
+    "duplicateRecords": 1,
+    "partitionStatus": "ACTIVE",
+    "cursor": "local-feed-cursor-008",
+    "cursorGapsRecovered": 1,
+    "auditEvents": 2
+  },
+  "factSource": "LOCAL_SYNTHETIC_IN_MEMORY",
+  "externalReads": 0,
+  "externalWrites": 0
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T08:31:04Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "scope": "LOCAL_DEVELOPMENT_AND_TEST_ONLY",
+  "result": "PASS_WITH_REAL_G7_AND_PERSISTENCE_DISABLED",
+  "story": "US-008",
+  "requirements": ["FR-008", "FR-015", "NFR-002", "NFR-005"],
+  "tests": ["TEST-021", "TEST-022", "TEST-023"],
+  "checks": [
+    {
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Invoke-Workspace.ps1 -Task check",
+      "result": "PASS",
+      "details": "Biome format/lint, TypeScript strict, 57/57 tests and non-strict delivery evidence validation passed"
+    },
+    {
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Invoke-Workspace.ps1 -Task build:web",
+      "result": "PASS",
+      "details": "Next.js production build includes the dispatch sync recovery route"
+    },
+    {
+      "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\Invoke-Workspace.ps1 -Task smoke:local-dispatch",
+      "result": "PASS",
+      "details": "FAILED -> RETRYING -> SYNCED recovery preserved CONFIRMED and the original command ID"
+    }
+  ],
+  "implemented": [
+    "orthogonal CONFIRMED and FAILED/RETRYING/SYNCED states",
+    "retryable error detail, attempt time and upstream reference",
+    "same-command retry and ALREADY_EXISTS convergence",
+    "reason-required revoke contract for an unsynced command",
+    "30-minute backlog inspection with idempotent administrator work and request/trace/upstream references",
+    "local BFF recovery route with server-enforced dispatch permission"
+  ],
+  "notImplemented": [
+    "durable Outbox, worker scheduling or database persistence",
+    "actual 30-minute monitor execution or administrator queue projection",
+    "signed G7 SANDBOX error mapping, write or readback",
+    "OpenTelemetry export, production SLO or alert delivery"
+  ],
+  "forbiddenActionsObserved": {
+    "liveG7Calls": 0,
+    "productionCredentials": 0,
+    "databaseMigrations": 0,
+    "agentOrModelCalls": 0,
+    "deployments": 0,
+    "secretChanges": 0,
+    "rbacChanges": 0
+  }
+}

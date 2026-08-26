@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-25T03:30:51.6347409Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "scope": "LOCAL_SYNTHETIC_DATA_ONLY",
+  "url": "http://127.0.0.1:3000/",
+  "title": "\u6613\u884c\u7269\u6d41\u667a\u80fd\u5de5\u4f5c\u53f0",
+  "result": "PASS_WITH_PRODUCTION_GATES_BLOCKED",
+  "assertions": [
+    {
+      "id": "QA-WEB-001",
+      "result": "PASS",
+      "assertion": "The page has meaningful workbench DOM content and no application console errors"
+    },
+    {
+      "id": "QA-WEB-002",
+      "result": "PASS",
+      "assertion": "Global search for \u6caaA\u00b72F18 returns exactly one transport object"
+    },
+    {
+      "id": "QA-WEB-003",
+      "result": "PASS",
+      "assertion": "Map fallback preserves the object list, textual location, freshness and handling entry point"
+    },
+    {
+      "id": "QA-WEB-004",
+      "result": "PASS",
+      "assertion": "Server-validated role switch changes the workspace from dispatcher to fleet lead"
+    },
+    {
+      "id": "QA-WEB-005",
+      "result": "PASS",
+      "assertion": "Accepting the late exception changes browser-local state and explicitly reports no G7 write"
+    },
+    {
+      "id": "QA-WEB-006",
+      "result": "PASS",
+      "assertion": "Native controls, visible focus styling and Chinese accessible names are present"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "pageHorizontalOverflow": false,
+      "applicationConsoleErrors": 0,
+      "screenshot": "screenshots/workbench-1440x900.png",
+      "sha256": "7413c0f0e2b4e41d3e9c7eda9833101f7bceceb72a896e5ccc4c0dc51013d5f0"
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "pageHorizontalOverflow": false,
+      "clippedWorkRows": 0,
+      "applicationConsoleErrors": 0,
+      "screenshot": "screenshots/workbench-1280x720.png",
+      "sha256": "bdf3a41b6d1b5b6804e2b4b2aacbe92a38674543aef2cd8ad4eedcdf7bb59108"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "pageHorizontalOverflow": false,
+      "toolbarHorizontalOverflow": false,
+      "applicationConsoleErrors": 0,
+      "screenshot": "screenshots/workbench-390x844.png",
+      "sha256": "59981b8911fd660a022e3b7125c05cf233099ff070f653768a136290cbb85d6e"
+    }
+  ],
+  "notValidated": [
+    "Real G7 SANDBOX or PROD behavior",
+    "Amap SDK or credential behavior",
+    "Agent, model or R3 behavior",
+    "Database persistence, RLS or audit append/readback",
+    "Production deployment or Continuous Verification"
+  ]
+}

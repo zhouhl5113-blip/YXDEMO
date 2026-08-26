@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="6" failures="0" errors="0" skipped="0" time="0.014">
+  <testsuite name="dispatch domain" tests="6" failures="0" errors="0" skipped="0" time="0.014">
+    <testcase name="TEST-013 saves a DRAFT without producing a G7 write" time="0.004" />
+    <testcase name="TEST-014 separates blockers from overridable advice" time="0.004" />
+    <testcase name="TEST-015 blocks overlapping driver assignments" time="0.001" />
+    <testcase name="TEST-016 rejects invalid windows before outbound commands" time="0.001" />
+    <testcase name="TEST-017 confirms atomically and replays idempotently" time="0.001" />
+    <testcase name="TEST-018 preserves newer facts when events arrive out of order" time="0.001" />
+  </testsuite>
+</testsuites>

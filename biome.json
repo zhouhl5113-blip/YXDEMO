@@ -1,0 +1,30 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
+  "files": {
+    "includes": [
+      "**",
+      "!!**/.next",
+      "!!**/dist",
+      "!!**/coverage",
+      "!!**/playwright-report",
+      "!!**/test-results"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended"
+    }
+  }
+}

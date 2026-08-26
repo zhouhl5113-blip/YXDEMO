@@ -32,3 +32,14 @@ The target manifest was amended to the sanitized hash. The original design
 workspace remains read-only. The exposed AMap credential is considered
 compromised and must be rotated before any real map integration; no value was
 copied into production code, delivery evidence, tests, or a Git commit.
+
+## Story acceptance ID amendment
+
+After the initial 8/8 verification, the product owner instructed the project to
+resolve the remaining development blockers. `STORY-001` was corrected by adding
+`TEST-146..163` to `US-069..074` without renumbering `TEST-001..145`, and the
+obsolete Build Ready count was corrected from 68 to 82 FR. The Story asset hash
+changed from `0b96a2d0535c5eb8d787f1d640e4010fdd614caa59e49e2500375e7a154d3f07`
+to `b473e2675d60cac077682deb4fd974beeb2a14f84ff3977068fcebf27ed12fa1`.
+The target manifest and asset-verification record were updated together; details
+are in `evidence/story-acceptance-amendment.json`.

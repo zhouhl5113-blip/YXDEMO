@@ -1,9 +1,13 @@
 {
-  "observedAt": "2026-08-24T03:14:13Z",
+  "observedAt": "2026-08-24T09:55:13Z",
   "entries": [
     {"url": "https://dp-openapi.g7.com.cn/workbench/apps", "httpStatus": 200, "contractEvidence": false},
     {"url": "https://dp-openapi.g7.com.cn/apidocs/", "httpStatus": 200, "contractEvidence": false}
   ],
+  "authenticatedWorkbenchInventory": true,
+  "authenticatedInventoryEvidence": "evidence/g7-workbench-sandbox-inventory.json",
+  "targetApplicationConfirmed": true,
+  "targetApplicationConfirmationEvidence": "evidence/g7-target-application-confirmation.json",
   "sandboxCredentialsUsed": false,
-  "reason": "Required Harness secret references are absent and credential rotation evidence is required before first real use."
+  "reason": "Target application ZHLDEMO is confirmed and authenticated workbench inventory is complete. The owner confirmed old credentials remain active; they are prohibited from use. Signed SANDBOX request/response tests remain blocked until action-specific rotation approval, rotation evidence and Harness Secret binding exist."
 }

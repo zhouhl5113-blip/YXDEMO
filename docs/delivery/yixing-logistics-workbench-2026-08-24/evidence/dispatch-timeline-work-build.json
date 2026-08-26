@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T10:02:33Z",
+  "deliveryId": "yixing-logistics-workbench-2026-08-24",
+  "implementationCommit": "68f372a28080470af3aa9e86605ab9146bc06fcf",
+  "scope": "LOCAL_DEVELOPMENT_AND_TEST_ONLY",
+  "result": "PASS_LOCAL_WITH_PERSISTENCE_AND_DEVELOPING_G7_DISABLED",
+  "story": "US-007",
+  "requirements": ["FR-009", "NFR-004"],
+  "tests": ["TEST-018", "TEST-019", "TEST-020"],
+  "checks": [
+    {
+      "command": "pnpm run check",
+      "result": "PASS",
+      "details": "Biome format/lint, TypeScript strict, 59/59 tests and non-strict delivery evidence validation passed"
+    },
+    {
+      "command": "pnpm run build:web",
+      "result": "PASS",
+      "details": "Next.js production build includes the timeline, timeline/work and work-items routes"
+    },
+    {
+      "command": "pnpm run smoke:local-dispatch",
+      "result": "PASS",
+      "details": "Four timeline fact types, flag-off composition, role denial, linked work, source idempotency and Today projection passed"
+    }
+  ],
+  "implemented": [
+    "tenant-scoped composition of plan, location, geofence and exception facts",
+    "out-of-order fact projection without replacing the newest location",
+    "exception-to-work creation linked to dispatch, vehicle, driver and source fact",
+    "server-derived owner, due time and closure criteria validation",
+    "source-fact idempotency and tenant/date-scoped Today projection",
+    "feature-flag-off composition that never invokes the developing trip segment port",
+    "responsive timeline and Today UI with explicit source and freshness labels"
+  ],
+  "notImplemented": [
+    "database persistence, RLS, durable Outbox or projection replay",
+    "signed G7 SANDBOX timeline facts or released contract evidence",
+    "developing G7 trip segment endpoint activation",
+    "real map/G7 integration or production telemetry"
+  ],
+  "forbiddenActionsObserved": {
+    "liveG7Calls": 0,
+    "productionCredentials": 0,
+    "databaseMigrations": 0,
+    "agentOrModelCalls": 0,
+    "deployments": 0,
+    "secretChanges": 0,
+    "rbacChanges": 0
+  }
+}

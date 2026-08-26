@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-08-26T10:02:33Z",
+  "url": "http://127.0.0.1:3000/",
+  "result": "PASS_WITH_LOCAL_SYNTHETIC_FACTS_ONLY",
+  "flow": "Today -> dispatch draft -> candidate selection -> confirmation -> timeline -> exception work -> Today readback",
+  "assertions": [
+    {
+      "id": "TEST-018",
+      "result": "PASS_LOCAL",
+      "detail": "Plan, location, geofence and exception facts are shown in received-time order with source and freshness"
+    },
+    {
+      "id": "TEST-019",
+      "result": "PASS_LOCAL",
+      "detail": "An exception creates one visibly linked work item and the Today navigation, heading and filter counts all become 13"
+    },
+    {
+      "id": "TEST-020",
+      "result": "PASS_LOCAL",
+      "detail": "The interface explicitly shows trip-segment-search disabled while the local timeline remains available"
+    },
+    {
+      "id": "QA-DISPATCH-TIMELINE-001",
+      "result": "PASS",
+      "detail": "Application console warnings/errors: 0"
+    },
+    {
+      "id": "QA-DISPATCH-TIMELINE-002",
+      "result": "PASS",
+      "detail": "No page or interactive-control horizontal overflow was detected"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "pageHorizontalOverflow": false,
+      "controlTextOverflow": false,
+      "screenshots": [
+        {
+          "path": "screenshots/dispatch-timeline-work-1440x900.png",
+          "sha256": "8c5340f9d17d93d379bd3e1ac24d81e41b44842149c21f494e3dab7a19038263"
+        },
+        {
+          "path": "screenshots/dispatch-today-work-1440x900.png",
+          "sha256": "65c1f912ff6e3dd539f1e18e6adeeb84f58d5dff0f8ef3487e00160391765257"
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "pageHorizontalOverflow": false,
+      "controlTextOverflow": false,
+      "fullInteractiveFlow": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "pageHorizontalOverflow": false,
+      "controlTextOverflow": false,
+      "screenshot": "screenshots/dispatch-today-work-390x844.png",
+      "sha256": "a3c7ad66919d34e6d39feea85bda11144a09d7abfda450c978d3fb0d04929891"
+    }
+  ],
+  "notValidated": [
+    "signed G7 SANDBOX facts or real G7 trip segment behavior",
+    "durable database persistence, projection replay or RLS",
+    "production identity, telemetry or deployment"
+  ]
+}
