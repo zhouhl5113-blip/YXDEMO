@@ -42,6 +42,12 @@ function expect(condition: boolean, message: string): void {
 }
 
 const session = await post("/api/session/context", { roleId: "dispatcher" });
+const safetyInbox = await get("/api/v1/safety/events?roleId=operations_manager");
+const deniedSafetyInbox = await get("/api/v1/safety/events?roleId=unassigned_safety_role");
+const safetyEvents = list(safetyInbox.body.events, "safety events");
+const safetyPartition = record(safetyInbox.body.partition, "safety partition");
+const safetyMetrics = record(safetyInbox.body.metrics, "safety metrics");
+const safetyAudit = list(safetyInbox.body.auditEvents, "safety audit events");
 const denied = await post("/api/v1/dispatches", {
   roleId: "operations_manager",
   businessNo: "DENIED-001",
@@ -156,6 +162,24 @@ const syncedDispatch = record(synced.body.dispatch, "synced dispatch");
 const syncedCommand = record(synced.body.syncCommand, "synced command");
 
 expect(roleOptions.length === 6, "expected six role options");
+expect(safetyInbox.status === 200, "assigned role could not read the local safety inbox");
+expect(
+  deniedSafetyInbox.status === 403 && deniedSafetyInbox.body.code === "ROLE_NOT_ASSIGNED",
+  "unassigned role was allowed to read the safety inbox",
+);
+expect(safetyEvents.length === 4, "safety event revisions were not projected by source event");
+expect(
+  safetyMetrics.acceptedRecords === 5 && safetyMetrics.duplicateRecords === 1,
+  "safety event accept/deduplicate metrics were incorrect",
+);
+expect(
+  safetyPartition.status === "ACTIVE" && safetyPartition.cursor === "local-feed-cursor-008",
+  "safety feed did not recover to the expected committed cursor",
+);
+expect(
+  safetyAudit.length === 2 && safetyMetrics.cursorGapsRecovered === 1,
+  "cursor gap detection and recovery were not audited",
+);
 expect(
   denied.status === 403 && denied.body.code === "DISPATCH_PERMISSION_DENIED",
   "read-only role was not denied",
@@ -235,6 +259,17 @@ console.log(
     {
       baseUrl,
       roleCount: roleOptions.length,
+      safetyFeed: {
+        status: safetyInbox.status,
+        deniedUnassignedRoleStatus: deniedSafetyInbox.status,
+        projectedEvents: safetyEvents.length,
+        acceptedRecords: safetyMetrics.acceptedRecords,
+        duplicateRecords: safetyMetrics.duplicateRecords,
+        partitionStatus: safetyPartition.status,
+        cursor: safetyPartition.cursor,
+        cursorGapsRecovered: safetyMetrics.cursorGapsRecovered,
+        auditEvents: safetyAudit.length,
+      },
       readOnlyRole: { status: denied.status, code: denied.body.code },
       draft: {
         status: created.status,

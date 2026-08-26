@@ -1694,6 +1694,305 @@ textarea:focus-visible {
   font-weight: 650;
 }
 
+.riskWorkspace {
+  display: block;
+}
+
+.riskInbox {
+  width: min(100%, 1440px);
+  margin-inline: auto;
+  padding: 24px;
+}
+
+.riskInboxHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.riskInboxHeading > div {
+  min-width: 0;
+}
+
+.riskInboxHeading p {
+  margin: 0 0 4px;
+  color: var(--teal-dark);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.riskInboxHeading h1 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.riskInboxHeading span {
+  display: block;
+  margin-top: 5px;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.riskInbox > .stateNotice {
+  margin-bottom: 12px;
+}
+
+.riskInboxLoading {
+  min-height: 220px;
+  padding: 40px 16px;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.feedMetrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.feedMetrics > div {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 64px;
+  padding: 10px 14px;
+  gap: 8px;
+  border-right: 1px solid var(--line);
+}
+
+.feedMetrics > div:last-child {
+  border-right: 0;
+}
+
+.feedMetrics svg {
+  color: var(--teal-dark);
+}
+
+.feedMetrics span {
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+
+.feedMetrics strong {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.riskInboxLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  min-height: 480px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.riskEventQueue {
+  min-width: 0;
+}
+
+.riskQueueHeader,
+.riskEventRow {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.7fr) minmax(140px, 0.8fr) minmax(240px, 1.7fr) 58px;
+  align-items: center;
+  gap: 12px;
+}
+
+.riskQueueHeader {
+  min-height: 38px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-subtle);
+  color: var(--ink-muted);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.riskEventQueue ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.riskEventQueue li + li {
+  border-top: 1px solid var(--line);
+}
+
+.riskEventRow {
+  position: relative;
+  width: 100%;
+  min-height: 88px;
+  padding: 12px 14px;
+  border: 0;
+  border-left: 3px solid var(--amber);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+}
+
+.riskEventRow.critical {
+  border-left-color: var(--coral);
+}
+
+.riskEventRow:hover,
+.riskEventRow.selected {
+  background: #f2f8f7;
+}
+
+.riskEventRow.selected::after {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  bottom: 10px;
+  width: 3px;
+  background: var(--teal);
+  content: "";
+}
+
+.riskEventRow > span,
+.riskType > span {
+  display: grid;
+  min-width: 0;
+}
+
+.riskEventRow strong,
+.riskEventRow small {
+  overflow-wrap: anywhere;
+}
+
+.riskEventRow strong {
+  font-size: 12px;
+}
+
+.riskEventRow small {
+  margin-top: 3px;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.riskType {
+  display: flex;
+  align-items: flex-start;
+  min-width: 0;
+  gap: 7px;
+}
+
+.riskType svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--amber);
+}
+
+.critical .riskType svg {
+  color: var(--coral);
+}
+
+.revisionCount {
+  justify-self: start;
+  padding: 3px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.feedIntegrity {
+  min-width: 0;
+  padding: 16px;
+  border-left: 1px solid var(--line);
+  background: var(--surface-subtle);
+}
+
+.feedIntegrityHeading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--teal-dark);
+}
+
+.feedIntegrityHeading > div {
+  display: grid;
+}
+
+.feedIntegrityHeading span {
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.feedIntegrityHeading strong {
+  margin-top: 2px;
+  font-size: 15px;
+}
+
+.feedIntegrity dl {
+  margin: 0;
+}
+
+.feedIntegrity dl > div {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.feedIntegrity dt {
+  color: var(--ink-muted);
+  font-size: 10px;
+}
+
+.feedIntegrity dd {
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.feedAudit {
+  margin-top: 16px;
+}
+
+.feedAudit h2 {
+  display: flex;
+  align-items: center;
+  margin: 0 0 8px;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.feedAudit ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+  list-style: none;
+}
+
+.feedAudit li {
+  display: grid;
+  padding-left: 10px;
+  border-left: 2px solid var(--teal);
+}
+
+.feedAudit li span,
+.feedAudit li small {
+  color: var(--ink-muted);
+  font-size: 10px;
+}
+
+.feedAudit li strong {
+  margin: 2px 0;
+  font-size: 11px;
+}
+
 @media (max-width: 1365px) {
   :root {
     --rail-width: 68px;
@@ -1876,6 +2175,19 @@ textarea:focus-visible {
   .linkedWorkFacts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .riskInbox {
+    padding: 16px 12px 24px;
+  }
+
+  .riskInboxLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .feedIntegrity {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
 }
 
 @media (max-width: 640px) {
@@ -2034,6 +2346,55 @@ textarea:focus-visible {
   .syncRecoveryActions .primaryButton,
   .syncRecoveryActions .secondaryButton {
     width: 100%;
+  }
+
+  .riskInboxHeading {
+    align-items: flex-start;
+  }
+
+  .riskInboxHeading h1 {
+    font-size: 20px;
+  }
+
+  .riskInboxHeading .secondaryButton {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    font-size: 0;
+    gap: 0;
+  }
+
+  .feedMetrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feedMetrics > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .feedMetrics > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .riskQueueHeader {
+    display: none;
+  }
+
+  .riskEventRow {
+    grid-template-columns: minmax(116px, 0.8fr) minmax(0, 1.2fr);
+    min-height: 112px;
+    gap: 8px 10px;
+  }
+
+  .riskEventRow > span:nth-child(3) {
+    grid-column: 1 / -1;
+    padding-left: 24px;
+  }
+
+  .revisionCount {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }
 

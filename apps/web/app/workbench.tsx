@@ -30,10 +30,11 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DispatchPlanner, type DispatchTodayWork } from "./dispatch-planner.tsx";
+import { RiskInbox } from "./risk-inbox.tsx";
 
 type WorkView = "list" | "timeline" | "map";
 type ContextTab = "now" | "timeline" | "record" | "audit";
-type WorkModule = "today" | "dispatch";
+type WorkModule = "today" | "dispatch" | "exceptions";
 
 interface RoleOption {
   readonly id: string;
@@ -147,7 +148,7 @@ const NAV_ITEMS = [
   { id: "orders", label: "订单", icon: Boxes, count: 7, enabled: false },
   { id: "dispatch", label: "派车", icon: Truck, count: 4, enabled: true },
   { id: "transit", label: "在途", icon: MapPinned, count: 23, enabled: false },
-  { id: "exceptions", label: "异常", icon: TriangleAlert, count: 3, enabled: false },
+  { id: "exceptions", label: "异常", icon: TriangleAlert, count: 4, enabled: true },
   { id: "receipts", label: "回单", icon: FileCheck2, count: 5, enabled: false },
   { id: "settlement", label: "结算", icon: ReceiptText, count: 2, enabled: false },
 ] as const;
@@ -312,7 +313,9 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
                 title={item.enabled ? item.label : `${item.label}将在后续批次启用`}
                 disabled={!item.enabled}
                 onClick={() => {
-                  if (item.id === "today" || item.id === "dispatch") setActiveModule(item.id);
+                  if (item.id === "today" || item.id === "dispatch" || item.id === "exceptions") {
+                    setActiveModule(item.id);
+                  }
                 }}
               >
                 <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
@@ -408,6 +411,10 @@ export function Workbench({ session }: Readonly<{ session: WorkbenchSession }>) 
                 setSelectedId(work.id);
               }}
             />
+          </div>
+        ) : activeModule === "exceptions" ? (
+          <div className="workspaceBody riskWorkspace">
+            <RiskInbox selectedRoleId={selectedRoleId} />
           </div>
         ) : (
           <div className={`workspaceBody${drawerOpen ? "" : " drawerClosed"}`}>

@@ -57,6 +57,8 @@ importers:
 
   packages/integrations/g7: {}
 
+  packages/safety-domain: {}
+
   packages/workbench-session: {}
 
 packages:
