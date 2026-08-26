@@ -18,15 +18,15 @@
     "url": "https://github.com/zhouhl5113-blip/YXDEMO.git",
     "branch": "codex/harness-scope-evidence",
     "baseBranch": "main",
-    "commit": "90cc0d9b3e0c4a29fe31000d040a2a9e2e27d5cf",
+    "commit": "53203e06a25919c723ac19dba53b2cbd67e60f85",
     "pullRequest": "https://github.com/zhouhl5113-blip/YXDEMO/pull/1"
   },
   "gates": [
     {"id": "product", "status": "blocked", "evidence": ["asset-verification.csv", "g7-capability-matrix.csv", "g7-gap-decisions.md", "gap-approval-packet.md", "open-decisions.md", "traceability.csv"]},
     {"id": "design", "status": "blocked", "evidence": ["g7-gap-decisions.md", "gap-approval-packet.md", "open-decisions.md", "release-plan.md", "repo:docs/security/YXDEMO-threat-model.md", "repo:docs/architecture/adr-0003-keycloak-identity-application-authorization.md", "repo:docs/architecture/adr-0004-g7-platform-first-local-data-boundaries.md"]},
-    {"id": "build", "status": "pending", "evidence": ["evidence/foundation-workbench-build.json", "evidence/foundation-workbench-tests.junit.xml", "evidence/dispatch-workflow-build.json", "evidence/dispatch-workflow-smoke.json", "evidence/dispatch-workflow-tests.junit.xml"]},
+    {"id": "build", "status": "pending", "evidence": ["evidence/foundation-workbench-build.json", "evidence/foundation-workbench-tests.junit.xml", "evidence/dispatch-workflow-build.json", "evidence/dispatch-workflow-smoke.json", "evidence/dispatch-workflow-tests.junit.xml", "evidence/dispatch-sync-recovery-build.json", "evidence/dispatch-sync-recovery-smoke.json", "evidence/dispatch-sync-recovery-tests.junit.xml"]},
     {"id": "security", "status": "pending", "evidence": ["evidence/foundation-workbench-security.json"]},
-    {"id": "acceptance", "status": "pending", "evidence": ["evidence/foundation-workbench-browser-qa.json", "evidence/dispatch-workflow-browser-qa.json"]},
+    {"id": "acceptance", "status": "pending", "evidence": ["evidence/foundation-workbench-browser-qa.json", "evidence/dispatch-workflow-browser-qa.json", "evidence/dispatch-sync-recovery-browser-qa.json"]},
     {"id": "release", "status": "pending", "evidence": []},
     {"id": "production", "status": "pending", "evidence": []}
   ],
@@ -111,6 +111,12 @@
     "evidence/screenshots/dispatch-candidates-1440x900.png",
     "evidence/screenshots/dispatch-confirmed-1280x720.png",
     "evidence/screenshots/dispatch-confirmed-390x844.png",
+    "evidence/dispatch-sync-recovery-build.json",
+    "evidence/dispatch-sync-recovery-smoke.json",
+    "evidence/dispatch-sync-recovery-tests.junit.xml",
+    "evidence/dispatch-sync-recovery-browser-qa.json",
+    "evidence/screenshots/dispatch-sync-failed-1440x900.png",
+    "evidence/screenshots/dispatch-sync-synced-390x844.png",
     "evidence/screenshots/workbench-1440x900.png",
     "evidence/screenshots/workbench-1280x720.png",
     "evidence/screenshots/workbench-390x844.png",
@@ -134,7 +140,8 @@
     "ADR-0003, ADR-0004 and OQ-008 are approved only for local development/test contracts, interfaces, application shells and draft migration review. 周贺龙 is the local Design approver, but activation review is unassigned and independent review is not demonstrated; no distinct second R3 approver exists, so R3, migration execution, Keycloak runtime and production identity infrastructure remain disabled or unresolved.",
     "The local web response and request security baseline passes, but a nonce-based script CSP, authoritative dependency advisories, Harness Secret/container/repository scans, DAST, SBOM and provenance remain unavailable and block Security Gate completion.",
     "Production infrastructure, retention, model governance, rollout and rollback owners are undecided.",
-    "The dispatch workflow is an approved local synthetic-data implementation backed by process memory only. It proves permissions, candidate policy, optimistic versioning, idempotent confirmation and pending-sync behavior, but no database migration, durable Outbox, signed G7 SANDBOX contract or G7 write/readback has been executed."
+    "The dispatch workflow is an approved local synthetic-data implementation backed by process memory only. It proves permissions, candidate policy, optimistic versioning, idempotent confirmation and pending-sync behavior, but no database migration, durable Outbox, signed G7 SANDBOX contract or G7 write/readback has been executed.",
+    "US-008 now proves local FAILED/RETRYING/SYNCED and reasoned REVOKED contracts, same-command convergence, tenant-scoped 30-minute backlog work generation, visible recovery actions and responsive behavior. The adapter is a controlled local stub; durable worker scheduling, real G7 failure semantics/readback, OpenTelemetry export and administrator queue delivery remain unimplemented."
   ],
-  "updatedAt": "2026-08-26T04:46:01Z"
+  "updatedAt": "2026-08-26T08:38:38Z"
 }
